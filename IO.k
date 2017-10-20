@@ -1,6 +1,6 @@
 Package IO {
 	Stream(key default priority) {
-		Stream = External-Stream(key default priority)
+		Stream = External-Stream(key default priority key)
 	}
 
 	Source(key default priority) {
