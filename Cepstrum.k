@@ -17,20 +17,20 @@ Package Cepstrum {
 
 	FFT(sig) {
 		raw = Unpack-Complex(sig)
-		(_ raw-out _) = Foreign-Function("int32" "kissfft" 
+		(_ raw-out _) = Foreign-Function["int32" "kissfft" 
 			"float*" raw
 			"int32" Coerce(Int32 Arity(sig))
-			"int32" 0i)
+			"int32" 0i]
 		norm = Math:Sqrt(#1 / Arity(sig))
 		FFT = Pack-Complex(Algorithm:Map((* norm) raw-out))
 	}
 
 	IFFT(sig) {
 		raw = Unpack-Complex(sig)
-		(_ raw-out _) = Foreign-Function("int32" "kissfft" 
+		(_ raw-out _) = Foreign-Function["int32" "kissfft" 
 			"float*" raw
 			"int32" Coerce(Int32 Arity(sig))
-			"int32" -1i)
+			"int32" -1i]
 		norm = Math:Sqrt(#1 / Arity(sig))
 		IFFT = Pack-Complex(Algorithm:Map((* norm) raw-out))			
 	}
