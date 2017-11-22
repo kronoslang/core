@@ -2,9 +2,6 @@ Import Exception
 Import Reflection
 
 Package Algorithm {
-	
-	; Map - apply a function over a set	 
-
 	Expand(count iterator seed) {
 		;; Produces a list of 'count' elements, starting with 'seed' and generating the following elements by applying 'iterator' to the previous one.
 		Expand = count  >= #2 : (seed Recur(count - #1 iterator Eval(iterator seed)))
@@ -19,10 +16,6 @@ Package Algorithm {
 	 	(x xs) = set...
 	 	Map = (Eval(func x) Recur(func xs))
 	}
-
-	For(count start step func) {
-		For = Map(func Expand(count (+ step) start))
-	}	
 
 	Flat-First(x) {
 		;; Returns the first element in 'x' regardless of its algebraic structure.

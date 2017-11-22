@@ -181,7 +181,7 @@ Package Actions {
 	} nil) }
 
 	Pr(values) {
-		For(values Print-One)		
+		For(values Print-One)
 	}
 
 	PrLn(values) {
@@ -202,18 +202,18 @@ Import Gen
 
 Bleep(dur freq) {
 	Use Actions
-	Do(
+	Do( p
 		id <- Start('Wave:Sin(freq))
 		After(dur Stop(id)))
 }
 
 Test(N) {
-	Use Algorithm
+	Use Algorithm 
 	Actions:For(Expand(N (+ 1) 0) i => Bleep(i * 0.1 220 + i))
 }
 
 Pulse(freq w) {
-	Use Actions
+	Use Actions 
 	Do( id <- Start('Audio:Signal(0.5)) 
 		After( w / freq  Stop(id) ) 
 		After( 1 / freq  Call(Pulse freq w) ) ) 
