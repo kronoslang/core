@@ -18,7 +18,11 @@ Curry(func a) {
 
 Package Fallback {
 	Eval(func argument)	{
+		unbound = Class-Of(Resolve("an impossible symbol"))
+		(unbound-sym _) = Break(unbound func)
+
 		Eval = Raise("Can not evaluate " func " with argument " argument)
+		Eval = Raise(unbound-sym " is not defined")
 		Eval = Closure:Call(func argument)
 	}	
 }
