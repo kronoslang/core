@@ -1,4 +1,3 @@
-Import Algorithm
 Import Exception
 
 Package VM {
@@ -17,9 +16,15 @@ Package VM {
 	Type Op
 	Type Instance
 
-	Step(op args) {
+	Step(op world) {
 		(closure return) = Break(Op op)
-		closure(args)
+;		FFI[closure(world) "kvm_drop!"]
+		closure(world)
+	}
+
+	Step-Push(op world) {
+		(closure return) = Break(Op op)
+		closure(world)
 	}
 
 	Run(a) {
@@ -82,11 +87,26 @@ Package VM {
 			"void*" ty]
 		(World:Cons(new-world) data)
 	}
+
+	Loop(body finally set...) {
+		Loop = Throw:Invalid-Argument(set... "must contain at least two elements")
+
+		(y1 y2) = set...
+		Loop = finally(y2 y1)
+
+		(x1 x2 xs) = set...
+		Loop = Nil?(xs) : finally(x2 x1)
+						  Recur(body finally body(x2 x1) xs) 
+	}
+
+	Last(set...) {
+		Last = set...
+		(x xs) = set...
+		Last = Nil?(xs) : x Recur(xs)
+	}
 }
 
 Package Actions {
-	Use Algorithm
-
 	Print-One(a) { 
 		VM:Make-Op["kvm_print!" 
 			"const char*" "out"
@@ -94,12 +114,21 @@ Package Actions {
 			"const void*" [a]]
 	}
 
-	Start(id-cls) {
+	Start(closure) {
 		Make(VM:Op {
 			VM:FFI[arg "kvm_start!"
-				"sizeof"		id-cls
-				"typeof"		id-cls
-				"const void*"	id-cls]
+				"sizeof"		closure
+				"typeof"		closure
+				"const void*"	closure]
+		} Make(VM:Instance 0q))
+	}
+
+	Friend(closure) {
+		Make(VM:Op {
+			VM:FFI[arg "kvm_furry_friend!"
+				"sizeof"		closure
+				"typeof"		closure
+				"const void*"	closure]
 		} Make(VM:Instance 0q))
 	}
 
@@ -147,10 +176,19 @@ Package Actions {
 		Make(VM:Op {
 			w1 = arg
 			(_ returns) = Break(VM:Op inner)
-			w2 = :VM:Step(inner w1)
+			w2 = :VM:Step-Push(inner w1)
 			(w3 bind) = :VM:Pop(w2 returns)
 			:VM:Step(Do(outer(bind)) w3)
 		} nil)
+	}
+
+	Return(value) {
+		Make(VM:Op {
+			world = arg
+			VM:FFI[world "kvm_push!"
+					"typeof" value
+					"const void*" value]
+		} value)
 	}
 
 	If(truth then else) {
@@ -172,13 +210,25 @@ Package Actions {
 		} nil)
 	}
 
-	Do(actions) { Make(VM:Op {
-		Reduce((w op) => VM:Step(op w) arg actions)
-	} nil) }	
+	Do(actions) { 
+		(_ returns) = Break(VM:Op VM:Last(actions))
 
-	For(values body) { Make(VM:Op {
-		Reduce((world value) => VM:Step(body(value) world) arg values) 
-	} nil) }
+		Make(VM:Op {
+			VM:Loop(VM:Step VM:Step-Push arg actions)
+		} returns) 
+	}	
+
+	For(values body) { 
+		pval = Pair?(values) : First(values) values
+
+		(_ returns) = Break(VM:Op body(pval))
+
+		Make(VM:Op {
+		VM:Loop((x world) => VM:Step(body(x) world)
+				(x world) => VM:Step-Push(body(x) world) 
+				arg values)
+		} returns) 
+	}
 
 	Pr(values) {
 		For(values Print-One)
@@ -196,9 +246,8 @@ Invoke-With(left right) {
 	Invoke-With = When(Equal-Type(Class-Of(left) VM:Op) Actions:Invoke-With(left right))
 }
 
-; kludge
-
 Import Gen
+Import Algorithm
 
 Bleep(dur freq) {
 	Use Actions
