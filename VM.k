@@ -128,7 +128,20 @@ Package Actions {
 			VM:FFI[arg "kvm_furry_friend!"
 				"sizeof"		closure
 				"typeof"		closure
-				"const void*"	closure]
+				"const void*"	closure
+				"const char*"   ""]
+		} Make(VM:Instance 0q))
+	}
+
+	Friend(name closure) {
+		unbound = Class-Of(Resolve(" "))
+
+		Make(VM:Op {
+			VM:FFI[arg "kvm_furry_friend!"
+				"sizeof"		closure
+				"typeof"		closure
+				"const void*"	closure
+				"const char*"   Equal-Type(Class-Of(name) unbound) : First(Break(unbound name)) name ]
 		} Make(VM:Instance 0q))
 	}
 
