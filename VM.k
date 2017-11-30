@@ -70,7 +70,7 @@ Package VM {
 	}
 
 	Instance-Wrapper(mixbus closure) {
-		sig = closure( Make(Instance Self-ID()) )
+		sig = closure( Make(Instance Self-ID() nil) )
 		bus = External(("unsafe" "accumulator") mixbus)
 		
 		When(Equal-Type(Class-Of(sig) Op) 
@@ -83,10 +83,16 @@ Package VM {
 	Pop(world ty) {
 		(new-world data _) = Foreign-Function["int64" "kvm_pop!"
 			"int64" World:Decons(world) 
-			"typeof" ty
+			"sizeof" ty
 			"void*" ty]
 		(World:Cons(new-world) data)
 	}
+
+	Output-Of(inst) {
+		(id r) = Break(Instance inst)
+		Key-to-Type(r)
+	}
+
 
 	Loop(body finally set...) {
 		Loop = Throw:Invalid-Argument(set... "must contain at least two elements")
@@ -115,25 +121,31 @@ Package Actions {
 	}
 
 	Start(closure) {
+		returns = Type-to-Key(closure(Make(VM:Instance 0q "n/a")))
 		Make(VM:Op {
 			VM:FFI[arg "kvm_start!"
 				"sizeof"		closure
 				"typeof"		closure
 				"const void*"	closure]
-		} Make(VM:Instance 0q))
+		} Make(VM:Instance 0q returns))
 	}
 
 	Friend(closure) {
+		r = closure(Make(VM:Instance 0q "n/a"))
+		returns = Type-to-Key(r)
 		Make(VM:Op {
 			VM:FFI[arg "kvm_furry_friend!"
 				"sizeof"		closure
 				"typeof"		closure
 				"const void*"	closure
-				"const char*"   ""]
-		} Make(VM:Instance 0q))
+				"const char*"   ""
+				"typeof"		r]
+		} Make(VM:Instance 0q returns))
 	}
 
 	Friend(name closure) {
+		r = closure(Make(VM:Instance 0q "n/a"))
+		returns = Type-to-Key(r)
 		unbound = Class-Of(Resolve(" "))
 
 		Make(VM:Op {
@@ -141,18 +153,22 @@ Package Actions {
 				"sizeof"		closure
 				"typeof"		closure
 				"const void*"	closure
-				"const char*"   Equal-Type(Class-Of(name) unbound) : First(Break(unbound name)) name ]
-		} Make(VM:Instance 0q))
+				"const char*"   Equal-Type(Class-Of(name) unbound) : First(Break(unbound name)) name 
+				"typeof"		r]
+		} Make(VM:Instance 0q returns))
 	}
 
 	Stop(instance) {
 		Stop = Throw:Type-Error(instance " is not an instance that can be stopped.")
+		(id returns) = Break(VM:Instance instance)
 		Stop = VM:Make-Op["kvm_stop!"
-			"int64" Break(VM:Instance instance)]
+			"int64" id]
 	}
 
 	Call(fn arguments) {
-		Make(VM:Op { VM:Step(fn(arguments) arg) } nil)
+		Make(VM:Op { 
+			VM:Step(fn(arguments) arg) 
+		} nil)
 	}
 
 	After(duration actions) {
@@ -176,13 +192,30 @@ Package Actions {
 	}
 
 	Send-To(instance method parameter) {
-		id = Break(VM:Instance instance)
-		VM:Make-Op["kvm_dispatch!"
+		(id returns) = Break(VM:Instance instance)
+		Make(VM:Op {
+			VM:FFI[arg "kvm_dispatch!"
 			"int64" id 
 			"const char*" method
 			"sizeof" parameter 
 			"const void*" parameter
-			"const char*" String:Interop-Format(parameter)]
+			"const char*" String:Interop-Format(parameter)
+			"const void*" parameter]
+		} nil)
+	}
+
+	Method(instance method parameter) {
+		(id returns) = Break(VM:Instance instance)
+		rv = Key-to-Type(returns)
+		Make(VM:Op {
+			VM:FFI[arg "kvm_dispatch!"
+			"int64" id 
+			"const char*" method
+			"sizeof" parameter 
+			"const void*" parameter
+			"const char*" String:Interop-Format(parameter)
+			"void*" rv]
+		} rv)
 	}
 
 	Invoke-With(inner outer) { 
@@ -199,7 +232,7 @@ Package Actions {
 		Make(VM:Op {
 			world = arg
 			VM:FFI[world "kvm_push!"
-					"typeof" value
+					"sizeof" value
 					"const void*" value]
 		} value)
 	}
