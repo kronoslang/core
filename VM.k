@@ -4,12 +4,21 @@ Package VM {
 	Package World {
 		Type World
 
-		Cons(env-id) {
-			Make(World env-id)
+		Cons(env-id bus-ty) {
+			Make(World env-id bus-ty)
 		}
 
 		Decons(w) {
 			Break(World w)
+		}
+
+		Id(w) {
+			(Id _) = Decons(w)
+		}
+
+		Update(world new-id) {
+			(id bus) = Decons(world)
+			Cons(new-id bus)
 		}
 	}
 
@@ -27,20 +36,26 @@ Package VM {
 		closure(world)
 	}
 
-	Run(a) {
-		Run = Step(a World:Cons(External(World:World 0q)))
+	Execute(a bus) {
+		Step(a World:Cons(External(World:World 0q) bus))
 	}
 
-	Output(action-or-value) {
-		Output = Run(Actions:Print-One(action-or-value "\n"))
-		Output = Run(action-or-value)
+	Output(action-or-value bus) {
+		Use Actions
+		Output = Execute(
+			Do(
+				Print-One(action-or-value) 
+				Print-One("\n")) 
+			bus)
+
+		Output = Execute(action-or-value bus)
 	}	
 
 	FFI(world sym args) {
-		World:Cons(
+		World:Update(world
 			First(
 				Foreign-Function("int64" sym "int64"	
-					World:Decons(world) args)))
+					World:Id(world) args)))
 	}
 
 	Make-Op(sym args) {
@@ -71,21 +86,21 @@ Package VM {
 
 	Instance-Wrapper(mixbus closure) {
 		sig = closure( Make(Instance Self-ID() nil) )
-		bus = External(("unsafe" "accumulator") mixbus)
+		bus = External(("unsafe" "accumulator") mixbus())
 		
 		When(Equal-Type(Class-Of(sig) Op) 
-				Effect-Dependency(bus VM:Run(sig))			
+				Effect-Dependency(bus sig)			
 			 Otherwise
 				Handle(Mix-Check[bus sig]
-				   { Effect-Dependency(bus sig) } ))
+				   { Effect-Dependency(bus sig) }) )
 	}
 
 	Pop(world ty) {
-		(new-world data _) = Foreign-Function["int64" "kvm_pop!"
-			"int64" World:Decons(world) 
+		(new-id data _) = Foreign-Function["int64" "kvm_pop!"
+			"int64" World:Id(world) 
 			"sizeof" ty
 			"void*" ty]
-		(World:Cons(new-world) data)
+		(World:Update(world new-id) data)
 	}
 
 	Output-Of(inst) {
@@ -120,42 +135,16 @@ Package Actions {
 			"const void*" [a]]
 	}
 
-	Start(closure) {
-		returns = Type-to-Key(closure(Make(VM:Instance 0q "n/a")))
+	Start(fn) {
+		;; Plug the function 'fn' into the mix bus of the environment
 		Make(VM:Op {
+			(id bus) = VM:World:Decons(arg)
+			audio-adapter = { VM:Instance-Wrapper(bus fn) }
 			VM:FFI[arg "kvm_start!"
-				"sizeof"		closure
-				"typeof"		closure
-				"const void*"	closure]
-		} Make(VM:Instance 0q returns))
-	}
-
-	Friend(closure) {
-		r = closure(Make(VM:Instance 0q "n/a"))
-		returns = Type-to-Key(r)
-		Make(VM:Op {
-			VM:FFI[arg "kvm_furry_friend!"
-				"sizeof"		closure
-				"typeof"		closure
-				"const void*"	closure
-				"const char*"   ""
-				"typeof"		r]
-		} Make(VM:Instance 0q returns))
-	}
-
-	Friend(name closure) {
-		r = closure(Make(VM:Instance 0q "n/a"))
-		returns = Type-to-Key(r)
-		unbound = Class-Of(Resolve(" "))
-
-		Make(VM:Op {
-			VM:FFI[arg "kvm_furry_friend!"
-				"sizeof"		closure
-				"typeof"		closure
-				"const void*"	closure
-				"const char*"   Equal-Type(Class-Of(name) unbound) : First(Break(unbound name)) name 
-				"typeof"		r]
-		} Make(VM:Instance 0q returns))
+				"sizeof"		audio-adapter
+				"typeof"		audio-adapter
+				"const void*"	audio-adapter]
+		} Make(VM:Instance 0q "n/a" ))
 	}
 
 	Stop(instance) {
@@ -175,7 +164,7 @@ Package Actions {
 		action = Do(actions)
 		Make(VM:Op {
 			world = arg
-			raw-world = VM:World:Decons(world)
+			(raw-world bus) = VM:World:Decons(world)
 			now  = First(Foreign-Function["int64" "kvm_now" "int64" raw-world])
 			rate = First(Foreign-Function["float" "kvm_scheduler_rate" "int64" raw-world])
 			(_ action-closure) = Specialization-Monitor(
@@ -192,7 +181,7 @@ Package Actions {
 	}
 
 	Send-To(instance method parameter) {
-		(id returns) = Break(VM:Instance instance)
+		(id _) = Break(VM:Instance instance)
 		Make(VM:Op {
 			VM:FFI[arg "kvm_dispatch!"
 			"int64" id 
@@ -284,6 +273,20 @@ Package Actions {
 		Do(
 			For(values Print-One)
 			Print-One("\n"))
+	}
+
+	Bind(name value) {
+		;; dynamically (re)set a constant in the code library.
+		;; only available in REPL.
+		VM:Make-Op["kvm_repl_bind" "const char*" name "typeof" value "const void*" value]
+	}
+
+	New(name object) {
+		Do(id <- Start(object) Bind(name id))
+	}
+
+	Friend(object) {
+		Do(id <- Start(object) Bind("" id))
 	}
 }
 
