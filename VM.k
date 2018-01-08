@@ -288,31 +288,17 @@ Package Actions {
 	Friend(object) {
 		Do(id <- Start(object) Bind("" id))
 	}
+
+	Empty-Seq = [(5 "" nil)]
+
+	Test(obj seq) {
+		Do(instance <- Start(obj)
+		   For(seq (time method param) =>
+		   		After(time Send-To(instance method param))))
+	}
 }
 
 Invoke-With(left right) {
 	Invoke-With = right(left)
 	Invoke-With = When(Equal-Type(Class-Of(left) VM:Op) Actions:Invoke-With(left right))
-}
-
-Import Gen
-Import Algorithm
-
-Bleep(dur freq) {
-	Use Actions
-	Do( 
-		id <- Start('Wave:Sin(freq))
-		After(dur Stop(id)))
-}
-
-Test(N) {
-	Use Algorithm 
-	Actions:For(Expand(N (+ 1) 0) i => Bleep(i * 0.1 220 + i))
-}
-
-Pulse(freq w) {
-	Use Actions 
-	Do( id <- Start('Audio:Signal(0.5)) 
-		After( w / freq  Stop(id) ) 
-		After( 1 / freq  Call(Pulse freq w) ) ) 
 }
