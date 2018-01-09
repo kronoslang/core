@@ -113,10 +113,10 @@ Package VM {
 		Loop = Throw:Invalid-Argument(set... "must contain at least two elements")
 
 		(y1 y2) = set...
-		Loop = finally(y2 y1)
+		Loop = Nil?(y2) : y1 finally(y2 y1)
 
 		(x1 x2 xs) = set...
-		Loop = Nil?(xs) : finally(x2 x1)
+		Loop = 	Nil?(xs) : finally(x2 x1)
 						  Recur(body finally body(x2 x1) xs) 
 	}
 
@@ -254,15 +254,18 @@ Package Actions {
 	}	
 
 	For(values body) { 
-		pval = Pair?(values) : First(values) values
+		pval = Pair?(values) : First(values) 
+			   values
 
-		(_ returns) = Break(VM:Op body(pval))
+		(_ returns) = Nil?(values) : (nil nil)
+					  Break(VM:Op body(pval))
 
-		Make(VM:Op {
+		For = Make(VM:Op {
 		VM:Loop((x world) => VM:Step(body(x) world)
 				(x world) => VM:Step-Push(body(x) world) 
 				arg values)
-		} returns) 
+		} returns)
+
 	}
 
 	Pr(values) {
@@ -289,12 +292,12 @@ Package Actions {
 		Do(id <- Start(object) Bind("" id))
 	}
 
-	Empty-Seq = [(5 "" nil)]
-
-	Test(obj seq) {
-		Do(instance <- Start(obj)
-		   For(seq (time method param) =>
-		   		After(time Send-To(instance method param))))
+	Test(duration obj seq) {
+		After(0 
+			instance <- Start(obj)
+		   	For(seq (time method param) =>
+		   		After(time Send-To(instance method param)))
+		   	After(duration Stop(instance)))
 	}
 }
 
