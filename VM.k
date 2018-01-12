@@ -292,9 +292,16 @@ Package Actions {
 		Do(id <- Start(object) Bind("" id))
 	}
 
+	Instrument(sig) {
+		(_ Instrument) = Foreign-Function["int64" "kvm_test_capture!" 
+			"const float*" sig
+			"float*" sig
+			"sizeof" sig]
+	}
+
 	Test(duration obj seq) {
 		After(0 
-			instance <- Start(obj)
+			instance <- Start({ Instrument(obj()) })
 		   	For(seq (time method param) =>
 		   		After(time Send-To(instance method param)))
 		   	After(duration Stop(instance)))
