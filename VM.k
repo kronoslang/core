@@ -139,7 +139,11 @@ Package Actions {
 		;; Plug the function 'fn' into the mix bus of the environment
 		Make(VM:Op {
 			(id bus) = VM:World:Decons(arg)
-			audio-adapter = { VM:Instance-Wrapper(bus fn) }
+			(_ audio-adapter) = Specialization-Monitor(
+				"kvm_anticipate_start"
+				{ VM:Instance-Wrapper(bus fn) }
+			)
+
 			VM:FFI[arg "kvm_start!"
 				"sizeof"		audio-adapter
 				"typeof"		audio-adapter
@@ -155,7 +159,7 @@ Package Actions {
 	}
 
 	Call(fn arguments) {
-		Make(VM:Op { 
+		Make(VM:Op {
 			VM:Step(fn(arguments) arg) 
 		} nil)
 	}
@@ -167,6 +171,7 @@ Package Actions {
 			(raw-world bus) = VM:World:Decons(world)
 			now  = First(Foreign-Function["int64" "kvm_now" "int64" raw-world])
 			rate = First(Foreign-Function["float" "kvm_scheduler_rate" "int64" raw-world])
+
 			(_ action-closure) = Specialization-Monitor(
 				"kvm_anticipate_after"
 				{ VM:Step(action world) }
@@ -293,14 +298,25 @@ Package Actions {
 	}
 
 	Instrument(sig) {
-		(_ Instrument) = Foreign-Function["int64" "kvm_test_capture!" 
+		(_ Instrument _) = Foreign-Function["int64" "kvm_test_capture!" 
 			"const float*" sig
 			"float*" sig
 			"sizeof" sig]
 	}
 
+	Prebuild-All = 1i
+
+	Flags(raise clear) {
+		Make(VM:Op {
+			world = arg
+			VM:FFI[world "kvm_flags!"
+					"int32" raise
+					"int32" clear]
+		} 0i)
+	}
+
 	Test(duration obj seq) {
-		After(0 
+		Do(
 			instance <- Start({ Instrument(obj()) })
 		   	For(seq (time method param) =>
 		   		After(time Send-To(instance method param)))
