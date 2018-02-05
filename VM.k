@@ -135,6 +135,13 @@ Package Actions {
 			"const void*" [a]]
 	}
 
+	Output(pipe value) {
+		VM:Make-Op["kvm_print!"
+			"const char*" pipe
+			"const char*" String:Interop-Format(value)
+			"const void*" [value]]
+	}
+
 	Start(fn) {
 		;; Plug the function 'fn' into the mix bus of the environment
 		Make(VM:Op {
