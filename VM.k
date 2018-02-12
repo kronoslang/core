@@ -37,7 +37,10 @@ Package VM {
 	}
 
 	Execute(a bus) {
-		Step(a World:Cons(External(World:World 0q) bus))
+		world = World:Cons(External(World:World 0q) bus)
+		(closure return) = Break(Op a)
+		
+		Pop(closure(world) return)
 	}
 
 	Output(action-or-value bus) {
@@ -142,11 +145,18 @@ Package Actions {
 			"const void*" [value]]
 	}
 
+	Output-JSON(pipe value) {
+		VM:Make-Op["kvm_print!"
+			"const char*" pipe
+			"const char*" String:Interop-Format-JSON(value)
+			"const void*" [value]]
+	}
+
 	Start(fn) {
 		;; Plug the function 'fn' into the mix bus of the environment
 		Make(VM:Op {
 			(id bus) = VM:World:Decons(arg)
-			(_ audio-adapter) = Specialization-Monitor(
+			audio-adapter = Specialization-Monitor(
 				"kvm_anticipate_start"
 				{ VM:Instance-Wrapper(bus fn) }
 			)
@@ -179,7 +189,7 @@ Package Actions {
 			now  = First(Foreign-Function["int64" "kvm_now" "int64" raw-world])
 			rate = First(Foreign-Function["float" "kvm_scheduler_rate" "int64" raw-world])
 
-			(_ action-closure) = Specialization-Monitor(
+			action-closure = Specialization-Monitor(
 				"kvm_anticipate_after"
 				{ VM:Step(action world) }
 			)
@@ -242,8 +252,8 @@ Package Actions {
 		Make(VM:Op {
 			world = arg
 
-			(_ then-branch) = Specialization-Monitor("kvm_anticipate_then" { VM:Step(then world) })
-			(_ else-branch) = Specialization-Monitor("kvm_anticipate_else" { VM:Step(else world) })
+			then-branch = Specialization-Monitor("kvm_anticipate_then" { VM:Step(then world) })
+			else-branch = Specialization-Monitor("kvm_anticipate_else" { VM:Step(else world) })
 			
 			VM:FFI[world "kvm_branch!"
 				"sizeof" truth 
