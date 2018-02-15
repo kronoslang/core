@@ -68,7 +68,8 @@ Package VM {
 	}
 
 	; for now support 2:2 1:2 and 2:1
-	Mix(bus sig _) {
+	Mix(mixbus sig _) {
+		bus = Audio:Signal(mixbus)
 
 		(bl br) = bus
 		(sl sr) = sig
