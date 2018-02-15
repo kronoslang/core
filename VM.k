@@ -80,6 +80,9 @@ Package VM {
 		Mix = bus + sl + sr
 		Mix = (bl + sm br + sm)
 		Mix = (bl + sl br + sr)
+
+		; unwrap any user types
+		Mix = Recur(bus Break(Class-Of(sig) sig) nil)
 	}
 
 	Mix-Check(bus sig _) {
@@ -319,6 +322,8 @@ Package Actions {
 			"const float*" sig
 			"float*" sig
 			"sizeof" sig]
+
+		Instrument = Recur(Break(Class-Of(sig) sig))
 	}
 
 	Prebuild-All = 1i
