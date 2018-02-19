@@ -345,6 +345,12 @@ Package Actions {
 		   		After(time Send-To(instance method param)))
 		   	After(duration Stop(instance)))
 	}
+
+	Hear(obj) {
+		Do(
+			instance <- Start(obj)
+			After(5 Stop(instance)))
+	}
 }
 
 Invoke-With(left right) {
