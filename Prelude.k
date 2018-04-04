@@ -22,6 +22,7 @@ Apply(func list) {
 }
 
 Fraction(x) {
+	;; Returns the difference between x and the largest integer less or equal to it
 	Fraction = x - Floor(x)
 }
 
