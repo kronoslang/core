@@ -54,6 +54,13 @@ Package Audio {
 	Rate() {
 		Rate = Rate-of(Clock)
 	}
+
+	Play-File(path) {
+		;; plays back audio from the file system 'path'
+		(sr frames) = External-Asset(path)
+		pos = z-1(0i Signal(pos + 1i))
+		Select(frames pos)
+	}
 }
 
 Package Control {

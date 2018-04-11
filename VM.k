@@ -349,7 +349,7 @@ Package Actions {
 	Hear(obj) {
 		Do(
 			instance <- Start(obj)
-			After(5 Stop(instance)))
+			After(12 Stop(instance)))
 	}
 }
 
