@@ -86,9 +86,19 @@ Package VM {
 		Mix = Recur(bus Break(Class-Of(sig) sig) nil)
 	}
 
+	Upmix(sig1 sig2) {
+		mix1 = Mix[sig1 sig2]
+		mix2 = Mix[sig2 sig1]
+		Arity(mix1) > Arity(mix2) : mix1 mix2
+	}
+
 	Mix-Check(bus sig _) {
 		mixed = Mix(arg)
 		Mix-Check = When(Equal-Type(bus mixed) mixed)
+	}
+
+	Mix-Signals(sigs) {
+		Algorithm:Reduce(Upmix sigs)
 	}
 
 	Instance-Wrapper(mixbus closure) {
