@@ -41,3 +41,16 @@ Package String {
 	}
 }
 
+Infix+ = :Add
+Infix- = :Sub
+Infix* = :Mul
+Infix/ = :Div
+Infix!= = :Not-Equal
+Infix== = :Equal
+Infix> = :Greater 
+Infix>= = :Greater-Equal
+Infix< = :Less 
+Infix<= = :Less-Equal
+Infix& = :And 
+Infix| = :Or 
+Infix<- = :LeftArrow
