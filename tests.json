@@ -7,7 +7,7 @@
 			"Map-And-Zip": {},
 			"Big-Reduce": {},
 			"Reverse-Reduce": { "exclude": "Darwin;Linux"},
-			"Simple-Filter": {},			
+			"Simple-Filter": {}
 		},
 		"Coerce": {
 			"Implicit-Coercion-Matrix": {},
