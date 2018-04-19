@@ -1,7 +1,7 @@
 Type Closure
 
-Package Closure{
-	Cons(func with){
+Package Closure {
+	Cons(func with) {
 		Cons = Make(:Closure (func with))
 	}
 
