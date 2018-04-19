@@ -14,7 +14,7 @@
 			"Vector-Coerce": {}
 		},
 		"Approx": {
-			"Cosine:" { "exclude": "Static" }
+			"Cosine": { "exclude": "Static" }
 		},
 		"String": {
 			"Replace": {},
@@ -90,7 +90,7 @@
 		},
 		"WikiSynthesis": {
 			"Geometric-Waves": {},
-			"Sine-Bank": { "exclude": "Linux" },
+			"Sine-Bank": { "exclude": "Linux" }
 		}
 	}
 }
