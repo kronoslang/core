@@ -1,0 +1,96 @@
+{
+	"eval": {
+		"Algorithm": {
+			"Simple-Expand": {},
+			"Nested-Expand": {},
+			"Simple-Accumulate": {},
+			"Map-And-Zip": {},
+			"Big-Reduce": {},
+			"Reverse-Reduce": { "exclude": "Darwin;Linux"},
+			"Simple-Filter": {},			
+		},
+		"Coerce": {
+			"Implicit-Coercion-Matrix": {},
+			"Vector-Coerce": {}
+		},
+		"Approx": {
+			"Cosine:" { "exclude": "Static" }
+		},
+		"String": {
+			"Replace": {},
+			"Unicode": { "exclude": "Linux" }
+		},
+		"Infix": {
+			"Custom-Infix": {}
+		},
+		"Thesis": {
+			"Tutorial-1": {},
+			"Tutorial-2": {},
+			"Tutorial-3": {},
+			"Tutorial-6": {},
+			"Tutorial-21": {},
+			"Tutorial-23": {},
+			"Tutorial-24": {},
+			"Tutorial-27": {}
+		}
+	},
+	"audio": {
+		"Osc": {
+			"Sin": {},
+			"Control-Rate-Sin": {},
+			"Mixed-Rate-Osc": {},
+			"Waveshaping": {},
+			"FM": {},
+			"Sin-Seq/Sin-Seq": {},
+			"Noise": {}
+		},
+		"Filter": {
+			"Simple-Resonator": {},
+			"Resonator-Bank": {},
+			"Vector-Resonator-Bank": {}
+		},
+		"CMJ": {
+			"Filter-Lowpass": {},
+			"Filter-Lowpass-Double": {},
+			"Filter-Complex": {},
+			"Naive-Saw": {},
+			"Schroeder-Reverb": {},
+			"Voice-Allocator/Midi": {}
+		},
+		"BDA": {
+			"Faust-Biquad": {}
+		},
+		"Thesis": {
+			"Supplementary-Example": {},
+			"Tutorial-4": {},
+			"Tutorial-5": {},
+			"Tutorial-7": {},
+			"Tutorial-8": {},
+			"Tutorial-9": {},
+			"Tutorial-10": {},
+			"Tutorial-11": {},
+			"Tutorial-12": {},
+			"Tutorial-13": {},
+			"Tutorial-14": {},
+			"Tutorial-15": {},
+			"Tutorial-16": {},
+			"Tutorial-17": {},
+			"Tutorial-18": {},
+			"Tutorial-19": {},
+			"Tutorial-20": {},
+			"Tutorial-22": {},
+			"Tutorial-25": {},
+			"Tutorial-26": {},
+			"Tutorial-28": {},
+			"Tutorial-29": {},
+			"Tutorial-30": {},
+			"Tutorial-31": {},
+			"Tutorial-32": {},
+			"Tutorial-33": {}
+		},
+		"WikiSynthesis": {
+			"Geometric-Waves": {},
+			"Sine-Bank": { "exclude": "Linux" },
+		}
+	}
+}
