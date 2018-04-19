@@ -1,96 +1,185 @@
 {
-	"eval": {
-		"Algorithm": {
-			"Simple-Expand": {},
-			"Nested-Expand": {},
-			"Simple-Accumulate": {},
-			"Map-And-Zip": {},
-			"Big-Reduce": {},
-			"Reverse-Reduce": { "exclude": "Darwin;Linux"},
-			"Simple-Filter": {}
-		},
-		"Coerce": {
-			"Implicit-Coercion-Matrix": {},
-			"Vector-Coerce": {}
-		},
-		"Approx": {
-			"Cosine": { "exclude": "Static" }
-		},
-		"String": {
-			"Replace": {},
-			"Unicode": { "exclude": "Linux" }
-		},
-		"Infix": {
-			"Custom-Infix": {}
-		},
-		"Thesis": {
-			"Tutorial-1": {},
-			"Tutorial-2": {},
-			"Tutorial-3": {},
-			"Tutorial-6": {},
-			"Tutorial-21": {},
-			"Tutorial-23": {},
-			"Tutorial-24": {},
-			"Tutorial-27": {}
-		}
-	},
-	"audio": {
-		"Osc": {
-			"Sin": {},
-			"Control-Rate-Sin": {},
-			"Mixed-Rate-Osc": {},
-			"Waveshaping": {},
-			"FM": {},
-			"Sin-Seq/Sin-Seq": {},
-			"Noise": {}
-		},
-		"Filter": {
-			"Simple-Resonator": {},
-			"Resonator-Bank": {},
-			"Vector-Resonator-Bank": {}
-		},
-		"CMJ": {
-			"Filter-Lowpass": {},
-			"Filter-Lowpass-Double": {},
-			"Filter-Complex": {},
-			"Naive-Saw": {},
-			"Schroeder-Reverb": {},
-			"Voice-Allocator/Midi": {}
-		},
-		"BDA": {
-			"Faust-Biquad": {}
-		},
-		"Thesis": {
-			"Supplementary-Example": {},
-			"Tutorial-4": {},
-			"Tutorial-5": {},
-			"Tutorial-7": {},
-			"Tutorial-8": {},
-			"Tutorial-9": {},
-			"Tutorial-10": {},
-			"Tutorial-11": {},
-			"Tutorial-12": {},
-			"Tutorial-13": {},
-			"Tutorial-14": {},
-			"Tutorial-15": {},
-			"Tutorial-16": {},
-			"Tutorial-17": {},
-			"Tutorial-18": {},
-			"Tutorial-19": {},
-			"Tutorial-20": {},
-			"Tutorial-22": {},
-			"Tutorial-25": {},
-			"Tutorial-26": {},
-			"Tutorial-28": {},
-			"Tutorial-29": {},
-			"Tutorial-30": {},
-			"Tutorial-31": {},
-			"Tutorial-32": {},
-			"Tutorial-33": {}
-		},
-		"WikiSynthesis": {
-			"Geometric-Waves": {},
-			"Sine-Bank": { "exclude": "Linux" }
-		}
-	}
+    "Algorithm": {
+        "Big-Reduce": {
+            "reference": {
+                "date": "Thu Apr 19 15:21:19 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 5788
+            },
+            "result": "5000050000\n"
+        },
+        "Map-And-Zip": {
+            "reference": {
+                "date": "Thu Apr 19 15:21:24 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 4897
+            },
+            "result": "(1 0 0) (0.809028 0.58777 0.854509) (0.309052 0.951045 0.997659) (-0.308964 0.951074 0.997662) (-0.808973 0.587845 0.854559) (-1 9.26574e-05 0.00962632) (-0.809082 -0.587695 0.308876) (-0.30914 -0.951016 0.901968) (0.308876 -0.951102 0.90214) (0.808919 -0.58792 -nan) nil\n"
+        },
+        "Nested-Expand": {
+            "reference": {
+                "date": "Thu Apr 19 15:21:29 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 4884
+            },
+            "result": "\n ((#1 #2 #3 #4 #5 #6 #7 #8 #9 #10 nil) (#2 #4 #6 #8 #10 #12 #14 #16 #18 #20 nil) (#3 #6 #9 #12 #15 #18 #21 #24 #27 #30 nil) (#4 #8 #12 #16 #20 #24 #28 #32 #36 #40 nil) (#5 #10 #15 #20 #25 #30 #35 #40 #45 #50 nil) (#6 #12 #18 #24 #30 #36 #42 #48 #54 #60 nil) (#7 #14 #21 #28 #35 #42 #49 #56 #63 #70 nil) (#8 #16 #24 #32 #40 #48 #56 #64 #72 #80 nil) (#9 #18 #27 #36 #45 #54 #63 #72 #81 #90 nil) (#10 #20 #30 #40 #50 #60 #70 #80 #90 #100 nil) nil) \n ((1 2 3 4 5 6 7 8 9 10 nil) (2 4 6 8 10 12 14 16 18 20 nil) (3 6 9 12 15 18 21 24 27 30 nil) (4 8 12 16 20 24 28 32 36 40 nil) (5 10 15 20 25 30 35 40 45 50 nil) (6 12 18 24 30 36 42 48 54 60 nil) (7 14 21 28 35 42 49 56 63 70 nil) (8 16 24 32 40 48 56 64 72 80 nil) (9 18 27 36 45 54 63 72 81 90 nil) (10 20 30 40 50 60 70 80 90 100 nil) nil) \n\n"
+        },
+        "Reverse-Reduce": {
+            "exclude": "Darwin;Linux",
+            "reference": {
+                "date": "Thu Apr 19 15:21:34 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 4850
+            },
+            "result": "1.77636e-06 3.55271e-06 7.10543e-06 1.42109e-05 2.84217e-05 5.68434e-05 0.000113687 0.000227374 0.000454747 0.000909495 0.00181899 0.00363798 0.00727596 0.0145519 0.0291038 0.0582077 0.116415 0.232831 0.465661 0.931323 1.86265 3.72529 7.45058 14.9012 29.8023 59.6046 119.209 238.419 476.837 953.674 1907.35 3814.7 7629.39 15258.8 30517.6 61035.2 122070 244141 488281 976563 1.95313e+06 3.90625e+06 7.8125e+06 1.5625e+07 3.125e+07 6.25e+07 1.25e+08 2.5e+08 5e+08 1e+09\n"
+        },
+        "Simple-Accumulate": {
+            "reference": {
+                "date": "Thu Apr 19 15:21:39 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 4587
+            },
+            "result": "1 3 6 10 15 21 28 36 45 55 66 78 91 105 120 136 153 171 190 210 231 253 276 300 325 351 378 406 435 465 496 528 561 595 630 666 703 741 780 820 861 903 946 990 1035 1081 1128 1176 1225 1275 nil\n"
+        },
+        "Simple-Expand": {
+            "reference": {
+                "date": "Thu Apr 19 15:21:44 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 5078
+            },
+            "result": "\n (#1 #2 #3 #4 #5 #6 #7 #8 #9 #10 nil) \n (1 2 3 4 5 6 7 8 9 10 nil) \n\n"
+        },
+        "Simple-Filter": {
+            "reference": {
+                "date": "Thu Apr 19 15:21:48 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 4500
+            },
+            "result": "long:   (longer string very long string more stuff nil) \n short:  (tad bit less nil) nil\n"
+        }
+    },
+    "Approx": {
+        "Cosine": {
+            "exclude": "Static",
+            "reference": {
+                "date": "Thu Apr 19 15:21:55 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 6317
+            },
+            "result": "(\nOrder #2 error: -63.2934 -50.6697 -38.0151 -25.3466 -12.6737 -4.37114e-08 12.6737 25.3466 38.0151 50.6697 nil) (\nOrder #3 error: 5255.61 4217.55 3170.78 2117.48 1059.83 -4.37114e-08 -1059.83 -2117.48 -3170.78 -4217.55 nil) (\nOrder #4 error: 402752 323281 243089 162359 81269.3 -4.37114e-08 -81269.3 -162359 -243090 -323281 nil) (\nOrder #5 error: -1.6953e+07 -1.36038e+07 -1.0227e+07 -6.82947e+06 -3.41818e+06 -4.37114e-08 3.41818e+06 6.82948e+06 1.0227e+07 1.36038e+07 nil) (\nOrder #6 error: -2.55519e+08 -2.05149e+08 -1.5429e+08 -1.03064e+08 -5.15931e+07 -4.37114e-08 5.15932e+07 1.03064e+08 1.5429e+08 2.05149e+08 nil) nil\n"
+        }
+    },
+    "Coerce": {
+        "Implicit-Coercion-Matrix": {
+            "reference": {
+                "date": "Thu Apr 19 15:21:59 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 4389
+            },
+            "result": "((#20 20 20 20 20 nil) (20 20 20 20 20 nil) (20 20 20 20 20 nil) (20 20 20 20 20 nil) (20 20 20 20 20 nil) nil) ((#-2 -2 -2 -2 -2 nil) (-2 -2 -2 -2 -2 nil) (-2 -2 -2 -2 -2 nil) (-2 -2 -2 -2 -2 nil) (-2 -2 -2 -2 -2 nil) nil) ((#99 99 99 99 99 nil) (99 99 99 99 99 nil) (99 99 99 99 99 nil) (99 99 99 99 99 nil) (99 99 99 99 99 nil) nil) ((#0.818182 0.818182 0 0.818182 0 nil) (0.818182 0.818182 0.818182 0.818182 0.818182 nil) (0 0.818182 0 0.818182 0 nil) (0.818182 0.818182 0.818182 0.818182 0.818182 nil) (0 0.818182 0 0.818182 0 nil) nil) nil\n"
+        },
+        "Vector-Coerce": {
+            "reference": {
+                "date": "Thu Apr 19 15:22:04 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 5025
+            },
+            "result": "<11 101 1001 10001> <22 202 2002 20002> <33 303 3003 30003> <44 404 4004 40004> nil\n"
+        }
+    },
+    "Infix": {
+        "Custom-Infix": {
+            "reference": {
+                "date": "Thu Apr 19 15:22:09 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 4752
+            },
+            "result": "9.48683\n"
+        }
+    },
+    "String": {
+        "Replace": {
+            "reference": {
+                "date": "Thu Apr 19 15:22:14 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 5310
+            },
+            "result": "oranges are round, and oranges are juicy.\n"
+        },
+        "Unicode": {
+            "exclude": "Linux",
+            "reference": {
+                "date": "Thu Apr 19 15:22:20 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 6048
+            },
+            "result": "Length of  üåäö漢字  is  #6 \nCode points:  #252 #229 #228 #246 #28450 #23383 nil\n"
+        }
+    },
+    "Thesis": {
+        "Tutorial-1": {
+            "reference": {
+                "date": "Thu Apr 19 15:22:29 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 8869
+            },
+            "result": "11 12 13 14 15\n"
+        },
+        "Tutorial-2": {
+            "reference": {
+                "date": "Thu Apr 19 15:22:39 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 9852
+            },
+            "result": "15\n"
+        },
+        "Tutorial-21": {
+            "reference": {
+                "date": "Thu Apr 19 15:22:48 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 8729
+            },
+            "result": "{Multichannel 21 32 43}\n"
+        },
+        "Tutorial-23": {
+            "reference": {
+                "date": "Thu Apr 19 15:22:57 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 9395
+            },
+            "result": "{Multichannel 1 1} {Multichannel 5 5 5 5}\n"
+        },
+        "Tutorial-24": {
+            "reference": {
+                "date": "Thu Apr 19 15:23:08 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 10692
+            },
+            "result": "{Multichannel 3 6} {Multichannel 12 120}\n"
+        },
+        "Tutorial-27": {
+            "reference": {
+                "date": "Thu Apr 19 15:23:19 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 11036
+            },
+            "result": "(11 -18) 55\n"
+        },
+        "Tutorial-3": {
+            "reference": {
+                "date": "Thu Apr 19 15:23:31 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 11629
+            },
+            "result": "Hello World\n"
+        },
+        "Tutorial-6": {
+            "reference": {
+                "date": "Thu Apr 19 15:23:40 2018\n",
+                "machine": "Win64-AMD64",
+                "runtime": 9536
+            },
+            "result": "1 2 4 8 16 32 64 128 256 512 nil\n"
+        }
+    }
 }
