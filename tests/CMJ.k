@@ -234,7 +234,8 @@ Synth(midi-bytes polyphony krate) {
 
 
 ; --- Entry points ------------------------------------------------------------------
-Import TestOsc
+Pseudo-White(seed) { rng = Iterative(x => x * 3.9999d * (1d - x) seed) Pseudo-White = 2 * Coerce(Float rng - 0.5d) }
+
 
 ramp = Buzzer(0.5)
 

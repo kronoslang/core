@@ -41,7 +41,7 @@
 			"Mixed-Rate-Osc": {},
 			"Waveshaping": {},
 			"FM": {},
-			"Sin-Seq/Sin-Seq": {},
+			"Sin-Seq": { "control": "Sin-Seq" },
 			"Noise": {}
 		},
 		"Filter": {
@@ -55,7 +55,7 @@
 			"Filter-Complex": {},
 			"Naive-Saw": {},
 			"Schroeder-Reverb": {},
-			"Voice-Allocator/Midi": {}
+			"Voice-Allocator": { "control": "Midi"}
 		},
 		"BDA": {
 			"Faust-Biquad": {}
