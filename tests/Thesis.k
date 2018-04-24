@@ -232,9 +232,9 @@ Package Test {
 		Supplementary-Example = Main()
 	}
 
-	Tutorial-1() {
+	Tutorial-01() {
 		MyFunction = x => x + 10
-		Tutorial-1 = Algorithm:Map(MyFunction 1 2 3 4 5)
+		Tutorial-01 = Algorithm:Map(MyFunction 1 2 3 4 5)
 	}
 
 	MyFold(f tuple) {
@@ -243,53 +243,53 @@ Package Test {
 		MyFold = f(x MyFold(f xs))
 	}
 
-	Tutorial-2() {
-		Tutorial-2 = MyFold(Add 1 2 3 4 5)
+	Tutorial-02() {
+		Tutorial-02 = MyFold(Add 1 2 3 4 5)
 	}
 
-	Tutorial-3() {
-		Tutorial-3 = MyFold(String:Append "Hello" " " "World")
+	Tutorial-03() {
+		Tutorial-03 = MyFold(String:Append "Hello" " " "World")
 	}
 
-	Tutorial-4() {
+	Tutorial-04() {
 		add-sin = (freq sig) => sig + Wave:Sin(freq) * 0.1
-		Tutorial-4 = MyFold(add-sin 440 550 660 0)
+		Tutorial-04 = MyFold(add-sin 440 550 660 0)
 	}
 
-	Tutorial-5() {
+	Tutorial-05() {
 		oscs = Algorithm:Map(Wave:Sin 440 550 660)
-		Tutorial-5 = MyFold(Add oscs) * 0.1
+		Tutorial-05 = MyFold(Add oscs) * 0.1
 	}
 
-	Tutorial-6() {
-		Tutorial-6 = Algorithm:Expand(#10 (* 2) 1)
+	Tutorial-06() {
+		Tutorial-06 = Algorithm:Expand(#10 (* 2) 1)
 	}
 
-	Tutorial-7() {
+	Tutorial-07() {
 		f0 = 220
 		ops = #3
 		freqs = Algorithm:Expand(ops (+ 110) f0)
 		rfreqs = Algorithm:Reduce((a b) => (b a) freqs)
 		fm-op = (sig freq) => Wave:Sin(freq + sig * freq)
-		Tutorial-7 = Algorithm:Reduce(fm-op 0 rfreqs)
+		Tutorial-07 = Algorithm:Reduce(fm-op 0 rfreqs)
 	}
 
-	Tutorial-8() {
+	Tutorial-08() {
 		f0 = 220 + Wave:Sin(5.5) * 10
 		ops = #3
 		freqs = Algorithm:Expand(ops (+ 110) f0)
 		rfreqs = Algorithm:Reduce((a b) => (b a) freqs)
 		fm-op = (sig freq) => Wave:Sin(freq + sig * freq)
-		Tutorial-8 = Algorithm:Reduce(fm-op 0 rfreqs)		
+		Tutorial-08 = Algorithm:Reduce(fm-op 0 rfreqs)		
 	}
 
-	Tutorial-9() {
+	Tutorial-09() {
 		f0 = 220 + Wave:Sin(5.5) * 10
 		ops = #4
 		freqs = Algorithm:Expand(ops (+ 110) f0)
 		rfreqs = Algorithm:Reduce((a b) => (b a) freqs)
 		fm-op = (sig freq) => Wave:Sin(freq + sig * freq)
-		Tutorial-9 = Algorithm:Reduce(fm-op 0 rfreqs)		
+		Tutorial-09 = Algorithm:Reduce(fm-op 0 rfreqs)		
 	}
 
 	Tutorial-10() {
