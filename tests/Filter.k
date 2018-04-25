@@ -1,6 +1,6 @@
 Import Algorithm
 Import Closure
-Import "Osc.k"
+Import "tests/Osc.k"
 
 Package Biquad {
 	Direct-II(x0 b0 b1 b2 a1 a2) {
