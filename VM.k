@@ -37,7 +37,7 @@ Package VM {
 	}
 
 	Execute(a bus) {
-		world = World:Cons(External(World:World 0q) bus)
+		world = World:Cons(IO:Source(World:World 0q #0) bus)
 		(closure return) = Break(Op a)
 		
 		Pop(closure(world) return)
@@ -124,7 +124,6 @@ Package VM {
 		(id r) = Break(Instance inst)
 		Key-to-Type(r)
 	}
-
 
 	Loop(body finally set...) {
 		Loop = Throw:Invalid-Argument(set... "must contain at least two elements")
