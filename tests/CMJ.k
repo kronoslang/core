@@ -234,7 +234,7 @@ Synth(midi-bytes polyphony krate) {
 
 
 ; --- Entry points ------------------------------------------------------------------
-Import "Osc.k"
+Import "tests/Osc.k"
 
 ramp = Buzzer(0.5)
 

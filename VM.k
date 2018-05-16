@@ -362,7 +362,7 @@ Package Actions {
 	}
 }
 
-Infix<-(left right) {
-	Infix<- = right(left)
-	Infix<- = When(Equal-Type(Class-Of(left) VM:Op) Actions:Invoke-With(left right))
+Invoke-With(left right) {
+	Invoke-With = right(left)
+	Invoke-With = When(Equal-Type(Class-Of(left) VM:Op) Actions:Invoke-With(left right))
 }
