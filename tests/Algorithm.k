@@ -21,6 +21,11 @@ Package Test {
 			)
 	}
 
+	Reduce-Concat() {
+		Use Algorithm
+		Reduce(Concat Expand(#10 '_ [1 2 3 4]))
+	}
+
 	Simple-Accumulate() {
 		Simple-Accumulate = Algorithm:Accumulate((+) Algorithm:Expand(#50 (+ 1) 1))
 	}
