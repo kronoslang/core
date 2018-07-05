@@ -143,19 +143,28 @@ Package VM {
 	}
 }
 
+Package Format {
+	Text(a) {
+		a
+	}	
+}
+
 Package Actions {
+
 	Print-One(a) { 
+		to-print = Format:Text(a)
 		VM:Make-Op["kvm_print!" 
 			"const char*" "out"
-			"const char*" String:Interop-Format(a)
-			"const void*" [a]]
+			"const char*" String:Interop-Format(to-print)
+			"const void*" [to-print]]
 	}
 
 	Output(pipe value) {
+		to-print = Format:Text(value)
 		VM:Make-Op["kvm_print!"
 			"const char*" pipe
-			"const char*" String:Interop-Format(value)
-			"const void*" [value]]
+			"const char*" String:Interop-Format(to-print)
+			"const void*" [to-print]]
 	}
 
 	Output-JSON(pipe value) {
