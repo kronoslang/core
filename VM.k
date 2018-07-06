@@ -106,7 +106,7 @@ Package VM {
 		bus = External(("unsafe" "accumulator") mixbus())
 		
 		When(Equal-Type(Class-Of(sig) Op) 
-				Effect-Dependency(bus sig)			
+				Effect-Dependency(bus Execute(sig mixbus))			
 			 Otherwise
 				Handle(Mix-Check[bus sig]
 				   { Effect-Dependency(bus sig) }) )
