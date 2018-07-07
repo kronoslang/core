@@ -1,0 +1,508 @@
+; Kronos kernel function stubs
+; This file is only intended to allow klangsrv and related tools to see the built-ins.
+
+
+; constant Int32
+
+Equal(a b) {
+        ;; Tests two numbers of matching type for equality, returning a bit maskCompare two invariant constants and yield #True if equal
+        Raise("no implementation")
+}
+
+External-Out(sig keys) {
+        ;; Splits the signal according to structure of 'keys', registering a reactive stream output for each atom in 'keys'.
+        Raise("no implementation")
+}
+
+Not-Equal(a b) {
+        ;; Tests two numbers of matching type for nonequality, returning a bit maskCompare two invariant constants and yield #True if not equal
+        Raise("no implementation")
+}
+
+Modulo(a b) {
+        ;; Implements modulo arithmetic on integers
+        Raise("no implementation")
+}
+
+Eval(func arg) {
+        ;; Evaluates 'func' as a function with the argument 'arg'
+        Raise("no implementation")
+}
+
+; constant arg
+
+; constant nil
+
+Mul(a b) {
+        ;; Multiplies two numbers of matching typeMultiply two invariant constants
+        Raise("no implementation")
+}
+
+Not(a) {
+        ;; Inverts all the bits of a number or a bitmaskYield #True if a is nil and vice versa
+        Raise("no implementation")
+}
+
+External(key default) {
+        ;; External input declaration with the identifier 'key' and type and default value provided by 'default'
+        Raise("no implementation")
+}
+
+External-Stream(stream-key default clock) {
+        ;; Stream input to this module from an external vector. The sample rate of the buffer is determined by 'clock'.
+        Raise("no implementation")
+}
+
+; constant Audio-File-Tag
+
+External-Asset(uri) {
+        ;; Loads an asset from 'uri' and returns its contents.
+        Raise("no implementation")
+}
+
+AndNot(a b) {
+        ;; Performs a bitwise and two numbers, inverting the left hand side
+        Raise("no implementation")
+}
+
+Raise(e) {
+        ;; Raises a user exception of type 'e'
+        Raise("no implementation")
+}
+
+Min(a b) {
+        ;; Returns the lesser of two numbers of matching type
+        Raise("no implementation")
+}
+
+Class-Of(instance) {
+        ;; Returns a type tag describing the type class of 'instance'
+        Raise("no implementation")
+}
+
+Ternary-Select(cond t f) {
+        ;; Selects a native atom of similar type; if 'cond' is nonzero, 't' is selected, otherwise 'f' is selected.
+        Raise("no implementation")
+}
+
+Select(vector index) {
+        ;; Selects an element from the homogeneous vector, clamping the index to the bounds
+        Raise("no implementation")
+}
+
+Select(vector constant-index) {
+        ;; Selects an element from the vector, clamping index to the bounds. 'constant-index' must be an invariant constant, but the contents of 'vector' do not need to be homogeneous.
+        Raise("no implementation")
+}
+
+Floor(a) {
+        ;; Returns the largest integer that is less or equal to a number
+        Raise("no implementation")
+}
+
+Cond(clauses) {
+        ;; 'clauses' is a list of conditionals and branches, followed by the 'else' branch. The first branch whose condition is true will be evaluated.
+        Raise("no implementation")
+}
+
+Abs(a) {
+        ;; Takes the absolute value of a number
+        Raise("no implementation")
+}
+
+Dispatch(func arg) {
+        ;; evaluates 'func' with argument 'arg', which is a union type. 'func' is runtime polymorphic with regard to 'arg'.
+        Raise("no implementation")
+}
+
+Select-Wrap(vector index) {
+        ;; Selects an element from the table according to index, using modulo addressing to wrap around the index
+        Raise("no implementation")
+}
+
+Add(a b) {
+        ;; Adds two numbers of matching typeAdd two invariant constants
+        Raise("no implementation")
+}
+
+Greater-Equal(a b) {
+        ;; Tests if a number is greater or equal to another, returning a bit maskCompare two invariant constants and yield #True if a is greater or equal
+        Raise("no implementation")
+}
+
+Less-Equal(a b) {
+        ;; Tests if a number is less or equal to another, returning a bit maskCompare two invariant constants and yield #True if a is less or equal
+        Raise("no implementation")
+}
+
+Sub(a b) {
+        ;; Substracts two numbers of matching typeSubstract two invariant constants
+        Raise("no implementation")
+}
+
+; constant Double
+
+Ceil(a) {
+        ;; Returns the smallest integer that is greater or equal to a number
+        Raise("no implementation")
+}
+
+Div(a b) {
+        ;; Divides two numbers of matching typeDivide two invariant constants
+        Raise("no implementation")
+}
+
+Less(a b) {
+        ;; Tests if a number is less than another, returning a bit maskCompare two invariant constants and yield #True if a is less
+        Raise("no implementation")
+}
+
+ClampIndex(a b) {
+        ;; Clamps index to 0 if it is negative or greater or equal to the right hand side
+        Raise("no implementation")
+}
+
+Max(a b) {
+        ;; Returns the greater of two numbers of matching type
+        Raise("no implementation")
+}
+
+Greater(a b) {
+        ;; Tests if a number is greater than another, returning a bit maskCompare two invariant constants and yield #True if a is greater
+        Raise("no implementation")
+}
+
+And(a b) {
+        ;; Performs a bitwise and on two numbers of matching typeYield #True if both a and b are #True
+        Raise("no implementation")
+}
+
+Or(a b) {
+        ;; Performs a bitwise or on two numbers of matching typeYield #True if either a or b is #True
+        Raise("no implementation")
+}
+
+BitShiftRight(a b) {
+        ;; Shifts the integer value 'a' right by 'b' bits
+        Raise("no implementation")
+}
+
+Xor(a b) {
+        ;; Performs a bitwise exclusive or on two numbers of matching typePerform exclusive or operation on a and b
+        Raise("no implementation")
+}
+
+Neg(a) {
+        ;; Inverts the sign of a number
+        Raise("no implementation")
+}
+
+Cvt-Float(a) {
+        ;; Converts a number to a 32-bit single precision float
+        Raise("no implementation")
+}
+
+Round(a) {
+        ;; Returns the nearest integer to a number
+        Raise("no implementation")
+}
+
+Truncate(a) {
+        ;; Discards any fractional decimals from a number
+        Raise("no implementation")
+}
+
+BitShiftLeft(a b) {
+        ;; Shifts the integer value 'a' left by 'b' bits
+        Raise("no implementation")
+}
+
+; constant Float
+
+; constant Int64
+
+; constant Unbound-Symbol
+
+; constant Exception
+
+LogicalShiftRight(a b) {
+        ;; Shifts the integer value 'a' right by 'b' bits including the sign bit.
+        Raise("no implementation")
+}
+
+; constant Vector
+
+Cvt-Int64(a) {
+        ;; Converts a number to a 64-bit integer
+        Raise("no implementation")
+}
+
+Cvt-Int32(a) {
+        ;; Converts a number to a 32-bit integer
+        Raise("no implementation")
+}
+
+Cvt-Double(a) {
+        ;; Converts a number to a 64-bit double precision float
+        Raise("no implementation")
+}
+
+Foreign-Function(return-type symbol parameters...) {
+        ;; Calls an external C function
+        Raise("no implementation")
+}
+
+Make(ivar-tag contents) {
+        ;; Wraps a raw tuple into a user type.
+        Raise("no implementation")
+}
+
+Break(type-tag instance) {
+        ;; Unwraps an user type into a raw tuple.
+        Raise("no implementation")
+}
+
+Arity(tuple) {
+        ;; Gets the arity of the argument
+        Raise("no implementation")
+}
+
+Require(required pass-through) {
+        ;; Returns 'pass-through' provided that 'required' is legal
+        Raise("no implementation")
+}
+
+Debug-Trace(label pass-through) {
+        ;; Prints the type of 'label' and 'pass-through' for debugging purposes. Returns 'pass-through'.
+        Raise("no implementation")
+}
+
+Equal-Type(a b) {
+        ;; performs compile time deep comparison of two type structures and returns true if identical
+        Raise("no implementation")
+}
+
+; constant Constant
+
+Get-Library-Metadata(package) {
+        ;; returns metadata describing the contents of the code repository
+        Raise("no implementation")
+}
+
+Get-Symbol-Source(symbol) {
+        ;; returns the source code that defines 'symbol'
+        Raise("no implementation")
+}
+
+Specialization-Trace(fn) {
+        ;; Specializes 'Eval(fn nil)' and returns a structured tracing log of the specialization
+        Raise("no implementation")
+}
+
+; constant Reject-All-Forms
+
+Resolve(symbol) {
+        ;; Tries to retrieve 'symbol' from the code repository
+        Raise("no implementation")
+}
+
+Effect-Dependency(value effect) {
+        ;; returns 'value' and creates a false dependency on 'effect' in order to not discard it.
+        Raise("no implementation")
+}
+
+Type-to-Key(value) {
+        ;; Make a unique key representing the type of 'value'
+        Raise("no implementation")
+}
+
+Key-to-Type(key) {
+        ;; make a zero-bit instance with the type associated with 'key'
+        Raise("no implementation")
+}
+Package Fallback {
+        ; constant No-Overload
+
+}
+
+Package Math {
+        Sin(a) {
+                ;; Take sine of an angle in radians
+                Raise("no implementation")
+        }
+
+        Pow(a b) {
+                ;; Compute a binary power function
+                Raise("no implementation")
+        }
+
+        Atan2(a b) {
+                ;; Compute the arcus tangent of (y x)
+                Raise("no implementation")
+        }
+
+        Exp(a) {
+                ;; Compute exponential function
+                Raise("no implementation")
+        }
+
+        Cos(a) {
+                ;; Take cosine of an angle in radians
+                Raise("no implementation")
+        }
+
+        Log(a) {
+                ;; Compute the natural logarithm
+                Raise("no implementation")
+        }
+
+        Log10(a) {
+                ;; Compute the base 10 logarithm
+                Raise("no implementation")
+        }
+
+        Sqrt(a) {
+                ;; Takes the square root of a floating point number
+                Raise("no implementation")
+        }
+
+}
+
+Package Reactive {
+        Upsample(sig multiplier) {
+                ;; Causes 'signal' to update 'multiplier' times for each incoming update.
+                Raise("no implementation")
+        }
+
+        Tick(driver) {
+                ;; Provides a reactive clock source with the specified driver.
+                Raise("no implementation")
+        }
+
+        Resample(sig clock) {
+                ;; Applies a reactive 'clock' to 'signal', which is otherwise unchanged.
+                Raise("no implementation")
+        }
+
+        Gate(sig gate) {
+                ;; Inhibits updates from 'signal' if gate is zero. 'Gate' must be a simple native type.
+                Raise("no implementation")
+        }
+
+        Merge(tuple) {
+                ;; Combines the elements of a homogenous tuple into a single element. The most recently updated element from any reactive source is always present at the output.
+                Raise("no implementation")
+        }
+
+        Downsample(signal divider) {
+                ;; Causes 'signal' to update only once in 'divider' incoming updates
+                Raise("no implementation")
+        }
+
+        Rate(sig) {
+                ;; Retrieves the update rate of 'sig'
+                Raise("no implementation")
+        }
+
+        Adjust-Priority(sig priority delta) {
+                ;; Adjusts the priorities of drivers in 'sig' so that they are equal to the highest priority driver in 'priority' modified by the invariant constant 'delta', either positive or negative.
+                Raise("no implementation")
+        }
+
+}
+
+Package String {
+        Take(str num-chars) {
+                ;; Take num-chars first characters from string
+                Raise("no implementation")
+        }
+
+        Append(a b) {
+                ;; Append invariant string b to a
+                Raise("no implementation")
+        }
+
+        Skip(str num-chars) {
+                ;; Skip num-chars first characters of string
+                Raise("no implementation")
+        }
+
+        Convert(val) {
+                ;; obtain the string representation of the type of 'var'
+                Raise("no implementation")
+        }
+
+        Interop-Format(val) {
+                ;; obtain a type descriptor string for native interop
+                Raise("no implementation")
+        }
+
+        Interop-Format-JSON(val) {
+                ;; obtain a JSON template descriptor string for native interop
+                Raise("no implementation")
+        }
+
+        Length(str) {
+                ;; Compute the length of a string
+                Raise("no implementation")
+        }
+
+        Find(text pattern) {
+                ;; Return the first character offset in 'text' where 'pattern' occurs or negative if no matches
+                Raise("no implementation")
+        }
+
+        Decode(string) {
+                ;; returns a list of Unicode code points in string
+                Raise("no implementation")
+        }
+
+}
+
+Package Vector {
+        Pack(tuple) {
+                ;; Converts a homogenous tuple into a packed vector.
+                Raise("no implementation")
+        }
+
+        Unpack(vector) {
+                ;; Converts a packed vector into a tuple of elements.
+                Raise("no implementation")
+        }
+
+        Broadcast(width element) {
+                ;; Builds a packed vector by replicating 'element' 'width' times.
+                Raise("no implementation")
+        }
+
+        ; constant Vector
+
+}
+
+When(condition branch) {
+        ;; When 'condition' is True, value is taken from 'branch'. Additional conditions and branches may be supplied, and they will be tried in order. When uses non-standard short-circuiting evaluation. If no branches are taken, specialization fails.
+        Raise("no implementation")
+}
+
+z-1(init sig~) {
+        ;; Provides signal memory with a unit delay. The delay is equivalent to one activation frame of the clock that drives 'signal'. Before any activations, z-1 will output the value in 'init'. The types of 'init' and 'signal' must be identical. Cyclic definitions via 'sig~' are allowed.
+        Raise("no implementation")
+}
+
+Handle(try catch-fn) {
+        ;; Attempts to specialize the 'try' value. If an exception is generated, call 'catch-fn' with the exception as a parameter. Any run-time variant data in the exception will be purged and replaced with an invariant type tag. Handle uses non-standard evaluation, only attempting to specialize 'catch-fn' if required.
+        Raise("no implementation")
+}
+
+rbuf(init order sig~) {
+        ;; Provides a signal memory ring buffer with 'order' elements. The 'order' parameter must be an invariant constant. The type and initial value of the elements is determined by 'init'. Cyclic definitions via 'sig~' are allowed.
+        Raise("no implementation")
+}
+
+rcsbuf(init order sig~) {
+        ;; Provides a signal memory ring buffer with 'order' elements. The 'order' parameter must be an invariant constant. The type and initial value of the elements is determined by 'init'. Returns a tuple of (output buffer index) where 'output' is the value evicted from the buffer, 'buffer' is the content of the ring buffer prior to the current activation frame, and 'index' is the position of the write head in the ring buffer. Cyclic definitions via 'sig~' are allowed.
+        Raise("no implementation")
+}
+
+; no documentation for Specialization-Monitor
+
