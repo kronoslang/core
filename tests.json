@@ -1,526 +1,97 @@
 {
     "audio": {
         "BDA": {
-            "Faust-Biquad": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:47 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3690
-                }
-            }
+            "Faust-Biquad": {}
         },
         "CMJ": {
-            "Filter-Complex": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:51 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3684
-                }
-            },
-            "Filter-Lowpass": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:54 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3676
-                }
-            },
-            "Filter-Lowpass-Double": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:58 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3676
-                }
-            },
-            "Naive-Saw": {
-                "reference": {
-                    "date": "Thu Jul  5 21:00:02 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3666
-                }
-            },
-            "Schroeder-Reverb": {
-                "reference": {
-                    "date": "Thu Jul  5 21:00:06 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 4110
-                }
-            },
-            "Voice-Allocator": {
-                "control": "Midi",
-                "reference": {
-                    "date": "Thu Jul  5 21:00:11 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 5548
-                }
-            }
+            "Filter-Complex": {},
+            "Filter-Lowpass": {},
+            "Filter-Lowpass-Double": {},
+            "Naive-Saw": {},
+            "Schroeder-Reverb": {},
+            "Voice-Allocator": { "control": "Midi" }
         },
         "Filter": {
-            "Resonator-Bank": {
-                "reference": {
-                    "date": "Thu Jul  5 21:00:15 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3770
-                }
-            },
-            "Simple-Resonator": {
-                "reference": {
-                    "date": "Thu Jul  5 21:00:19 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3756
-                }
-            },
-            "Vector-Resonator-Bank": {
-                "reference": {
-                    "date": "Thu Jul  5 21:00:22 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3671
-                }
-            }
+            "Resonator-Bank": {},
+            "Simple-Resonator": {},
+            "Vector-Resonator-Bank": {}
         },
         "Osc": {
-            "Control-Rate-Sin": {
-                "reference": {
-                    "date": "Thu Jul  5 21:00:26 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3733
-                }
-            },
-            "FM": {
-                "reference": {
-                    "date": "Thu Jul  5 21:00:30 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3705
-                }
-            },
-            "Mixed-Rate-Osc": {
-                "reference": {
-                    "date": "Thu Jul  5 21:00:34 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3757
-                }
-            },
-            "Noise": {
-                "reference": {
-                    "date": "Thu Jul  5 21:00:37 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3632
-                }
-            },
-            "Sin": {
-                "reference": {
-                    "date": "Thu Jul  5 21:00:41 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3677
-                }
-            },
-            "Sin-Seq": {
-                "control": "Sin-Seq",
-                "reference": {
-                    "date": "Thu Jul  5 21:00:47 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 6097
-                },
-                "result": "subtask failed!"
-            },
-            "Waveshaping": {
-                "reference": {
-                    "date": "Thu Jul  5 21:00:51 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3707
-                }
-            }
+            "Control-Rate-Sin": {},
+            "FM": {},
+            "Mixed-Rate-Osc": {},
+            "Noise": {},
+            "Sin": {},
+            "Sin-Seq": { "control": "Sin-Seq"},
+            "Waveshaping": {}
         },
         "Thesis": {
-            "Supplementary-Example": {
-                "reference": {
-                    "date": "Thu Jul  5 21:00:55 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3938
-                }
-            },
-            "Tutorial-04": {
-                "reference": {
-                    "date": "Thu Jul  5 21:00:59 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3741
-                }
-            },
-            "Tutorial-05": {
-                "reference": {
-                    "date": "Thu Jul  5 21:01:02 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3753
-                }
-            },
-            "Tutorial-07": {
-                "reference": {
-                    "date": "Thu Jul  5 21:01:06 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3742
-                }
-            },
-            "Tutorial-08": {
-                "reference": {
-                    "date": "Thu Jul  5 21:01:10 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3755
-                }
-            },
-            "Tutorial-09": {
-                "reference": {
-                    "date": "Thu Jul  5 21:01:14 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3777
-                }
-            },
-            "Tutorial-10": {
-                "reference": {
-                    "date": "Thu Jul  5 21:01:17 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3770
-                }
-            },
-            "Tutorial-11": {
-                "reference": {
-                    "date": "Thu Jul  5 21:01:21 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3657
-                }
-            },
-            "Tutorial-12": {
-                "reference": {
-                    "date": "Thu Jul  5 21:01:25 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3672
-                }
-            },
-            "Tutorial-13": {
-                "reference": {
-                    "date": "Thu Jul  5 21:01:28 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3684
-                }
-            },
-            "Tutorial-14": {
-                "reference": {
-                    "date": "Thu Jul  5 21:01:32 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3715
-                }
-            },
-            "Tutorial-15": {
-                "reference": {
-                    "date": "Thu Jul  5 21:01:36 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3664
-                }
-            },
-            "Tutorial-16": {
-                "reference": {
-                    "date": "Thu Jul  5 21:01:40 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3708
-                }
-            },
-            "Tutorial-17": {
-                "reference": {
-                    "date": "Thu Jul  5 21:01:43 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3724
-                }
-            },
-            "Tutorial-18": {
-                "reference": {
-                    "date": "Thu Jul  5 21:01:47 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3720
-                }
-            },
-            "Tutorial-19": {
-                "reference": {
-                    "date": "Thu Jul  5 21:01:51 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3729
-                }
-            },
-            "Tutorial-20": {
-                "reference": {
-                    "date": "Thu Jul  5 21:01:55 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3710
-                }
-            },
-            "Tutorial-22": {
-                "reference": {
-                    "date": "Thu Jul  5 21:01:58 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3730
-                }
-            },
-            "Tutorial-25": {
-                "reference": {
-                    "date": "Thu Jul  5 21:02:02 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3711
-                }
-            },
-            "Tutorial-26": {
-                "reference": {
-                    "date": "Thu Jul  5 21:02:06 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3739
-                }
-            },
-            "Tutorial-28": {
-                "reference": {
-                    "date": "Thu Jul  5 21:02:09 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3629
-                }
-            },
-            "Tutorial-29": {
-                "reference": {
-                    "date": "Thu Jul  5 21:02:13 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3678
-                }
-            },
-            "Tutorial-30": {
-                "reference": {
-                    "date": "Thu Jul  5 21:02:17 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3662
-                }
-            },
-            "Tutorial-31": {
-                "reference": {
-                    "date": "Thu Jul  5 21:02:20 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3664
-                }
-            },
-            "Tutorial-32": {
-                "reference": {
-                    "date": "Thu Jul  5 21:02:24 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3672
-                }
-            },
-            "Tutorial-33": {
-                "reference": {
-                    "date": "Thu Jul  5 21:02:28 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3693
-                }
-            }
+            "Supplementary-Example": {},
+            "Tutorial-04": {},
+            "Tutorial-05": {},
+            "Tutorial-07": {},
+            "Tutorial-08": {},
+            "Tutorial-09": {},
+            "Tutorial-10": {},
+            "Tutorial-11": {},
+            "Tutorial-12": {},
+            "Tutorial-13": {},
+            "Tutorial-14": {},
+            "Tutorial-15": {},
+            "Tutorial-16": {},
+            "Tutorial-17": {},
+            "Tutorial-18": {},
+            "Tutorial-19": {},
+            "Tutorial-20": {},
+            "Tutorial-22": {},
+            "Tutorial-25": {},
+            "Tutorial-26": {},
+            "Tutorial-28": {},
+            "Tutorial-29": {},
+            "Tutorial-30": {},
+            "Tutorial-31": {},
+            "Tutorial-32": {},
+            "Tutorial-33": {}
         },
         "WikiSynthesis": {
-            "Geometric-Waves": {
-                "reference": {
-                    "date": "Thu Jul  5 21:02:32 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 3683
-                }
-            },
-            "Sine-Bank": {
-                "exclude": "Linux",
-                "reference": {
-                    "date": "Thu Jul  5 21:02:36 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 4301
-                }
-            }
+            "Geometric-Waves": {},
+            "Sine-Bank": { "exclude": "Linux" }
         }
     },
     "eval": {
         "Algorithm": {
-            "Big-Reduce": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:38 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 171
-                }
-            },
-            "Map-And-Zip": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:38 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 221
-                },
-                "result": "(1 0 1) (0.809028 0.58777 1) (0.309052 0.951045 1) (-0.308964 0.951074 1) (-0.808973 0.587845 1) (-1 9.26574e-05 1) (-0.809082 -0.587695 1) (-0.30914 -0.951016 1) (0.308876 -0.951102 1) (0.808919 -0.58792 1) nil\n"
-            },
-            "Nested-Expand": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:39 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 267
-                },
-                "result": "\n ((#1 #2 #3 #4 #5 #6 #7 #8 #9 #10 nil) (#2 #4 #6 #8 #10 #12 #14 #16 #18 #20 nil) (#3 #6 #9 #12 #15 #18 #21 #24 #27 #30 nil) (#4 #8 #12 #16 #20 #24 #28 #32 #36 #40 nil) (#5 #10 #15 #20 #25 #30 #35 #40 #45 #50 nil) (#6 #12 #18 #24 #30 #36 #42 #48 #54 #60 nil) (#7 #14 #21 #28 #35 #42 #49 #56 #63 #70 nil) (#8 #16 #24 #32 #40 #48 #56 #64 #72 #80 nil) (#9 #18 #27 #36 #45 #54 #63 #72 #81 #90 nil) (#10 #20 #30 #40 #50 #60 #70 #80 #90 #100 nil) nil) \n ((1 2 3 4 5 6 7 8 9 10 nil) (2 4 6 8 10 12 14 16 18 20 nil) (3 6 9 12 15 18 21 24 27 30 nil) (4 8 12 16 20 24 28 32 36 40 nil) (5 10 15 20 25 30 35 40 45 50 nil) (6 12 18 24 30 36 42 48 54 60 nil) (7 14 21 28 35 42 49 56 63 70 nil) (8 16 24 32 40 48 56 64 72 80 nil) (9 18 27 36 45 54 63 72 81 90 nil) (10 20 30 40 50 60 70 80 90 100 nil) nil) \n\n"
-            },
-            "Reduce-Concat": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:39 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 307
-                },
-                "result": "1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4 nil\n"
-            },
-            "Reverse-Reduce": {
-                "exclude": "Darwin;Linux",
-                "reference": {
-                    "date": "Thu Jul  5 20:59:39 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 182
-                },
-                "result": "1.77636e-06 3.55271e-06 7.10543e-06 1.42109e-05 2.84217e-05 5.68434e-05 0.000113687 0.000227374 0.000454747 0.000909495 0.00181899 0.00363798 0.00727596 0.0145519 0.0291038 0.0582077 0.116415 0.232831 0.465661 0.931323 1.86265 3.72529 7.45058 14.9012 29.8023 59.6046 119.209 238.419 476.837 953.674 1907.35 3814.7 7629.39 15258.8 30517.6 61035.2 122070 244141 488281 976562 1.95312e+06 3.90625e+06 7.8125e+06 1.5625e+07 3.125e+07 6.25e+07 1.25e+08 2.5e+08 5e+08 1e+09\n"
-            },
-            "Simple-Accumulate": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:39 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 174
-                },
-                "result": "1 3 6 10 15 21 28 36 45 55 66 78 91 105 120 136 153 171 190 210 231 253 276 300 325 351 378 406 435 465 496 528 561 595 630 666 703 741 780 820 861 903 946 990 1035 1081 1128 1176 1225 1275 nil\n"
-            },
-            "Simple-Expand": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:39 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 180
-                },
-                "result": "\n (#1 #2 #3 #4 #5 #6 #7 #8 #9 #10 nil) \n (1 2 3 4 5 6 7 8 9 10 nil) \n\n"
-            },
-            "Simple-Filter": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:40 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 167
-                },
-                "result": "long:   (longer string very long string more stuff nil) \n short:  (tad bit less nil) nil\n"
-            }
+            "Big-Reduce": {},
+            "Map-And-Zip": {},
+            "Nested-Expand": {},
+            "Reduce-Concat": {},
+            "Reverse-Reduce": { "exclude": "Darwin;Linux" },
+            "Simple-Accumulate": {},
+            "Simple-Expand": {},
+            "Simple-Filter": {}
         },
         "Approx": {
-            "Cosine": {
-                "exclude": "Static",
-                "reference": {
-                    "date": "Thu Jul  5 20:59:41 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 1239
-                },
-                "result": "(\nOrder #2 error: 0.0751677 0.025153 0.0060674 0.000808358 2.54512e-05 -4.37114e-08 -2.55406e-05 -0.000808477 -0.00606745 -0.0251531 nil) (\nOrder #3 error: -0.00452495 -0.000960588 -0.000129521 -7.689e-06 -5.96046e-08 -4.37114e-08 -2.98023e-08 7.56979e-06 0.000129461 0.000960588 nil) (\nOrder #4 error: 0.00015682 2.12193e-05 1.54972e-06 0 -2.98023e-08 -4.37114e-08 -8.9407e-08 -5.96046e-08 -1.60933e-06 -2.12193e-05 nil) (\nOrder #5 error: -3.57628e-06 -3.57628e-07 -5.96046e-08 -5.96046e-08 -2.98023e-08 -4.37114e-08 -8.9407e-08 -5.96046e-08 0 2.38419e-07 nil) (\nOrder #6 error: 0 5.96046e-08 -5.96046e-08 -5.96046e-08 -2.98023e-08 -4.37114e-08 -8.9407e-08 -5.96046e-08 0 5.96046e-08 nil) nil\n"
-            }
+            "Cosine": { "exclude": "Static" }
         },
         "Coerce": {
-            "Implicit-Coercion-Matrix": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:41 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 189
-                },
-                "result": "((#20 20 20 20 20 nil) (20 20 20 20 20 nil) (20 20 20 20 20 nil) (20 20 20 20 20 nil) (20 20 20 20 20 nil) nil) ((#-2 -2 -2 -2 -2 nil) (-2 -2 -2 -2 -2 nil) (-2 -2 -2 -2 -2 nil) (-2 -2 -2 -2 -2 nil) (-2 -2 -2 -2 -2 nil) nil) ((#99 99 99 99 99 nil) (99 99 99 99 99 nil) (99 99 99 99 99 nil) (99 99 99 99 99 nil) (99 99 99 99 99 nil) nil) ((#0.818182 0.818182 0 0.818182 0 nil) (0.818182 0.818182 0.818182 0.818182 0.818182 nil) (0 0.818182 0 0.818182 0 nil) (0.818182 0.818182 0.818182 0.818182 0.818182 nil) (0 0.818182 0 0.818182 0 nil) nil) nil\n"
-            },
-            "Vector-Coerce": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:41 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 158
-                },
-                "result": "<11 101 1001 10001> <22 202 2002 20002> <33 303 3003 30003> <44 404 4004 40004> nil\n"
-            }
+            "Implicit-Coercion-Matrix": {},
+            "Vector-Coerce": {}
         },
         "Infix": {
-            "Custom-Infix": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:41 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 96
-                },
-                "result": "9.48683\n"
-            }
+            "Custom-Infix": {}
         },
         "String": {
-            "Replace": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:41 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 153
-                },
-                "result": "oranges are round, and oranges are juicy.\n"
-            },
-            "Unicode": {
-                "exclude": "Linux",
-                "reference": {
-                    "date": "Thu Jul  5 20:59:42 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 163
-                },
-                "result": "Length of  üåäö漢字  is  #6 \nCode points:  #252 #229 #228 #246 #28450 #23383 nil\n"
-            }
+            "Replace": {},
+            "Unicode": { "exclude": "Linux" }
         },
         "Thesis": {
-            "Tutorial-01": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:42 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 181
-                },
-                "result": "11 12 13 14 15\n"
-            },
-            "Tutorial-02": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:42 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 179
-                }
-            },
-            "Tutorial-03": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:42 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 181
-                },
-                "result": "Hello World\n"
-            },
-            "Tutorial-06": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:42 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 189
-                },
-                "result": "1 2 4 8 16 32 64 128 256 512 nil\n"
-            },
-            "Tutorial-21": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:43 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 184
-                },
-                "result": "{Multichannel 21 32 43}\n"
-            },
-            "Tutorial-23": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:43 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 186
-                },
-                "result": "{Multichannel 1 1} {Multichannel 5 5 5 5}\n"
-            },
-            "Tutorial-24": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:43 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 194
-                },
-                "result": "{Multichannel 3 6} {Multichannel 12 75}\n"
-            },
-            "Tutorial-27": {
-                "reference": {
-                    "date": "Thu Jul  5 20:59:43 2018\n",
-                    "machine": "Darwin-x86_64",
-                    "runtime": 187
-                },
-                "result": "(11 -18) 55\n"
-            }
+            "Tutorial-01": {},
+            "Tutorial-02": {},
+            "Tutorial-03": {},
+            "Tutorial-06": {},
+            "Tutorial-21": {},
+            "Tutorial-23": {},
+            "Tutorial-24": {},
+            "Tutorial-27": {}
         }
     }
 }
