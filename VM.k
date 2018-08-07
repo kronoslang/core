@@ -357,7 +357,7 @@ Package Actions {
 	}
 
 	Test(duration obj seq) {
-		Do(
+		After(0.1
 			instance <- Start({ Instrument(obj()) })
 		   	For(seq (time method param) =>
 		   		After(time Send-To(instance method param)))
