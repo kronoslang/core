@@ -101,6 +101,23 @@ Package VM {
 		Algorithm:Reduce(Upmix sigs)
 	}
 
+	Peak-Meter(pipe sig) {
+		peak-clock = Reactive:Tick(#5 ("audio" "Post"))
+		peak-zero = Reactive:Resample(0 peak-clock)
+		peak-reset = Not(Reactive:Clock-Edge(peak-clock))
+
+		comb-sig = Reactive:Abdicate(sig (sig peak-zero))
+
+		peak+ = z-1(0 Max(peak+ comb-sig) & peak-reset)
+		peak- = z-1(0 Min(peak- comb-sig) & peak-reset)
+
+		Effect-Dependency(sig
+			Execute(
+				Actions:Output-JSON(
+					Reactive:Resample((pipe peak+ peak-) peak-clock)) 
+				nil))
+	}
+
 	Instance-Wrapper(mixbus closure) {
 		sig = closure( Make(Instance Self-ID() nil) )
 		bus = External(("unsafe" "accumulator") mixbus())
