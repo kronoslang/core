@@ -101,6 +101,8 @@ Package VM {
 		Algorithm:Reduce(Upmix sigs)
 	}
 
+	Type Peak-Level
+
 	Peak-Meter(pipe sig) {
 		peak-clock = Reactive:Tick(#5 ("audio" "Post"))
 		peak-zero = Reactive:Resample(0 peak-clock)
@@ -111,10 +113,12 @@ Package VM {
 		peak+ = z-1(0 Max(peak+ comb-sig) & peak-reset)
 		peak- = z-1(0 Min(peak- comb-sig) & peak-reset)
 
+		peaks = Make(Peak-Level peak+ peak-)
+
 		Effect-Dependency(sig
 			Execute(
 				Actions:Output-JSON(
-					Reactive:Resample((pipe peak+ peak-) peak-clock)) 
+					Reactive:Resample((pipe peaks) peak-clock)) 
 				nil))
 	}
 
