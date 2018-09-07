@@ -1,0 +1,14 @@
+{
+	"name": "core",
+	"url": "https://bitbucket.org/kronoslang/core",
+	"version": [0, 1, 18],
+	"packages": {
+		"Algorithm": "Operations over sets of data",
+		"Gen": "Waveform generators for audio and control",
+		"Cycle": "Declarative method for unit-delay feedback processors",
+		"Filter": "Elementary digital filters",
+		"Linear-Algebra": "Elementary matrix types and operations",	
+		"MIDI": "Interfacing with MIDI devices",
+		"Comp": "Function composition"
+	}
+}
