@@ -106,12 +106,12 @@ Package VM {
 	Peak-Meter(pipe sig) {
 		peak-clock = Reactive:Tick(#5 ("audio" "Post"))
 		peak-zero = Reactive:Resample(0 peak-clock)
-		peak-reset = Not(Reactive:Clock-Edge(peak-clock))
+		peak-reset = Reactive:Clock-Edge(peak-clock)
 
 		comb-sig = Reactive:Abdicate(sig (sig peak-zero))
 
-		peak+ = z-1(0 Max(peak+ comb-sig) & peak-reset)
-		peak- = z-1(0 Min(peak- comb-sig) & peak-reset)
+		peak+ = z-1(0 Ternary-Select(peak-reset -2 Max(peak+ comb-sig)))
+		peak- = z-1(0 Ternary-Select(peak-reset 2 Min(peak- comb-sig)))
 
 		peaks = Make(Peak-Level peak+ peak-)
 
