@@ -1,5 +1,8 @@
 Import Exception
 
+; this is very compact to save rpc bandwidth
+Type pk
+
 Package VM {
 	Package World {
 		Type World
@@ -24,6 +27,11 @@ Package VM {
 
 	Type Op
 	Type Instance
+
+	Package Output-Method {
+		Type Audio
+		Type Text
+	}
 
 	Step(op world) {
 		(closure return) = Break(Op op)
@@ -67,69 +75,14 @@ Package VM {
 		} nil)
 	}
 
-	; for now support 2:2 1:2 and 2:1
-	Mix(mixbus sig _) {
-		bus = Audio:Signal(mixbus)
-
-		(bl br) = bus
-		(sl sr) = sig
-		sm = sig * 0.5
-
-		; environment will accept 2:2, 1:1, 2:1 and 1:2
-		Mix = Throw:Invalid-Argument("No mixer available for " sig)
-		Mix = bus + sig
-		Mix = bus + sl + sr
-		Mix = (bl + sm br + sm)
-		Mix = (bl + sl br + sr)
-
-		; unwrap any user types
-		Mix = Recur(bus Break(Class-Of(sig) sig) nil)
-	}
-
-	Upmix(sig1 sig2) {
-		mix1 = Mix[sig1 sig2]
-		mix2 = Mix[sig2 sig1]
-		Arity(mix1) > Arity(mix2) : mix1 mix2
-	}
-
-	Mix-Check(bus sig _) {
-		mixed = Mix(arg)
-		Mix-Check = When(Equal-Type(bus mixed) mixed)
-	}
-
-	Mix-Signals(sigs) {
-		Algorithm:Reduce(Upmix sigs)
-	}
-
-	Type Peak-Level
-
-	Peak-Meter(pipe sig) {
-		peak-clock = Reactive:Tick(#5 ("audio" "Post"))
-		peak-zero = Reactive:Resample(0 peak-clock)
-		peak-reset = Reactive:Clock-Edge(peak-clock)
-
-		comb-sig = Reactive:Abdicate(sig (sig peak-zero))
-
-		peak+ = z-1(0 Ternary-Select(peak-reset -2 Max(peak+ comb-sig)))
-		peak- = z-1(0 Ternary-Select(peak-reset 2 Min(peak- comb-sig)))
-
-		peaks = Make(Peak-Level peak+ peak-)
-
-		Effect-Dependency(sig
-			Execute(
-				Actions:Output-JSON(
-					Reactive:Resample((pipe peaks) peak-clock)) 
-				nil))
-	}
-
-	Instance-Wrapper(mixbus closure) {
+	Adapter(mixbus closure) {
 		sig = closure( Make(Instance Self-ID() nil) )
 		bus = External(("unsafe" "accumulator") mixbus())
-		
+
 		When(Equal-Type(Class-Of(sig) Op) 
 				Effect-Dependency(bus Execute(sig mixbus))			
 			 Otherwise
-				Handle(Mix-Check[bus sig]
+				Handle(Mixer:Onto-Bus[bus sig]
 				   { Effect-Dependency(bus sig) }) )
 	}
 
@@ -161,6 +114,70 @@ Package VM {
 		Last = set...
 		(x xs) = set...
 		Last = Nil?(xs) : x Recur(xs)
+	}
+
+	Package Mixer {
+		Mix-ZeroPad(bus sig) {
+
+			(b bs) = bus
+			(s ss) = sig
+
+			Mix-ZeroPad = Throw:Invalid-Argument("Can't mix " sig)
+
+			Mix-ZeroPad = bus + sig
+			Mix-ZeroPad = When(Nil?(ss) bus + s)
+			Mix-ZeroPAd = bus + s
+
+			Mix-ZeroPad = (b + sig Recur(bs 0))
+			Mix-ZeroPad = When(Nil?(ss) b + s Recur(bs 0))
+			Mix-ZeroPad = (b + s Recur(bs ss))
+		}
+
+		; for now support 2:2 1:2 and 2:1
+		Mix(mixbus sig _) {
+			Mix = Throw:Invalid-Argument("Don't know how to mix " sig " onto " sig)
+			Mix = Mix-ZeroPad(Audio:Signal(mixbus) sig)
+
+			; implicit mono to stereo conversion if mixbus is not mono
+			sm = When(Not(Pair?(sig)) sig * 0.5)
+			Mix = When(Pair?(mixbus) Recur(mixbus (sm sm) nil))
+
+			; unwrap any user types
+			Mix = Recur(mixbus Break(Class-Of(sig) sig) nil)
+		}
+
+		Upmix(sig1 sig2) {
+			mix1 = Mix[sig1 sig2]
+			mix2 = Mix[sig2 sig1]
+			Arity(mix1) > Arity(mix2) : mix1 mix2
+		}
+
+		Onto-Bus(bus sig _) {
+			mixed = Mix(arg)
+			When(Equal-Type(bus mixed) mixed)
+		}
+
+		Channels(sigs) {
+			Algorithm:Reduce(Upmix sigs)
+		}
+
+		Peak-Stream(sig peak-clock) {
+			peak-reset 	   = Reactive:Clock-Edge(peak-clock)
+			combined-sig   = Reactive:Abdicate(sig (sig peak-clock))
+
+			peak+ = z-1(0 Ternary-Select(peak-reset -1 Max(peak+ combined-sig)))
+			peak- = z-1(0 Ternary-Select(peak-reset  1 Min(peak- combined-sig)))
+
+			Reactive:Resample((peak+ peak-) peak-clock)
+		}
+
+		Peak-Meter(pipe sig) {
+			peak-clock  = Reactive:Resample(0 Reactive:Tick(#5 ("audio" "Post"))) 
+
+			Effect-Dependency(sig 
+				Execute(Actions:Output-JSON( pipe
+					Make(:pk Peak-Stream(sig peak-clock))) nil))
+		}
 	}
 }
 
@@ -201,7 +218,7 @@ Package Actions {
 			(id bus) = VM:World:Decons(arg)
 			audio-adapter = Specialization-Monitor(
 				"kvm_anticipate_start"
-				{ VM:Instance-Wrapper(bus fn) }
+				{ VM:Adapter(bus fn) }
 			)
 
 			VM:FFI[arg "kvm_start!"
