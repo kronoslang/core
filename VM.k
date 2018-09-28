@@ -1,4 +1,5 @@
 Import Exception
+Import Widget
 
 ; this is very compact to save rpc bandwidth
 Type pk
@@ -61,6 +62,11 @@ Package VM {
 
 		Output = Execute(action-or-value bus)
 	}	
+
+	Command(action-or-value) {
+		Command = action-or-value
+		Command = Execute(action-or-value nil)
+	}
 
 	FFI(world sym args) {
 		World:Update(world
@@ -126,7 +132,7 @@ Package VM {
 
 			Mix-ZeroPad = bus + sig
 			Mix-ZeroPad = When(Nil?(ss) bus + s)
-			Mix-ZeroPAd = bus + s
+			Mix-ZeroPad = bus + s
 
 			Mix-ZeroPad = (b + sig Recur(bs 0))
 			Mix-ZeroPad = When(Nil?(ss) b + s Recur(bs 0))
@@ -174,9 +180,11 @@ Package VM {
 		Peak-Meter(pipe sig) {
 			peak-clock  = Reactive:Resample(0 Reactive:Tick(#5 ("audio" "Post"))) 
 
+			peaks = Algorithm:Map(ss => Peak-Stream(ss peak-clock) As-List(sig))
+
 			Effect-Dependency(sig 
 				Execute(Actions:Output-JSON( pipe
-					Make(:pk Peak-Stream(sig peak-clock))) nil))
+					Make(:pk peaks)) nil))
 		}
 	}
 }

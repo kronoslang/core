@@ -9,6 +9,12 @@ List-to-Tuple(list) {
 					(x Recur(xs))
 }
 
+As-List(set...) {
+	As-List = Nil?(set...) : set... [set...]
+	(x xs) = set...
+	As-List = (x Recur(xs))
+}
+
 Tuple-to-List(tuple) {
 	;; Adds trailing 'nil' to convert a tuple to a list
 	Tuple-to-List = [tuple]
