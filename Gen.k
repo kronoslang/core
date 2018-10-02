@@ -49,6 +49,10 @@ Package Noise {
 }
 
 Package Wave {
+	Brief(documentation) {
+		;; Defines geometric waveform oscillators for audio.
+	}
+
 	Sin(freq) { 
 		;; Audio rate sinusoid generator suitable for frequency modulation.
 		Sin = :Gen:Osc(:Waveform:Sin freq)

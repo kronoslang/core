@@ -1,6 +1,11 @@
 Import Algorithm
 
 Package Block-Diagram {
+	Brief(documentation) {
+		;; Defines primitives to combine signal processors in parallel, series and recursively.
+		nil
+	}
+
 	Serial(a b) {
 		;; route 'a' and 'b' serially, from left to right
 		Serial = { b(a(arg)) }

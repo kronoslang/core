@@ -1,6 +1,11 @@
 Import Algorithm
 
 Package Math {
+	Brief(documentation) {
+		;; Mathematical functions, for hyperbolic transcendentals and polynomials.
+		nil
+	}
+
 	Pi = #3.14159265358979
 	Tan(x) {
 		Tan = Sin(x) / Cos(x)

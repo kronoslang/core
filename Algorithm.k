@@ -1,7 +1,12 @@
 Import Exception
 Import Reflection
 
-Package Algorithm {
+Package Algorithm {	
+	Brief(documentation) {
+		;; Higher order functions for applying transformations over data structures.
+		nil
+	} 
+
 	Expand(count iterator seed) {
 		;; Produces a list of 'count' elements, starting with 'seed' and generating the following elements by applying 'iterator' to the previous one.
 		Expand = count  >= #2 : (seed Recur(count - #1 iterator Eval(iterator seed)))

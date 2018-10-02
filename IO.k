@@ -26,6 +26,11 @@ Frequency-Coefficient(sig freq) {
 }
 
 Package Audio {
+	Brief(documentation) {
+		;; Defines audio input and output
+		nil
+	}
+
 	Priority = #10
 	Clock 	 = Reactive:Tick(Priority "audio")
 
@@ -64,6 +69,11 @@ Package Audio {
 }
 
 Package Control {
+	Brief(documentation) {
+		;; Defines control rate signals for several fractions of the audio sampling rate.
+		nil
+	}
+
 	Fine = Reactive:Downsample(:Audio:Clock #8)
 	Clock = Reactive:Downsample(:Audio:Clock #64)
 	Coarse = Reactive:Downsample(:Audio:Clock #512)

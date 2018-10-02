@@ -4,6 +4,11 @@ Import Math
 Type Complex
 
 Package Complex{
+	Brief(documentation) {
+		;; Defines complex-number type and arithmetic.
+		nil
+	}
+
 	Cons(real img) {
 		;; Constructs a Complex number from 'real' and 'img'inary parts.
 		Cons = Make(:Complex (Type-Check(real Real?) Type-Check(img Real?)))

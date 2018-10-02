@@ -1,6 +1,11 @@
 Import Algorithm
 
 Package Matrix {
+	Brief(documentation) {
+		;; Defines linear algebra primitives.
+		nil
+	}
+
 	Type Matrix
 
 	Cons(rows) {
