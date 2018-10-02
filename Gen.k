@@ -51,6 +51,7 @@ Package Noise {
 Package Wave {
 	Brief(documentation) {
 		;; Defines geometric waveform oscillators for audio.
+		nil
 	}
 
 	Sin(freq) { 
