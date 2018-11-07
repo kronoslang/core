@@ -24,7 +24,9 @@ Package Widget {
 
 Package Graphics {
 	API(func params) {
-		VM:Make-Op[String:Append("Gfx" func) "const float*" params]
+		VM:Make-Op[String:Append(String:Append("Gfx" func) "!")
+			"const float*" Map(p => Coerce(Float p) params) 
+			"int32" Coerce(Int32 Arity(params))]
 	}
 
 	PolyLine(coords) {
@@ -76,7 +78,7 @@ Package Graphics {
 			API("Push" 0)
 			API("Scale" x y)
 			Do(shapes)
-			API("Pop") 0)
+			API("Pop" 0))
 	}
 
 	Translate(x y shapes) {
@@ -85,7 +87,7 @@ Package Graphics {
 			API("Push" 0)
 			API("Translate" x y)
 			Do(shapes)
-			API("Pop") 0)
+			API("Pop" 0))
 	}
 
 	Canvas(id shapes) {
@@ -116,23 +118,23 @@ Package Display {
 		Use Actions
 
 		pole(p) {
-			Z = Coerce(Complex:Cons(0 0) p)
-			x = Complex:Real(Z)
-			y = Complex:Img(Z)
+			Z = p + Complex:Cons(0 0)
+			x = Coerce(Float Complex:Real(Z))
+			y = Coerce(Float Complex:Img(Z))
 			Do(
 				Line(x - 0.1 y - 0.1 x + 0.1 y + 0.1)
 				Line(x - 0.1 y + 0.1 x + 0.1 y - 0.1))
 		}
 
 		zero(p) {
-			Z = Coerce(Complex:Cons(0 0) p)
-			x = Complex:Real(Z)
-			y = Complex:Img(Z)
+			Z = p + Complex:Cons(0 0)
+			x = Coerce(Float Complex:Real(Z))
+			y = Coerce(Float Complex:Img(Z))
 			Circle(x y 0.1)
 		}
 
-		Viewport( 2 2
-			Translate(1 1 
+		Viewport( 2.5 2.5
+			Translate(1.25 1.25 
 				Stroke((1 1 1 0.5)
 					Line(-1 0 1 0)
 					Line(0 -1 0 1)

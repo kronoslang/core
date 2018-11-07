@@ -1,7 +1,7 @@
 {
 	"name": "core",
 	"url": "https://bitbucket.org/kronoslang/core",
-	"version": [0, 1, 21],
+	"version": [0, 2, 1],
 	"packages": {
 		"Algorithm": "Operations over sets of data",
 		"Comp": "Function composition",
