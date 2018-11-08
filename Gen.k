@@ -45,9 +45,9 @@ Package Gen {
 Package Audio-File {
 	Scrub(path speed) {
 		(sr waveform) = Audio:File(path)
-		counter = z-1(Audio:Signal(Audio:Signal(counter + speed)))
+		counter = z-1(Audio:Signal(Audio:Signal(counter + Coerce(Double speed))))
 		pos = counter * (sr / Reactive:Rate(counter))
-		Interpolation:Hermite(pos waveform)
+		Interpolation:Hermite(Coerce(Float pos) waveform)
 	}
 
 	Play(path) {
