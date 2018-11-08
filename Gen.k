@@ -3,6 +3,7 @@ Import Closure
 Import IO
 Import Complex
 Import Filter
+Import Interpolation
 
 Package Waveform {
 	Sin(phase) { Sin = Approx:Cosine-Shape(Abs(phase - #0.5) #5) }
@@ -38,6 +39,19 @@ Package Gen {
 
 	ULFO(shape freq) {
 		ULFO = #0.5 * (#1 + LFO(shape freq))
+	}
+}
+
+Package Audio-File {
+	Scrub(path speed) {
+		(sr waveform) = Audio:File(path)
+		counter = z-1(Audio:Signal(Audio:Signal(counter + speed)))
+		pos = counter * (sr / Reactive:Rate(counter))
+		Interpolation:Hermite(pos waveform)
+	}
+
+	Play(path) {
+		Scrub(path 1)
 	}
 }
 

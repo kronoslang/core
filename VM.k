@@ -150,6 +150,9 @@ Package VM {
 
 			; unwrap any user types
 			Mix = Recur(mixbus Break(Class-Of(sig) sig) nil)
+
+			; unpack vectors
+			Mix = Recur(mixbus Vector:Unpack(sig) nil)
 		}
 
 		Upmix(sig1 sig2) {

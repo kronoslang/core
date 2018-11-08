@@ -60,11 +60,14 @@ Package Audio {
 		Rate = Rate-of(Clock)
 	}
 
-	Play-File(path) {
-		;; plays back audio from the file system 'path'
-		(sr frames) = External-Asset(path)
-		pos = z-1(0i Signal(pos + 1i))
-		Select(frames pos)
+	File(path) { 
+		;; Load a sound file at 'path', returning a tuple of (sample-rate function), where function samples the audio file at integer positions.
+		(sr _) = Break(Audio-File-Tag External-Asset(path))
+		(sr {
+			(_ frames) = Break(Audio-File-Tag External-Asset(path))
+			out = Select(frames arg)
+			Pair?(out) : Vector:Pack(out) out
+		})
 	}
 }
 

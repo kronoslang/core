@@ -43,9 +43,26 @@ Package Interpolation {
 		})
 	}
 
+	Linear(pos fn) {
+		;; Obtain interpolated value from 'fn' at 'pos', interpolating linearly between samples at integral locations.
+		i0 = Floor(pos)
+		i1 = i0 + 1
+		fr = pos - i0
+		Linear(fr fn(i0) fn(i1))		
+	}
+
 	Linear(h x0 x1) {
 		;; Interpolate linearly between x0 an x1 as h ranges from 0 to 1.
 		Linear = x0 + h * (x1 - x0)
+	}
+
+	Hermite(pos fn) {
+		i0 = Floor(pos)
+		i-1 = i0 - 1
+		i1 = i0 + 1
+		i2 = i0 + 2
+		fr = pos - i0
+		Hermite(fr fn(i-1) fn(i0) fn(i1) fn(i2))
 	}
 
 	Hermite(h xm1 x0 x1 x2) {
@@ -59,20 +76,5 @@ Package Interpolation {
 		bn = w + a 
 
 		Hermite = ((((a * h) - bn) * h + c) * h + x0)
-	}
-
-	Hermite-Fn(h fn) {
-		Hermite(h fn(-1) fn(0) fn(1) fn(2))
-	}
-
-	In(h pts) {
-		;; Interpolation considering all of 'pts'. 'h' moves the value between the centermost pair of values in 'pts', with the other points providing additional control points.
-		N = Arity(pts)
-		fun = N == #4 : Hermite 
-		      N == #2 : Linear
-		      N == #1 : (h pts) => h
-		      Throw:Invalid-Argument("No interpolator for " N " points")
-
-		In = fun(h List-to-Tuple(pts))
 	}
 }
