@@ -10,15 +10,23 @@ Invalid-Function() {
 }
 
 First(pair) {
+	;; Destructure 'pair' and return the first half.
 	(First _) = pair
 }
 
 Rest(pair) {
+	;; Destructure 'pair' and return the second half.
 	(_ Rest) = pair
 }
 
 Pair(fst rst) {
+	;; Incorporate 'fst' and 'rst' as the first and second halves of a pair.
 	Pair = (fst rst)
+}
+
+Sequence(head tail...) {
+	;; construct a sequence with 'head' followed by the data in 'tail...'
+	(head tail...)
 }
 
 Nil?(n) {
@@ -86,7 +94,7 @@ Constraints:Scalar!(s) {
 
 Integer?(a) {
 	Integer? = Reflection:Is-Any-Of(a Int32 Int64)
-	Integer? = When(Equal-Type(Class-Of(a) Constant) & Constant - Floor(Constant) == #0 True)
+	Integer? = When(Equal-Type(Class-Of(a) Constant) When(Constant - Floor(Constant) == #0) True)
 	Integer? = Recur(First(Vector:Unpack(a)))
 }
 
