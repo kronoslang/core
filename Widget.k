@@ -22,86 +22,95 @@ Package Widget {
 	Dial = Slider	
 }
 
+Package g {
+	Type pq
+	Type pl
+	Type pc
+	Type pa	
+	Type ss
+	Type sf
+	Type tr
+	Type ts
+	Type tt
+	Type vp
+}
+
 Package Graphics {
-	API(func params) {
-		VM:Make-Op[String:Append(String:Append("Gfx" func) "!")
-			"const float*" Map(p => Coerce(Float p) params) 
-			"int32" Coerce(Int32 Arity(params))]
+	Use g
+	Brief() {
+		;; Graphics primitives and composition operations
+		nil
 	}
 
-	PolyLine(coords) {
-		API("PolyLine" coords)
+	Group(shapes) {
+		top = (-1i nil)
+		push(list tag) {
+			(oi _) = Nil?(list) : (-1i nil) 
+							      First(list)
+			n = (oi + #1 tag)
+			(n list)
+		}
+		Algorithm:Reduce(push nil shapes)
+	}
+
+	Seq(shapes) {
+		Make(pq Group(shapes))
+	}
+
+	PolyLine(x1 y1 x2 y2 more...) {
+		;; Draw connected line segments between 2 or more sets of coordinates
+		Make(pl arg)
 	}
 
 	Line(x1 y1 x2 y2) {
-		PolyLine[x1 y1 x2 y2]
+		;; Draw a line from (x1,y1) to (x2,y2)
+		PolyLine(x1 y1 x2 y2)
 	}
 
 	Circle(x y r) {
-		API("Circle" x y r)
+		;; Draw a circle with a center point at (x,y) and a 'r'adius.
+		Make(pc x y r)
 	}
 
 	Area-Plot(x y w values) {
-		API("AreaPlot" x y w values)
+		Make(pa x y w values)
 	}
 
-	Stroke((r g b a) shapes) {
-		Use Actions
-		Do(
-			API("Push" 1)
-			API("Stroke" r g b a)
-			Do(shapes)
-			API("Pop" 1))
+	Stroke(color shapes) {
+		;; Draw 'shapes...' with 'color', which is a tuple of either (RED GREEN BLUE) or (RED GREEN BLUE ALPHA) with values from 0 to 1.
+		Make(ss color Group(shapes))
 	}
 
-	Fill((r g b a) shapes) {
-		Use Actions
-		Do(
-			API("Push" 1)
-			API("Stroke" r g b a)
-			Do(shapes)
-			API("Pop" 1))
+	Fill(color shapes) {
+		;; Fill 'shapes...' with 'color', which is a tuple of either (RED GREEN BLUE) or (RED GREEN BLUE ALPHA) with values from 0 to 1.
+		Make(sf color Group(shapes))
 	}
 
 	Rotate(angle shapes) {
-		Use Actions
-		Do(
-			API("Push" 0)
-			API("Rotate" angle)
-			Do(shapes)
-			API("Pop" 0))
+		;; Rotate 'shapes' by 'angle' degrees
+		Make(tr angle Group(shapes))
 	}
 
 	Scale(x y shapes) {
-		Use Actions
-		Do(
-			API("Push" 0)
-			API("Scale" x y)
-			Do(shapes)
-			API("Pop" 0))
+		;; Scale 'shapes' by multipliers 'x' and 'y'
+		Make(ts (x y) Group(shapes))
 	}
 
 	Translate(x y shapes) {
-		Use Actions
-		Do(
-			API("Push" 0)
-			API("Translate" x y)
-			Do(shapes)
-			API("Pop" 0))
+		;; Move all of 'shapes' along the 'x' and 'y' axes
+		Make(tt (x y) Group(shapes))
 	}
 
 	Canvas(id shapes) {
-		Use Actions
-		Do(
-			VM:Make-Op["GfxContext" "const char*" id]
-			shapes)
+		VM:Make-Op["kvm_gfx!"
+			"const char*" id
+			"const char*" String:Interop-Format-JSON(shapes)
+			"const void*" [shapes]]
 	}
 
 	Viewport(width height shapes) {
-		Use Actions
-		Do(
-			API("Viewport" width height)
-			shapes)
+		;; Draw 'shapes' in a viewport with coordinate space (0,0) -- (width, height)
+		Make(vp (width height) Group(shapes))
 	}
 }
 
@@ -115,13 +124,13 @@ Package Display {
 		;; Visualize complex 'poles' and 'zeros' on the unit circle of the Z-plane.
 
 		Use Graphics 
-		Use Actions
+		Use Algorithm
 
 		pole(p) {
 			Z = p + Complex:Cons(0 0)
 			x = Coerce(Float Complex:Real(Z))
 			y = Coerce(Float Complex:Img(Z))
-			Do(
+			Seq(
 				Line(x - 0.1 y - 0.1 x + 0.1 y + 0.1)
 				Line(x - 0.1 y + 0.1 x + 0.1 y - 0.1))
 		}
@@ -136,12 +145,16 @@ Package Display {
 		Viewport( 2.5 2.5
 			Translate(1.25 1.25 
 				Stroke((1 1 1 0.5)
-					Line(-1 0 1 0)
-					Line(0 -1 0 1)
+					Line(-2 0 2 0)
+					Line(0 -2 0 2)
 					Circle(0 0 1))
 				Stroke((0 0.5 1 1)
-					For(poles pole))
+					Map(pole poles))
 				Stroke((1 0 0.5 1)
-					For(zeros zero))))
+					Map(zero zeros))))
+	}
+
+	Output(id data) {
+		Output = Actions:Output-JSON(id data)
 	}
 }
