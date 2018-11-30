@@ -49,10 +49,12 @@ Package Audio {
 	}
 
 	Stereo-In() {
-		Stereo-In = Input(0 0)
+		;; Stereo audio input from the hardware interface. 
+		Stereo-In = Vector:Pack(Input(0 0))
 	}
 
 	Mono-In() {
+		;; Mono input from the hardware interface.
 		Mono-In = Input(0)
 	}
 
@@ -68,6 +70,16 @@ Package Audio {
 			out = Select(frames arg)
 			Pair?(out) : Vector:Pack(out) out
 		})
+	}
+
+	Loop(path) {
+		;; Load a sound file at 'path', returning a tuple of (sample-rate function), where function samples the audio file at integer positions. The file is exposed as an infinite cyclic loop.
+		(sr _) = Break(Audio-File-Tag External-Asset(path))
+		(sr {
+			(_ frames) = Break(Audio-File-Tag External-Asset(path))
+			out = Select-Wrap(frames arg)
+			Pair?(out) : Vector:Pack(out) out
+		})	
 	}
 }
 

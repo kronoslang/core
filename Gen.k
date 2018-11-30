@@ -43,16 +43,21 @@ Package Gen {
 }
 
 Package Audio-File {
-	Scrub(path speed) {
-		(sr waveform) = Audio:File(path)
+	Scrub(audio-file speed) {
+		;; Plays the asset 'audio-file' with interpolation and variable 'speed' 
+		;; multiplier. Speed of 1 is normal playback.
+
+		(sr waveform) = Audio:Loop(audio-file)
 		counter = z-1(Audio:Signal(Audio:Signal(counter + Coerce(Double speed))))
 		pos = counter * (sr / Reactive:Rate(counter))
 		Interpolation:Hermite(Coerce(Float pos) waveform)
 	}
 
-	Play(path) {
-		Scrub(path 1)
+	Play(audio-file) {
+		;; Plays the asset 'audio-file'
+		Scrub(audio-file 1)
 	}
+
 }
 
 Package Noise {
