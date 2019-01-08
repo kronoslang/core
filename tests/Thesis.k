@@ -358,7 +358,7 @@ Package Test {
 	Tutorial-23() {
 		Tutorial-23 = (
 			Coerce(Multichannel:Cons(0 0) 1)
-			Coerce(Multichannel:Cons(0 0 0 0) 5i)
+			Coerce(Multichannel:Cons(0 0 0 0) 5d)
 			)
 	}
 
