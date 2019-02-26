@@ -6,7 +6,7 @@ Compose(fn-list...) {
 		comp = Nil?(fns) : f(x)
 			   Recur(f(x) fs)
 	}
-	'comp(_ fn-list)
+	'comp(_ fn-list...)
 }
 
 Juxtapose(fn-list...) {
@@ -19,5 +19,5 @@ Juxtapose(fn-list...) {
 			(f(x) Recur(x fs))
 	}
 
-	'juxt(_ fn-list)
+	'juxt(_ fn-list...)
 }
