@@ -21,21 +21,14 @@ Interval-of(sig) {
 }
 
 Frequency-Coefficient(sig freq) {
-	;; Compute a frequency coefficient for the sample clock of 'sig'; the frequency is multiplied by the sampling interval and becomes a signal source with the chosen sample rate.
  	Frequency-Coefficient = Reactive:Resample(freq * Interval-of(sig) sig)
 }
 
 Package Audio {
-	Brief(documentation) {
-		;; Defines audio input and output
-		nil
-	}
-
 	Priority = #10
 	Clock 	 = Reactive:Tick(Priority "audio")
 
 	Signal(sig) {
-		;; Treats 'sig' as an audio signal that updates at the audio rate.
 		Signal = Reactive:Resample(sig Clock)
 	}
 
@@ -44,17 +37,15 @@ Package Audio {
 	}
 
 	All-Inputs() {
-		All-Inputs = 
+		All-Inputs =
 			Input(Algorithm:Expand(Configuration:Available-Audio-Inputs() '0 0))
 	}
 
 	Stereo-In() {
-		;; Stereo audio input from the hardware interface. 
 		Stereo-In = Vector:Pack(Input(0 0))
 	}
 
 	Mono-In() {
-		;; Mono input from the hardware interface.
 		Mono-In = Input(0)
 	}
 
@@ -62,7 +53,7 @@ Package Audio {
 		Rate = Rate-of(Clock)
 	}
 
-	File(path) { 
+	File(path) {
 		;; Load a sound file at 'path', returning a tuple of (sample-rate function), where function samples the audio file at integer positions.
 		(sr _) = Break(Audio-File-Tag External-Asset(path))
 		(sr {
@@ -79,37 +70,28 @@ Package Audio {
 			(_ frames) = Break(Audio-File-Tag External-Asset(path))
 			out = Select-Wrap(frames arg)
 			Pair?(out) : Vector:Pack(out) out
-		})	
+		})
 	}
 }
 
 Package Control {
-	Brief(documentation) {
-		;; Defines control rate signals for several fractions of the audio sampling rate.
-		nil
-	}
-
 	Fine = Reactive:Downsample(:Audio:Clock #8)
 	Clock = Reactive:Downsample(:Audio:Clock #64)
 	Coarse = Reactive:Downsample(:Audio:Clock #512)
 
 	Signal(sig) {
-		;; Treats 'sig' as a control signal that updates at 1/64 of the audio rate.
 		Signal = Reactive:Resample(sig Clock)
 	}
 
 	Signal-Fine(sig) {
-		;; Treats 'sig' as a control signal that updates at 1/8 of the audio rate.
 		Signal-Fine = Reactive:Resample(sig Fine)
 	}
 
 	Signal-Coarse(sig) {
-		;; Treats 'sig' as a control signal that updates at 1/512 of the audio rate.
 		Signal-Coarse = Reactive:Resample(sig Coarse)
 	}
 
 	Param(key init) {
-		;; Represents an external control parameter keyed as 'key', with the default value of 'init'
 		Param = IO:Source(key init #0)
 	}
 

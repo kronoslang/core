@@ -34,6 +34,7 @@ Fraction(x) {
 
 Package Reactive {
 	Couple(signals) {
+		;; Resamples all of 'signals' to the dominant clock in the set.
 		Couple = Reactive:Resample(signals signals)
 	}
 }

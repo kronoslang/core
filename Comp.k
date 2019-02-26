@@ -21,13 +21,3 @@ Juxtapose(fn-list) {
 
 	'juxt(_ fn-list)
 }
-
-Adder(k) {
-	;; Produces a function that increments its argument by 'k'
-	(+ k)
-}
-
-Multiplier(k) {
-	;; Produces a function that multiplies its argument by 'k'
-	(* k)
-}

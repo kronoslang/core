@@ -1,7 +1,8 @@
 {
 	"name": "core",
 	"url": "https://bitbucket.org/kronoslang/core",
-	"version": [0, 2, 4],
+	"description": "Built-in fundamentals and primitives for the Kronos Language",
+	"version": [0, 2, 5],
 	"packages": {
 		"Algorithm": "Operations over sets of data",
 		"Approx": "Mathematical approximations",
@@ -10,7 +11,7 @@
 		"Cycle": "Declarative method for unit-delay feedback processors",
 		"Interpolation": "Interpolating discrete data",
 		"Gen": "Waveform generators for audio and control",
-		"Linear-Algebra": "Elementary matrix types and operations",	
+		"Linear-Algebra": "Elementary matrix types and operations",
 		"Math": "Additional mathematical functions",
 		"MIDI": "Interfacing with MIDI devices"
 	}

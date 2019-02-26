@@ -8,6 +8,7 @@ Package Math {
 
 	Pi = #3.14159265358979
 	Tan(x) {
+		;; Computes the tanget of 'x'
 		Tan = Sin(x) / Cos(x)
 	}
 
@@ -15,7 +16,7 @@ Package Math {
 		;; Computes the hyperbolic sine of 'x'
 		ex = Exp( Min(x #32) )
 		Sinh = (ex * ex - #1) / (ex + ex)
-	}	
+	}
 
 	Cosh(x) {
 		;; Computes the hyperbolic cosine of 'x'

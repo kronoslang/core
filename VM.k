@@ -1,5 +1,4 @@
 Import Exception
-Import Widget
 
 ; this is very compact to save rpc bandwidth
 Type pk
@@ -48,7 +47,7 @@ Package VM {
 	Execute(a bus) {
 		world = World:Cons(IO:Source(World:World 0q #0) bus)
 		(closure return) = Break(Op a)
-		
+
 		Pop(closure(world) return)
 	}
 
@@ -56,12 +55,12 @@ Package VM {
 		Use Actions
 		Output = Execute(
 			Do(
-				Print-One(action-or-value) 
-				Print-One("\n")) 
+				Print-One(action-or-value)
+				Print-One("\n"))
 			bus)
 
 		Output = Execute(action-or-value bus)
-	}	
+	}
 
 	Command(action-or-value) {
 		Command = action-or-value
@@ -71,7 +70,7 @@ Package VM {
 	FFI(world sym args) {
 		World:Update(world
 			First(
-				Foreign-Function("int64" sym "int64"	
+				Foreign-Function("int64" sym "int64"
 					World:Id(world) args)))
 	}
 
@@ -85,8 +84,8 @@ Package VM {
 		sig = closure( Make(Instance Self-ID() nil) )
 		bus = External(("unsafe" "accumulator") mixbus())
 
-		When(Equal-Type(Class-Of(sig) Op) 
-				Effect-Dependency(bus Execute(sig mixbus))			
+		When(Equal-Type(Class-Of(sig) Op)
+				Effect-Dependency(bus Execute(sig mixbus))
 			 Otherwise
 				Handle(Mixer:Onto-Bus[bus sig]
 				   { Effect-Dependency(bus sig) }) )
@@ -94,7 +93,7 @@ Package VM {
 
 	Pop(world ty) {
 		(new-id data _) = Foreign-Function["int64" "kvm_pop!"
-			"int64" World:Id(world) 
+			"int64" World:Id(world)
 			"sizeof" ty
 			"void*" ty]
 		(World:Update(world new-id) data)
@@ -113,7 +112,7 @@ Package VM {
 
 		(x1 x2 xs) = set...
 		Loop = 	Nil?(xs) : finally(x2 x1)
-						  Recur(body finally body(x2 x1) xs) 
+						  Recur(body finally body(x2 x1) xs)
 	}
 
 	Last(set...) {
@@ -181,11 +180,11 @@ Package VM {
 		}
 
 		Peak-Meter(pipe sig) {
-			peak-clock  = Reactive:Resample(0 Reactive:Tick(#5 ("audio" "Post"))) 
+			peak-clock  = Reactive:Resample(0 Reactive:Tick(#5 ("audio" "Post")))
 
 			peaks = Algorithm:Map(ss => Peak-Stream(ss peak-clock) As-List(sig))
 
-			Effect-Dependency(sig 
+			Effect-Dependency(sig
 				Execute(Actions:Output-JSON( pipe
 					Make(:pk peaks)) nil))
 		}
@@ -195,14 +194,14 @@ Package VM {
 Package Format {
 	Text(a) {
 		a
-	}	
+	}
 }
 
 Package Actions {
 
-	Print-One(a) { 
+	Print-One(a) {
 		to-print = Format:Text(a)
-		VM:Make-Op["kvm_print!" 
+		VM:Make-Op["kvm_print!"
 			"const char*" "out"
 			"const char*" String:Interop-Format(to-print)
 			"const void*" [to-print]]
@@ -248,7 +247,7 @@ Package Actions {
 
 	Call(fn arguments) {
 		Make(VM:Op {
-			VM:Step(fn(arguments) arg) 
+			VM:Step(fn(arguments) arg)
 		} nil)
 	}
 
@@ -277,9 +276,9 @@ Package Actions {
 		(id _) = Break(VM:Instance instance)
 		Make(VM:Op {
 			VM:FFI[arg "kvm_dispatch!"
-			"int64" id 
+			"int64" id
 			"const char*" method
-			"sizeof" parameter 
+			"sizeof" parameter
 			"const void*" parameter
 			"const char*" String:Interop-Format(parameter)
 			"const void*" parameter]
@@ -291,16 +290,16 @@ Package Actions {
 		rv = Key-to-Type(returns)
 		Make(VM:Op {
 			VM:FFI[arg "kvm_dispatch!"
-			"int64" id 
+			"int64" id
 			"const char*" method
-			"sizeof" parameter 
+			"sizeof" parameter
 			"const void*" parameter
 			"const char*" String:Interop-Format(parameter)
 			"void*" rv]
 		} rv)
 	}
 
-	Invoke-With(inner outer) { 
+	Invoke-With(inner outer) {
 		Make(VM:Op {
 			w1 = arg
 			(_ returns) = Break(VM:Op inner)
@@ -325,9 +324,9 @@ Package Actions {
 
 			then-branch = Specialization-Monitor("kvm_anticipate_then" { VM:Step(then world) })
 			else-branch = Specialization-Monitor("kvm_anticipate_else" { VM:Step(else world) })
-			
+
 			VM:FFI[world "kvm_branch!"
-				"sizeof" truth 
+				"sizeof" truth
 				"const void*" truth
 				"sizeof" then-branch
 				"typeof" then-branch
@@ -338,16 +337,16 @@ Package Actions {
 		} nil)
 	}
 
-	Do(actions) { 
+	Do(actions) {
 		(_ returns) = Break(VM:Op VM:Last(actions))
 
 		Make(VM:Op {
 			VM:Loop(VM:Step VM:Step-Push arg actions)
-		} returns) 
-	}	
+		} returns)
+	}
 
-	For(values body) { 
-		pval = Pair?(values) : First(values) 
+	For(values body) {
+		pval = Pair?(values) : First(values)
 			   values
 
 		(_ returns) = Nil?(values) : (nil nil)
@@ -355,7 +354,7 @@ Package Actions {
 
 		For = Make(VM:Op {
 		VM:Loop((x world) => VM:Step(body(x) world)
-				(x world) => VM:Step-Push(body(x) world) 
+				(x world) => VM:Step-Push(body(x) world)
 				arg values)
 		} returns)
 
@@ -386,7 +385,7 @@ Package Actions {
 	}
 
 	Instrument(sig) {
-		(_ Instrument _) = Foreign-Function["int64" "kvm_test_capture!" 
+		(_ Instrument _) = Foreign-Function["int64" "kvm_test_capture!"
 			"const float*" sig
 			"float*" sig
 			"sizeof" sig]

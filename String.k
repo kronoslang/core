@@ -6,7 +6,7 @@ Package String {
 		nil
 	}
 
-	Concat(strings) {
+	Concat(strings...) {
 		;; Concatenate several values into a string
 		Concat = Algorithm:Reduce(String:Append Algorithm:Map(v => Coerce("" v) strings))
 	}
