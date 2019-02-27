@@ -222,6 +222,10 @@ Package Actions {
 			"const void*" [value]]
 	}
 
+	Display(id data) {
+		Actions:Output-JSON(id data)
+	}
+
 	Start(fn) {
 		;; Plug the function 'fn' into the mix bus of the environment
 		Make(VM:Op {

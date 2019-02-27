@@ -8,7 +8,7 @@ Package Widget {
 
 	Polynomial(min max exp) {
 		ui => min + Math:Pow(ui exp) * (max - min)
-	} 
+	}
 
 	Exponential(min max crv) {
 		ui => min * Math:Pow(max / min ui)
@@ -19,14 +19,14 @@ Package Widget {
 		mapping(Control:Param(key deflt))
 	}
 
-	Dial = Slider	
+	Dial = Slider
 }
 
 Package g {
 	Type pq
 	Type pl
 	Type pc
-	Type pa	
+	Type pa
 	Type ss
 	Type sf
 	Type tr
@@ -45,7 +45,7 @@ Package Graphics {
 	Group(shapes) {
 		top = (-1i nil)
 		push(list tag) {
-			(oi _) = Nil?(list) : (-1i nil) 
+			(oi _) = Nil?(list) : (-1i nil)
 							      First(list)
 			n = (oi + #1 tag)
 			(n list)
@@ -123,7 +123,7 @@ Package Display {
 	Pole-Zero-Plot(poles zeros) {
 		;; Visualize complex 'poles' and 'zeros' on the unit circle of the Z-plane.
 
-		Use Graphics 
+		Use Graphics
 		Use Algorithm
 
 		pole(p) {
@@ -143,7 +143,7 @@ Package Display {
 		}
 
 		Viewport( 2.5 2.5
-			Translate(1.25 1.25 
+			Translate(1.25 1.25
 				Stroke((1 1 1 0.5)
 					Line(-2 0 2 0)
 					Line(0 -2 0 2)
@@ -152,9 +152,5 @@ Package Display {
 					Map(pole poles))
 				Stroke((1 0 0.5 1)
 					Map(zero zeros))))
-	}
-
-	Output(id data) {
-		Output = Actions:Output-JSON(id data)
 	}
 }
