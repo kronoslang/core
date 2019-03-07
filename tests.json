@@ -67,7 +67,9 @@
             "Reverse-Reduce": { "exclude": "Darwin;Linux" },
             "Simple-Accumulate": {},
             "Simple-Expand": {},
-            "Simple-Filter": {}
+            "Simple-Filter": {},
+            "Some": {},
+            "Some-Haystack": {}
         },
         "Approx": {
             "Cosine": { "exclude": "Static" }

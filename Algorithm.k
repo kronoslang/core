@@ -1,11 +1,11 @@
 Import Exception
 Import Reflection
 
-Package Algorithm {	
+Package Algorithm {
 	Brief(documentation) {
 		;; Higher order functions for applying transformations over data structures.
 		nil
-	} 
+	}
 
 	Expand(count iterator seed) {
 		;; Produces a list of 'count' elements, starting with 'seed' and generating the following elements by applying 'iterator' to the previous one.
@@ -17,7 +17,7 @@ Package Algorithm {
 		;; Applies 'func' to each element in 'set', collecting the results in a new structurally similar set.
 	 	Map = Nil?(set...) : nil
 	 		  Eval(func set...)
-	 		  
+
 	 	(x xs) = set...
 	 	Map = (Eval(func x) Recur(func xs))
 	}
@@ -63,7 +63,7 @@ Package Algorithm {
 	}
 
 	Accumulate(func set...) {
-		;; Produces a list where each element is produced by applying 'func' to the previously produced element and an element from 'set'. 
+		;; Produces a list where each element is produced by applying 'func' to the previously produced element and an element from 'set'.
 		(a b) = set...
 		Accumulate = Nil?(b)		: set...
 					 Atom?(set...)	: set...
@@ -85,8 +85,8 @@ Package Algorithm {
 	}
 
 	Filter(predicate set) {
-		;; Evaluates 'predicate' for each element in 'set', removing those elements for which nil is returned.	
-		Filter = When(Atom?(set) 
+		;; Evaluates 'predicate' for each element in 'set', removing those elements for which nil is returned.
+		Filter = When(Atom?(set)
 			Throw:Invalid-Argument("Filter requires a nil-terminated list"))
 
 		(x xs) = set
@@ -97,7 +97,7 @@ Package Algorithm {
 	}
 
 	Iterate(n func x) {
-		;; Applies a pipeline of 'n' 'func's to 'x'. 
+		;; Applies a pipeline of 'n' 'func's to 'x'.
 		Iterate = n > #0 : Recur(n - #1 func func(x)) x
 	}
 
@@ -111,13 +111,12 @@ Package Algorithm {
 
 	Some(predicate set...) {
 		;; #true if some element in 'set' is true according to 'predicate'.
-		Some = predicate(set...)
+		Some = When(predicate(set...) set... nil)
 
 		(x xs) = set...
-		Some = Nil?(set...) : nil
-			   Nil?(xs) : predicate(x)
-			   Not(predicate(x)) : Recur(predicate xs)
-			   True
+		Some = Nil?(set...) 			: nil
+			   Not(predicate(x)) 		: Recur(predicate xs)
+			   x
 	}
 
 	Reverse(set...) {
@@ -127,8 +126,8 @@ Package Algorithm {
 	Multi-Map(func sets...) {
 		;; Applies a polyadic 'func' to a tuple of corresponding elements in all of the 'sets'. The resulting set length corresponds to the smallest input set.
 		Multi-Map = Some(Nil? sets...)   : nil
-			   		Every(Pair? sets...) : (Eval(func Map(First sets...)) 
-									   		Recur(func Map(Rest sets...)))			   
+			   		Every(Pair? sets...) : (Eval(func Map(First sets...))
+									   		Recur(func Map(Rest sets...)))
 			   		Eval(func Map(Flat-First sets...))
 	}
 
@@ -158,7 +157,7 @@ Package Algorithm {
 
 		; choose for custom types
 		tid = Class-Of(when-true)
-		Choose = When(Equal-Type(when-true when-false) 
+		Choose = When(Equal-Type(when-true when-false)
 					  Make(tid Choose(
 					  	truth Break(tid when-true) Break(tid when-false))))
 	}
@@ -191,7 +190,7 @@ Package Algorithm {
 
 		Lower-Bound-Index = Throw:Invalid-Argument("Couldn't perform binary search")
 
-		Upper-Bound-Index = First(Iterate(Ns (lo hi) => Binary-Converge(pred lo hi sorted-set...) 
+		Upper-Bound-Index = First(Iterate(Ns (lo hi) => Binary-Converge(pred lo hi sorted-set...)
 								         0i Coerce(Int32 N)))
 	}
 }

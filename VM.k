@@ -1,4 +1,5 @@
 Import Exception
+Import Reflection
 
 ; this is very compact to save rpc bandwidth
 Type pk
@@ -44,7 +45,7 @@ Package VM {
 		closure(world)
 	}
 
-	Execute(a bus) {
+	Execute(a bus) #[Pattern] {
 		world = World:Cons(IO:Source(World:World 0q #0) bus)
 		(closure return) = Break(Op a)
 

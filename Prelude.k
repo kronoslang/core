@@ -43,7 +43,7 @@ Package String {
 	Concat(strs) {
 		Concat = strs
 		(s ss) = strs
-		Concat = Nil?(ss) : s 
+		Concat = Nil?(ss) : s
 				 String:Append(s Concat(ss))
 	}
 }
@@ -54,10 +54,11 @@ Infix* = :Mul
 Infix/ = :Div
 Infix!= = :Not-Equal
 Infix== = :Equal
-Infix> = :Greater 
+Infix> = :Greater
 Infix>= = :Greater-Equal
-Infix< = :Less 
+Infix< = :Less
 Infix<= = :Less-Equal
-Infix& = :And 
-Infix| = :Or 
+Infix& = :And
+Infix| = :Or
 Infix<- = :LeftArrow
+Infix==t = :Equal-Type

@@ -1,4 +1,3 @@
-Import Dictionary
 Import Math
 
 Type Complex
@@ -17,7 +16,7 @@ Package Complex{
 	Cons-Maybe(real img) {
 		;; Constructs a Complex number from 'real' and 'img', provided that they are real numbers.
 		Cons-Maybe = When(
-			Real?(real) & Real?(img) 
+			Real?(real) & Real?(img)
 			Make(:Complex real img))
 	}
 
@@ -25,7 +24,7 @@ Package Complex{
 		Maybe = When(Real?(real) & Real?(img) Cons(real img))
 	}
 
-	Real/Img(c) {
+	Real/Img(c) #[Pattern] {
 		;; Retrieve Real and/or Imaginary part of a Complex number 'c'.
 		(Real Img) = Break(:Complex c)
 	}
@@ -60,17 +59,17 @@ Package Complex{
 		Conjugate = Cons(Real(c), 0 - Img(c))
 	}
 
-	Abs-Square(c) {
+	Abs-Square(c) #[Pattern] {
 		;; Computes the square of the absolute value of complex 'c'.
 		Abs-Square = Real(c) * Real(c) + Img(c) * Img(c)
 	}
 
-	Abs(c) {
+	Abs(c) #[Pattern] {
 		;; Computes the absolute value of complex 'c'.
 		Abs = :Math:Sqrt(Abs-Square(c))
 	}
 
-	Arg(c) {
+	Arg(c) #[Pattern] {
 		Arg = :Math:Atan2(Img(c) Real(c))
 	}
 
@@ -83,8 +82,8 @@ Package Complex{
 		;; Constructs a unitary complex number at 'angle' in radians.
 		Unitary = Cons(Math:Cos(angle) Math:Sin(angle))
 	}
-	
-	Neg(z) {
+
+	Neg(z) #[Pattern] {
 		;; Negates a complex number 'z'.
 		(re im) = (Real(z) Img(z))
 		Neg = Cons(:Neg(re) :Neg(im))
@@ -97,26 +96,26 @@ Package Complex{
 }
 
 Package Fallback {
-	Binary-Op(func name a b) {
+	Binary-Op(func name a b) #[Extend] {
 		overloads = [ (Add Complex:Add)
 					  (Mul Complex:Mul)
 					  (Sub Complex:Sub)
 					  (Div Complex:Div)
 					  (Equal Complex:Equal) ]
 
-		(key overload) = Dictionary:Find(overloads func)
+		(key overload) = Algorithm:Some((k o) => Equal-Type(k func) overloads)
 
-		Binary-Op = When(Equal-Type(Class-Of(a) Complex) & 
+		Binary-Op = When(Equal-Type(Class-Of(a) Complex) &
 						 Equal-Type(Class-Of(b) Complex)
 						 :Eval(overload a b))
 	}
 }
 
-Neg(args) {
+Neg(args) #[Extend] {
 	Neg = :Complex:Neg(args)
 }
 
-Abs(args) {
+Abs(args) #[Extend] {
 	Abs = :Complex:Abs(args)
 }
 
@@ -124,40 +123,40 @@ Complex?(z) {
 	Complex? = Equal-Type(Class-Of(z) Complex)
 }
 
-Number?(z) {
+Number?(z) #[Extend] {
 	Number? = When(Complex?(z) True)
 }
 
 I = Complex:Cons(0 1)
 
 Package Type-Conversion {
-	Explicit(type data) {
+	Explicit(type data) #[Extend] {
 		; try again by dropping imaginary part
 		Explicit = Recur(type Complex:Real(data))
 
 		; Convert real number to complex
 		Explicit = When(
-			Equal-Type(Class-Of(type) Complex) 
+			Equal-Type(Class-Of(type) Complex)
 			Complex:Cons-Maybe(data #0))
 	}
 
-	Implicit(type data) {
+	Implicit(type data) #[Extend] {
 		; Reals are implicitly upgraded to Complex
 		Implicit = When(
-			Equal-Type(Class-Of(type) Complex) 
+			Equal-Type(Class-Of(type) Complex)
 			Complex:Cons-Maybe(data #0))
 	}
 }
 
 Package Math {
-	Log(Z) {
+	Log(Z) #[Extend] {
 		Use Complex
 		Log = Complex:Cons(Log(Abs-Square(Z)) / #2 Arg(Z))
 	}
 
-	Exp(Z) {
+	Exp(Z) #[Extend] {
 		Use Complex
 		(x y) = (Real(Z) Img(Z))
-		Exp = Complex:Polar(y Math:Exp(x)) 
+		Exp = Complex:Polar(y Math:Exp(x))
 	}
 }

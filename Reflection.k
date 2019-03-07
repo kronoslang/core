@@ -1,7 +1,7 @@
 ;
 ; Utility functions for type reflection
 ;
- 
+
 True = Not(nil)
 Otherwise = True
 
@@ -33,7 +33,7 @@ Nil?(n) {
 	Nil? = Equal-Type(n nil)
 }
 
-Constraints:Nil!(n) {
+Constraints:Nil!(n) #[Pattern] {
 	;; Matches when 'n' is nil
 	When(Nil?(n) n)
 }
@@ -42,7 +42,7 @@ True?(t) {
 	True? = Equal-Type(t True)
 }
 
-Constraints:True!(t) {
+Constraints:True!(t) #[Pattern] {
 	;; Matches when 'n' is true
 	When(True?(t) t)
 }
@@ -54,7 +54,7 @@ Pair?(p) {
 	Pair? = Require((a b) True)
 }
 
-Constraints:Sequence!(p) {
+Constraints:Sequence!(p) #[Pattern] {
 	;; Matches when 'p' can be destructured.
 	When(Pair?(p) p)
 }
@@ -63,7 +63,7 @@ Atom?(a) {
 	Atom? = Not(Pair?(a))
 }
 
-Constraints:Atom!(a) {
+Constraints:Atom!(a) #[Pattern] {
 	;; Matches when 'a' is an atom, a value that can not be further destructured.
 	When(Atom?(a) a)
 }
@@ -72,12 +72,12 @@ Constant?(a) {
 	Constant? = Equal-Type(Class-Of(a) Constant)
 }
 
-Constraints:Constant!(a) {
+Constraints:Constant!(a) #[Pattern] {
 	;; Matches when 'a' is an invariant constant.
 	When(Constant?(a) a)
 }
 
-Constraints:Condition!(v pred) {
+Constraints:Condition!(v pred) #[Pattern] {
 	;; Tests 'v'alue using 'pred'icate. If pred(v) is True, returns 'v', otherwise do not match.
 	When(pred(v) v)
 }
@@ -87,7 +87,7 @@ Scalar?(a) {
 	Scalar? = Reflection:Is-Any-Of(First(Vector:Unpack(a)) Float Double Int32 Int64 Constant)
 }
 
-Constraints:Scalar!(s) {
+Constraints:Scalar!(s) #[Pattern] {
 	;; Matches when 's' is a scalar numeric value.
 	When(Scalar?(s) s)
 }
@@ -98,8 +98,8 @@ Integer?(a) {
 	Integer? = Recur(First(Vector:Unpack(a)))
 }
 
-Constraints:Integer!(i) {
-	;; Matches when 'i' is a scalar integer 
+Constraints:Integer!(i) #[Pattern] {
+	;; Matches when 'i' is a scalar integer
 	When(Integer?(i) i)
 }
 
@@ -108,7 +108,7 @@ Real?(a) {
 	Real? = Recur(First(Vector:Unpack(a)))
 }
 
-Constraints:Real!(r) {
+Constraints:Real!(r) #[Pattern] {
 	;; Matches when 'r' is a scalar real number
 	When(Real?(r) r)
 }
@@ -122,7 +122,7 @@ Single-Precision?(a) {
 	Single-Precision? = Recur(First(Vector:Unpack(a)))
 }
 
-Constraints:Single-Precision!(sp) {
+Constraints:Single-Precision!(sp) #[Pattern] {
 	;; Matches when 'sp' is a single precision floating point number
 	When(Single-Precision?(sp) sp)
 }
@@ -132,7 +132,7 @@ Double-Precision?(a) {
 	Double-Precision? = Recur(First(Vector:Unpack(a)))
 }
 
-Constraints:Double-Precision!(dp) {
+Constraints:Double-Precision!(dp) #[Pattern] {
 	;; Matches when 'dp' is a double precision floating point number
 	When(Double-Precision(dp) dp)
 }
@@ -141,18 +141,18 @@ Vector?(a) {
 	Vector? = Require(Vector:Unpack(a) Vector)
 }
 
-Constraints:Vector!(v) {
+Constraints:Vector!(v) #[Pattern] {
 	;; Matches when 'v' is a vector of scalars
 	When(Vector?(v) v)
 }
 
-Class-Of(a) {
+Class-Of(a) #[Extend] {
 	vlst = Vector:Unpack(a)
 	Class-Of = (Class-Of(First(vlst)) Arity(vlst))
 }
 
 Type-Check(data constraints) {
-	Type-Check = Eval(constraints data) : data 
+	Type-Check = Eval(constraints data) : data
 				 Raise(data " is not of type " constraints)
 }
 

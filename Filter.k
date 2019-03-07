@@ -36,7 +36,7 @@ Package Filter {
 
 	DF-II(sig filter) {
 		;; Apply 'filter' to 'sig'nal. This function designs the filter according to the
-		;; sample rate of 'sig'. The delay lines in FIR and IIR parts of the filter are 
+		;; sample rate of 'sig'. The delay lines in FIR and IIR parts of the filter are
 		;; commuted.
 		Use Algorithm
 
@@ -46,7 +46,7 @@ Package Filter {
 		deduce-type = Reduce(Mul sig Concat(fir iir))
 		zero   	 = deduce-type - deduce-type
 		zeroes 	 = Expand(Max(Arity(fir) - #1  Arity(iir)) 'zero zero)
-		taps   	 = (sig Accumulate((t z) => z-1(z t + zero)  
+		taps   	 = (sig Accumulate((t z) => z-1(z t + zero)
 								   z-1(zero y0 + zero) Rest(zeroes)))
 		y0       = Reduce(Sub taps)
 		fir-taps = Zip-With(Mul taps fir)
@@ -59,7 +59,7 @@ Package Filter {
 		Response = Algorithm:Fold((c cs) => c + z * cs coefs)
 	}
 
-	Response(sample-rate filter) {
+	Response(sample-rate filter) #[Extend] {
 		;; Returns a unary function that describes the complex frequency response of the filter.
 		;; The parameter to this function is the frequency point at which response is computed.
 		design = Designer(filter)
@@ -68,7 +68,7 @@ Package Filter {
 		Response = {
 			z = Complex:Unitary(#2 * Math:Pi * arg / sample-rate)
 			folder = (c cs) => c + z * cs
-			
+
 			Algorithm:Fold(folder fir) /
 			Algorithm:Fold(folder #1 iir)
 		}
@@ -83,10 +83,10 @@ Package Filter {
 		Resonator = Cons( {
 			w = #2 * freq * arg * Math:Pi
 			r = Math:Exp(Neg(bw * arg))
-			
+
 			norm = (#1 - r * r)
 
-			((norm #0 Neg(norm)) 
+			((norm #0 Neg(norm))
 			 (#-2 * r * Math:Cos(w)  r * r))
 		} )
 	}

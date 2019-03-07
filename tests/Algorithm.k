@@ -13,7 +13,7 @@ Package Test {
 
 	Nested-Expand() {
 		inner = x => Algorithm:Expand(#10 (+ x) x)
-		invariant = Algorithm:Map(inner inner(#1))		
+		invariant = Algorithm:Map(inner inner(#1))
 		variant = Algorithm:Map(inner inner(1))
 		Nested-Expand = ( "\n"
 			invariant "\n"
@@ -61,5 +61,20 @@ Package Test {
 			"long:  " Algorithm:Filter({String:Length(arg) > #4} strings) "\n"
 			"short: " Algorithm:Filter({String:Length(arg) <= #4} strings )
 			]
+	}
+
+	Some() {
+		[
+			Some(( == #42) "foo" "bar" 3 #42 [1 2 3])
+			Some('nil 1 2 3 4)
+			Some(( > #3) #1 #2 #3)
+		]
+	}
+
+	Some-Haystack() {
+		Use Algorithm[Expand Map Some]
+		range = Expand(#10 (+ #1) #1)
+		Map(find => Some((==t find) range)
+			range)
 	}
 }
