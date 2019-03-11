@@ -143,7 +143,7 @@ Package Multichannel {
         As-Tuple = Break(:Multichannel mc)
 	}
 
-    Binary-Op(op a b) #[Extend] {
+    Binary-Op(op a b) #[Pattern] {
         Binary-Op = Multichannel:Cons(
 			Algorithm:Zip-With(op
 			    Multichannel:As-Tuple(a)
@@ -151,15 +151,15 @@ Package Multichannel {
     }
 }
 
-Add(a b) {
+Add(a b) #[Extend] {
     Add = Multichannel:Binary-Op(Add a b)
 }
 
-Sub(a b) {
+Sub(a b) #[Extend] {
     Sub = Multichannel:Binary-Op(Sub a b)
 }
 
-Mul(a b) {
+Mul(a b) #[Extend] {
     Mul = Multichannel:Binary-Op(Mul a b)
 }
 
