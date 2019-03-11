@@ -4,7 +4,7 @@ Import Closure
 Import Coerce
 
 Package Fallback {
-	Coerce-Binary(a b) #[Extend] {
+	Coerce-Binary(a b) #[Pattern] {
 		Coerce-Binary = (a Type-Conversion:Implicit(a b))
 		Coerce-Binary = (Type-Conversion:Implicit(b a) b)
 	}

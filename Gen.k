@@ -2,14 +2,14 @@ Import Approx
 Import Closure
 Import IO
 Import Complex
-Import Filter
-Import Interpolation
+Import "deprecated/Filter.k"
+Import "deprecated/Interpolation.k"
 
 Package Waveform {
 	Sin(phase) { Sin = Approx:Cosine-Shape(Abs(phase - #0.5) #5) }
 	Saw = phase => #-1 + #2 * phase
 	Tri = phase => Abs(Saw(phase)) * #2 - #1
-	Parabolic = phase => #2 * Saw(phase) * Saw(phase) - #1 
+	Parabolic = phase => #2 * Saw(phase) * Saw(phase) - #1
 	Pulse = width => (phase => Ternary-Select(phase < width Coerce(phase #1) Coerce(phase #-1)))
 	Sqr = Pulse(#0.5)
 }
@@ -44,7 +44,7 @@ Package Gen {
 
 Package Audio-File {
 	Scrub(audio-file speed) {
-		;; Plays the asset 'audio-file' with interpolation and variable 'speed' 
+		;; Plays the asset 'audio-file' with interpolation and variable 'speed'
 		;; multiplier. Speed of 1 is normal playback.
 
 		(sr waveform) = Audio:Loop(audio-file)
@@ -73,7 +73,7 @@ Package Wave {
 		nil
 	}
 
-	Sin(freq) { 
+	Sin(freq) {
 		;; Audio rate sinusoid generator suitable for frequency modulation.
 		Sin = :Gen:Osc(:Waveform:Sin freq)
 	}
@@ -89,10 +89,10 @@ Package Wave {
 	}
 
 	Sin-DWG(freq) {
-		;; Audio rate sinusoid generater based on a digital waveguide. It is very pure and CPU-efficient, but not for audio-rate modulation such as FM. 
+		;; Audio rate sinusoid generater based on a digital waveguide. It is very pure and CPU-efficient, but not for audio-rate modulation such as FM.
 		R = #1
 		b1 = #1
-		theta = freq * Math:Pi * #2 / Audio:Rate() 
+		theta = freq * Math:Pi * #2 / Audio:Rate()
 
 		g = R * R
 		t = Math:Tan(theta)
@@ -124,7 +124,7 @@ Package Wave {
 		phasor = Saw(freq)
 		c = sr / (#4 * freq)
 		ig = phasor * phasor
-		z = ig - ig 
+		z = ig - ig
 		d1 = z-1(ig ig)
 		d2 = z-1(d1 d1)
 		DPW = (ig - d2) * c

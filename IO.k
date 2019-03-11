@@ -36,10 +36,15 @@ Package Audio {
 		Input = IO:Stream("audio" initialize-channels Priority)
 	}
 
+	Device-Inputs = (0 0)
+	Inputs = Device-Inputs
+
 	All-Inputs() {
-		All-Inputs =
-			Input(Algorithm:Expand(Configuration:Available-Audio-Inputs() '0 0))
+		All-Inputs = Input(Inputs)
 	}
+
+	Device-Outputs = (0 0)
+	Outputs = Device-Outputs
 
 	Stereo-In() {
 		Stereo-In = Vector:Pack(Input(0 0))

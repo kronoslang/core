@@ -111,7 +111,7 @@ Package Algorithm {
 
 	Some(predicate set...) {
 		;; #true if some element in 'set' is true according to 'predicate'.
-		Some = When(predicate(set...) set... nil)
+		Some = predicate(set...) : set... nil
 
 		(x xs) = set...
 		Some = Nil?(set...) 			: nil

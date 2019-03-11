@@ -1,11 +1,11 @@
-; the Algorithm library contains higher order 
+; the Algorithm library contains higher order
 ; functions like Expand, Map and Reduce
 
 ; the Complex library provides complex algebra
 
 ; the IO library provides parameter inputs
 
-; the Closure library provides captures for 
+; the Closure library provides captures for
 ; lambdas
 
 ; the Math library provides the Pi constant
@@ -18,11 +18,11 @@ Import Math
 Import Implicit-Coerce
 
 Generic-Oscillator(seed iterator-func) {
-	; oscillator output is initially 'seed', 
-	; otherwise the output is computed by applying 
-	; the iterator function to the previous output 
+	; oscillator output is initially 'seed',
+	; otherwise the output is computed by applying
+	; the iterator function to the previous output
 
-	; the audio clock rate is injected into the loop 
+	; the audio clock rate is injected into the loop
 	; with 'Audio:Signal'
 
 	out = z-1(seed iterator-func(Audio:Signal(out)))
@@ -35,7 +35,7 @@ Sinusoid-Oscillator(freq) {
 	norm = Math:Pi / Rate-of(Audio:Clock)
 	feedback-coef = Complex:Unitary(freq * norm)
 
-	; initially, the complex waveform starts from 
+	; initially, the complex waveform starts from
 	; phase 0
 	initial = Complex:Unitary(0)
 
@@ -133,24 +133,24 @@ MyFilter(sig tone) {
     MyFilter = y0
 }
 
-Type Multichannel 
+Type Multichannel
 Package Multichannel {
 	Cons(channels) {
         Cons = Make(:Multichannel channels)
 	}
 
-    As-Tuple(mc) {
+    As-Tuple(mc) #[Pattern] {
         As-Tuple = Break(:Multichannel mc)
 	}
 
-    Binary-Op(op a b) {
+    Binary-Op(op a b) #[Extend] {
         Binary-Op = Multichannel:Cons(
 			Algorithm:Zip-With(op
 			    Multichannel:As-Tuple(a)
 			    Multichannel:As-Tuple(b)))
     }
 }
-	
+
 Add(a b) {
     Add = Multichannel:Binary-Op(Add a b)
 }
@@ -170,14 +170,14 @@ Multichannel?(mc) {
 }
 
 Package Type-Conversion {
-    Explicit(type data) {
+    Explicit(type data) #[Extend] {
 		channels = Multichannel:As-Tuple(type)
 		Explicit = When(Real?(data)
 		    Multichannel:Cons(
 		        Algorithm:Map('data channels)))
-	} 
+	}
 
-	Implicit?(from to) {
+	Implicit?(from to) #[Extend] {
 		Implicit? = When(
 			Real?(from) & Multichannel?(to) True)
 	}
@@ -220,11 +220,11 @@ Resonator2(freq bw) {
     norm = (#1 - r * r)
     Resonator2 = Biquad(#2 * r * Math:Cos(w)
                        Neg(r * r)
-                       norm #0 Neg(norm))	
+                       norm #0 Neg(norm))
 }
 
 Package Test {
-	; These tests are trivial; they are to ensure that 
+	; These tests are trivial; they are to ensure that
 	; the examples in my doctoral thesis do not ever
 	; break.
 
@@ -280,7 +280,7 @@ Package Test {
 		freqs = Algorithm:Expand(ops (+ 110) f0)
 		rfreqs = Algorithm:Reduce((a b) => (b a) freqs)
 		fm-op = (sig freq) => Wave:Sin(freq + sig * freq)
-		Tutorial-08 = Algorithm:Reduce(fm-op 0 rfreqs)		
+		Tutorial-08 = Algorithm:Reduce(fm-op 0 rfreqs)
 	}
 
 	Tutorial-09() {
@@ -289,13 +289,13 @@ Package Test {
 		freqs = Algorithm:Expand(ops (+ 110) f0)
 		rfreqs = Algorithm:Reduce((a b) => (b a) freqs)
 		fm-op = (sig freq) => Wave:Sin(freq + sig * freq)
-		Tutorial-09 = Algorithm:Reduce(fm-op 0 rfreqs)		
+		Tutorial-09 = Algorithm:Reduce(fm-op 0 rfreqs)
 	}
 
 	Tutorial-10() {
 		rfreqs = (0.1 330 440 550 165)
 		fm-op = (sig freq) => Wave:Sin(freq + sig * freq)
-		Tutorial-10 = Algorithm:Reduce(fm-op 0 rfreqs)		
+		Tutorial-10 = Algorithm:Reduce(fm-op 0 rfreqs)
 	}
 
 	Tutorial-11() {
@@ -332,7 +332,7 @@ Package Test {
 		Tutorial-18 = Osc(Pulse2(0.5) 440) * LFO(Tri2 1)
 	}
 
-	Tutorial-19() { 
+	Tutorial-19() {
 		gain = Upsample-Linear(LFO(Tri2 1) Audio:Signal)
 		Tutorial-19 = Osc(Pulse2(0.5) 440) * gain
 	}
@@ -391,9 +391,9 @@ Package Test {
 	}
 
 	Tutorial-28() {
-		Phasor = 
-			Serial((/ Audio:Rate()) 
-				Serial(Audio:Signal 
+		Phasor =
+			Serial((/ Audio:Rate())
+				Serial(Audio:Signal
 					Recursive(Add Serial(
 						Serial('(_ _)
 							Parallel('_ Floor)) Sub))))
@@ -401,13 +401,13 @@ Package Test {
 	}
 
 	Tutorial-29() {
-		Phasor = (/ Audio:Rate()) -> Audio:Signal 
+		Phasor = (/ Audio:Rate()) -> Audio:Signal
 			-> (Add ~ ('_ -< ('_ || Floor) -> Sub))
 		Tutorial-29 = Phasor(220)
 	}
 
 	Tutorial-30() {
-		Phasor = (/ Audio:Rate()) -> Audio:Signal 
+		Phasor = (/ Audio:Rate()) -> Audio:Signal
 			-> (Add ~ ('_ -< ('_ || Floor) -> Sub))
 		Tri = Phasor -> (- 0.5) -> Abs -> (* 2) -> (- 0.5)
 		Tutorial-30 = Tri(220)
@@ -422,7 +422,7 @@ Package Test {
 		SinOsc = (* (Math:Pi / Audio:Rate())) -> Complex:Unitary
 			-> Audio:Signal -> (Mul ~ '_) -> Complex:Real
 		Tutorial-32 = SinOsc(440)
-	} 
+	}
 
 	Tutorial-33() {
 		noise = 'Noise:Pseudo-White(0.499d)

@@ -63,9 +63,10 @@ Package Test {
 			]
 	}
 
-	Some() {
+	Simple-Some() {
+		Use Algorithm
 		[
-			Some(( == #42) "foo" "bar" 3 #42 [1 2 3])
+			Some(( ==t #42) "foo" "bar" 3 #42 [1 2 3])
 			Some('nil 1 2 3 4)
 			Some(( > #3) #1 #2 #3)
 		]

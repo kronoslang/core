@@ -68,7 +68,7 @@
             "Simple-Accumulate": {},
             "Simple-Expand": {},
             "Simple-Filter": {},
-            "Some": {},
+            "Simple-Some": {},
             "Some-Haystack": {}
         },
         "Approx": {

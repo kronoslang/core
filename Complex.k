@@ -123,10 +123,6 @@ Complex?(z) {
 	Complex? = Equal-Type(Class-Of(z) Complex)
 }
 
-Number?(z) #[Extend] {
-	Number? = When(Complex?(z) True)
-}
-
 I = Complex:Cons(0 1)
 
 Package Type-Conversion {
