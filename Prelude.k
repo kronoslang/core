@@ -41,10 +41,10 @@ Package Reactive {
 
 Package String {
 	Concat(strs) {
-		Concat = strs
+		Concat = Coerce("" strs)
 		(s ss) = strs
-		Concat = Nil?(ss) : s
-				 String:Append(s Concat(ss))
+		Concat = Nil?(ss) : Coerce("" s)
+				 String:Append(Coerce("" s) Concat(ss))
 	}
 }
 

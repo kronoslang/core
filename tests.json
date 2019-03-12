@@ -83,7 +83,8 @@
         },
         "String": {
             "Replace": {},
-            "Unicode": { "exclude": "Linux" }
+            "Unicode": { "exclude": "Linux" },
+            "Coercing-Concat": {}
         },
         "Thesis": {
             "Tutorial-01": {},

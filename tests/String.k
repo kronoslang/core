@@ -1,17 +1,13 @@
 Import Algorithm
 
-Concat(strings) {
-	Concat = Algorithm:Reduce(String:Append strings)
-}
-
 Replace-All(text find replace) {
 	pos = String:Find(text find)
 	remainder = String:Skip(text pos + String:Length(find))
 
 	Replace-All = When(
-		pos >= #0 
-			Concat(String:Take(text pos) replace Recur(remainder find replace))
-		Otherwise 
+		pos >= #0
+			String:Concat(String:Take(text pos) replace Recur(remainder find replace))
+		Otherwise
 			text)
 }
 
@@ -25,5 +21,9 @@ Package Test {
 		ext-chars = "üåäö漢字"
 		Unicode = (
 		"Length of " ext-chars " is " String:Length(ext-chars) "\nCode points: " String:Decode(ext-chars))
+	}
+
+	Coercing-Concat() {
+		String:Concat(1 #2 nil ["foo"] "bar" baz lambda => 5 { arg } Coercing-Concat)
 	}
 }
