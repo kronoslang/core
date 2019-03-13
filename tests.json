@@ -25,6 +25,22 @@
             "Sin-Seq": { "control": "Sin-Seq"},
             "Waveshaping": {}
         },
+        "Gen": {
+            "Phasor":
+            { "expr": "Gen:Phasor(441)" },
+
+            "Osc-Unipolar":
+            { "expr": "Gen:Osc(Gen:Shape:Triangle 220.5)" },
+
+            "Osc-Scaled":
+            { "expr": "Gen:Osc(Gen:Shape:Saw 330.75 0.25)" },
+
+            "Osc-Bipolar":
+            { "expr": "Gen:Osc(Gen:Shape:Pulse(0.3) 441 -0.3 0.7)"},
+
+            "Osc-Modulation":
+            { "expr": "Gen:Osc(Gen:Shape:Pulse(Gen:Phasor(0.5)) 110 + 110 * Gen:Phasor(1))"}
+        },
         "Thesis": {
             "Supplementary-Example": {},
             "Tutorial-04": {},
@@ -95,6 +111,12 @@
             "Tutorial-23": {},
             "Tutorial-24": {},
             "Tutorial-27": {}
+        },
+        "Core": {
+            "Binding": {},
+            "Cycle-Error": {},
+            "Function-Binding": {},
+            "Infix-Override": {}
         }
     }
 }

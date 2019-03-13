@@ -208,6 +208,10 @@ Package Actions {
 			"const void*" [to-print]]
 	}
 
+	Sleep(time) {
+		VM:Make-Op["kvm_sleep!" "double" Coerce(Double time)]
+	}
+
 	Output(pipe value) {
 		to-print = Format:Text(value)
 		VM:Make-Op["kvm_print!"
