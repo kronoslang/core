@@ -43,7 +43,7 @@ Package Filter {
 	Resonator(sig freq bw) {
 		;; Filters 'sig'nal to produce a resonant peak at 'freq'uency,
 		;; with a bandwidth of 'bw' in Hertz.
-		sr = Reactive:Rate-of(sig)
+		sr = Rate-of(sig)
 		w = #2 * freq * sr * Math:Pi
 		r = Math:Exp(Neg(bw * sr))
 
