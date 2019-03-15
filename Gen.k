@@ -134,15 +134,35 @@ Package Gen {
 
 	Sin(freq) {
 		;; Produces a polynomial sinusoid waveform.
-		Osc(w => Approx:Cosine-Shape(Abs(w - #0.5) #5) freq)
+		Osc(w => Approx:Cosine-Shape(Abs(Fraction(w + #0.25) - #0.5) #5)
+			freq #1)
 	}
 
 	Sin(freq offset) #[Extend] {
 		;; Produces a polynomial sinusoid waveform with a phase 'offset'
 		;; against a cosine wave, measured in periods of the waveform.
-		Osc(w => Approx:Cosine-Shape(Abs(Fraction(w + offset) - #0.5)
-									 #5)
-			freq)
+		Osc(w => Approx:Cosine-Shape(Abs(Fraction(w + #0.25 + offset) - #0.5) #5)
+			freq #1)
+	}
+
+	Sin-Waveguide(freq) {
+		;; Audio rate sinusoid generater based on a digital waveguide. It is very pure and CPU-efficient, but not for audio-rate modulation such as FM.
+		R = #1
+		b1 = #1
+		theta = freq * Math:Pi * #2 / Audio:Rate()
+
+		g = R * R
+		t = Math:Tan(theta)
+		cp = Math:Sqrt(g / (g + t * t * ((#1 + g) * (#1 + g) + (#1 - g) * (#1 - g)) / #4 ))
+
+		x1 = z-1(Coerce(freq #1) Audio:Signal(x0))
+		y1 = z-1(Coerce(freq #0) Audio:Signal(y0))
+
+		tmp = cp * (x1 + y1)
+		x0 = tmp - y1
+		y0 = x1 + tmp
+
+		Sin-Waveguide = x0
 	}
 
 	Slower(factor fn) {
@@ -170,4 +190,17 @@ Package Gen {
 			Reactive:Resample(arg new-tick)
 		} fn)
 	}
+
+	Noise() {
+		state = z-1(0.499d Signal(state * #3.9999 * (#1 - state)))
+		2 * Coerce(Float state) - 1
+	}
 }
+
+;; backwards compatibility shims
+
+Wave:Sin = f => Gen:Sin(f #-0.25)
+Wave:Tri = Gen:Tri
+Wave:Saw = Gen:Saw-
+Wave:Sin-DWG = Gen:Sin-Waveguide
+Noise:Pseudo-White = Gen:Noise

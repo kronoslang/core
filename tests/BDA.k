@@ -1,4 +1,5 @@
 Import Block-Diagram
+Import Gen
 Use Block-Diagram
 
 Convolution(sig coefs) {
@@ -13,7 +14,7 @@ Conv = coefs => ('Convolution(_ coefs))
 Biquad = (a1 a2 b0 b1 b2) => ( ( Add ~ Conv(a1 a2) ) -> Conv(b0 b1 b2) )
 
 Resonator(freq bw) {
-    w = #2 * Math:Pi * freq / Audio:Rate() 
+    w = #2 * Math:Pi * freq / Audio:Rate()
     r = Math:Exp(Neg(Math:Pi * bw / Audio:Rate()))
     norm = (#1 - r * r)
     Resonator = Biquad(#2 * r * Math:Cos(w)

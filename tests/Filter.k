@@ -1,6 +1,8 @@
 Import Algorithm
 Import Closure
 Import "tests/Osc.k"
+Import Gen
+Import Filter
 
 Package Biquad {
 	Direct-II(x0 b0 b1 b2 a1 a2) {
@@ -15,7 +17,7 @@ Package Biquad {
 
 Package Design {
 	Resonator(amp freq bw sample-rate) {
-		w = #2 * Math:Pi * freq / sample-rate 
+		w = #2 * Math:Pi * freq / sample-rate
 		r = Math:Exp(Neg(Math:Pi * bw / sample-rate))
 		norm = (#1 - r * r) * amp
 
@@ -54,7 +56,7 @@ Package Test {
 	}
 
 	Resonator-Bank() {
-		filter = (sig freq bw) => 
+		filter = (sig freq bw) =>
 			Biquad:Direct-II(sig
 				Design:Resonator(#1 freq bw Rate-of(sig)))
 
@@ -70,7 +72,7 @@ Package Test {
 
 	Vector-Resonator-Bank() {
 
-		filter = (sig freq bw) => 
+		filter = (sig freq bw) =>
 			Biquad:Direct-II(sig
 				Design:Resonator(#1 freq bw Vector:Broadcast(#4 Rate-of(sig))))
 
@@ -89,7 +91,7 @@ Package Test {
 	Vector-Big-Bank() {
 		num-filters = #32
 
-		filter = (sig freq bw sr) => 
+		filter = (sig freq bw sr) =>
 			Biquad:Direct-II(sig Design:Resonator(#1 freq bw sr))
 
 		sig = Pseudo-White(0.5d)
@@ -110,12 +112,16 @@ Package Test {
 			Vector:Unpack(bank)) / num-filters
 	}
 
-	file() {
-		data = External-Stream("audio-file"
-			"C:\\Users\\Vesa\\Documents\\Studio One\\Projects\\Pispalan Sottiisi\\Releases\\Pispalan Sottiisi\\01 - Joen laulu.mp3")
+	Simple-Halfband() {
+		sr = Rate-of(Gen:Signal(0))
+		Filter:Halfband(Gen:Sin(sr * (0.5 + 0.5 * Gen:Sin(0.2)))) * Gen:Sin(sr / 4)
+	}
 
-		pos = z-1(0i Audio:Signal(pos + 1i))
+	Simple-Tone() {
+		Filter:Tone(Gen:Noise() Gen:Phasor(1))
+	}
 
-		file = Select-Wrap(data pos)
+	Library-Resonator() {
+		Filter:Resonator(Gen:Saw(44.1) Gen:Phasor(1) * 4000 100)
 	}
 }

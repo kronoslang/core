@@ -4,17 +4,19 @@ Import IO
 
 Type Filter
 Package Filter {
-	Cons(designer-fun) {
-		Cons = Make(Filter designer-fun)
-	}
-
-	Designer(flt) {
-		Designer = Break(Filter flt)
-	}
-
 	Integrate(sig leak) {
-		y1 = z-1(sig - sig y1 * leak + sig)
+		y1 = z-1(y1 * leak + sig)
 		Integrate = y1
+	}
+
+	Allpass(sig coef) {
+		y0 = x2 + ((sig - y2) * coef)
+		x1 = z-1(sig)
+		x2 = z-1(x1)
+		y1 = z-1(y0)
+		y2 = z-1(y1)
+
+		y0
 	}
 
 	Convolve(sig coefs) {
@@ -24,44 +26,83 @@ Package Filter {
 			coefs)
 	}
 
-	DF-I(sig filter) {
-		;; Apply 'filter' to 'sig'nal. This function designs the filter according to the
-		;; sample rate of 'sig'.
-		design = Designer(filter)
-		(fir iir) = design(Interval-of(sig))
+	Biquad(sig a0 a1 a2 b1 b2) {
+		;; Two-pole, two-zero filter with forward coefficients
+		;; 'a0' 'a1' and 'a1', and feedback coefficients
+		;; 'b1' and 'b2'. The output comes from the difference
+		;; equation y[t] = a0 x[t] + a1 x[t-1] + a2 x[t-2] - b1 y[t-1] - b2 y[t-2]
+		x1 = z-1(sig)
+		x2 = z-1(x1)
+		y1 = z-1(y0)
+		y2 = z-1(y1)
+		y0 = sig * a0 + x1 * a1 + x2 * a2 - b1 * y1 - b2 * y2
 
-		iir-part = sig - z-1(sig - sig  Filter:Convolve(iir-part iir))
-		DF-I = Convolve(iir-part fir)
+		Biquad = y0
 	}
 
-	DF-II(sig filter) {
-		;; Apply 'filter' to 'sig'nal. This function designs the filter according to the
-		;; sample rate of 'sig'. The delay lines in FIR and IIR parts of the filter are
-		;; commuted.
-		Use Algorithm
+	Resonator(sig freq bw) {
+		;; Filters 'sig'nal to produce a resonant peak at 'freq'uency,
+		;; with a bandwidth of 'bw' in Hertz.
+		sr = Reactive:Rate-of(sig)
+		w = #2 * freq * sr * Math:Pi
+		r = Math:Exp(Neg(bw * sr))
 
-		design = Designer(filter)
-		(fir iir) = design(Reactive:Interval-of(sig))
+		norm = (#1 - r * r)
 
-		deduce-type = Reduce(Mul sig Concat(fir iir))
-		zero   	 = deduce-type - deduce-type
-		zeroes 	 = Expand(Max(Arity(fir) - #1  Arity(iir)) 'zero zero)
-		taps   	 = (sig Accumulate((t z) => z-1(z t + zero)
-								   z-1(zero y0 + zero) Rest(zeroes)))
-		y0       = Reduce(Sub taps)
-		fir-taps = Zip-With(Mul taps fir)
-		DF-II    = Reduce(Add fir-taps)
+		Biquad(sig
+			norm #0 Neg(norm)
+			#-2 * r * Math:Cos(w)  r * r)
 	}
 
-	Resonator(freq bw) {
-		Resonator = Cons( {
-			w = #2 * freq * arg * Math:Pi
-			r = Math:Exp(Neg(bw * arg))
+	Tone(sig cutoff) {
+		;; Filter 'sig'nal with a simple one-pole 6dB/octave lowpass
+		;; slope. The cutoff range is [0,1].
+		y0 = y1 + cutoff * (sig - y1)
+		y1 = z-1(y0)
 
-			norm = (#1 - r * r)
+		Tone = y0
+	}
 
-			((norm #0 Neg(norm))
-			 (#-2 * r * Math:Cos(w)  r * r))
-		} )
+	Halfband(sig) {
+		;; Filters 'sig'nal to remove the upper half of the signal band with a sharp
+		;; transition. Uses less computation power than 'Halfband-HQ'.
+		Use Algorithm[Reduce]
+
+		a = [0.03583278843106211
+			 0.2720401433964576
+			 0.5720571972357003
+			 0.827124761997324]
+
+		b = [0.1340901419430669
+			 0.4243248712718685
+			 0.7062921421386394
+			 0.9415030941737551]
+
+		out-b = Reduce(Allpass sig b)
+
+		(Reduce(Allpass sig a) + z-1(out-b)) * 0.5
+	}
+
+	Halfband-HQ(sig) {
+		;; Filters 'sig'nal to remove the upper half of the signal band with a sharp
+		;; transition. Provides more ideal filter characteristics than 'Halfband'.
+		Use Algorithm[Reduce]
+
+		a = [0.036681502163648017
+			 0.2746317593794541
+			 0.56109896978791948
+			 0.769741833862266
+			 0.8922608180038789
+			 0.962094548378084]
+
+		b = [0.13654762463195771
+			 0.42313861743656667
+			 0.6775400499741616
+			 0.839889624849638
+			 0.9315419599631839
+			 0.9878163707328971]
+
+
+		0.5 * (Reduce(Allpass sig a) + z-1(Reduce(Allpass sig b)))
 	}
 }

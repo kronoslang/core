@@ -69,6 +69,7 @@ Package Test {
 			Some(( ==t #42) "foo" "bar" 3 #42 [1 2 3])
 			Some('nil 1 2 3 4)
 			Some(( > #3) #1 #2 #3)
+			Some(( < #3) #4 #3 #2 #1)
 		]
 	}
 

@@ -14,7 +14,10 @@
         "Filter": {
             "Resonator-Bank": {},
             "Simple-Resonator": {},
-            "Vector-Resonator-Bank": {}
+            "Vector-Resonator-Bank": {},
+            "Simple-Halfband": {},
+            "Simple-Tone": {},
+            "Library-Resonator": {}
         },
         "Osc": {
             "Control-Rate-Sin": {},
@@ -46,8 +49,7 @@
             "Sin":
             { "expr": "Gen:Sin(440 * (1 + 0.1 * Gen:Sin(5.5 0.5)))" },
 
-            "Slower": {},
-            "Faster": {},
+            "Simple-Slower": {},
             "Nested-Slower": {},
             "Oversampled-RM": {}
         },
