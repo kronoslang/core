@@ -3,6 +3,11 @@ Import Approx
 Import Math
 
 Package Gen {
+	Brief() {
+		;; Elementary signal generator system
+		nil
+	}
+
 	Signal(sig) {
 		;; Acts as a signal clock generator for all the generators. By default,
 		;; 'sig' is resampled to the audio clock. You can use 'With-Binding' to

@@ -122,6 +122,6 @@ Package Test {
 	}
 
 	Library-Resonator() {
-		Filter:Resonator(Gen:Saw(44.1) Gen:Phasor(1) * 4000 100)
+		Filter:Resonator(Gen:Saw(44.1) 3000 * Gen:Phasor(1) Gen:Phasor(0.1) * 1500)
 	}
 }

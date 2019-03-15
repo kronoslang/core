@@ -4,6 +4,11 @@ Import IO
 
 Type Filter
 Package Filter {
+	Brief() {
+		;; Audio filters to shape the frequency response
+		nil
+	}
+
 	Integrate(sig leak) {
 		y1 = z-1(y1 * leak + sig)
 		Integrate = y1
