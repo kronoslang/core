@@ -39,7 +39,17 @@
             { "expr": "Gen:Osc(Gen:Shape:Pulse(0.3) 441 -0.3 0.7)"},
 
             "Osc-Modulation":
-            { "expr": "Gen:Osc(Gen:Shape:Pulse(Gen:Phasor(0.5)) 110 + 110 * Gen:Phasor(1))"}
+            { "expr": "Gen:Osc(Gen:Shape:Pulse(Gen:Phasor(0.5)) 110 + 110 * Gen:Phasor(1))"},
+
+            "Offset-Zoo": {},
+
+            "Sin":
+            { "expr": "Gen:Sin(440 * (1 + 0.1 * Gen:Sin(5.5 0.5)))" },
+
+            "Slower": {},
+            "Faster": {},
+            "Nested-Slower": {},
+            "Oversampled-RM": {}
         },
         "Thesis": {
             "Supplementary-Example": {},

@@ -53,32 +53,6 @@ Package Filter {
 		DF-II    = Reduce(Add fir-taps)
 	}
 
-	Response(freq coefs) {
-		;; Returns the frequency response of a FIR filter determined by 'coefs' at the point determined by 'freq', given in radians per sample.
-		z = Complex:Unitary(freq)
-		Response = Algorithm:Fold((c cs) => c + z * cs coefs)
-	}
-
-	Response(sample-rate filter) #[Extend] {
-		;; Returns a unary function that describes the complex frequency response of the filter.
-		;; The parameter to this function is the frequency point at which response is computed.
-		design = Designer(filter)
-		(fir iir) = design(#1 / sample-rate)
-
-		Response = {
-			z = Complex:Unitary(#2 * Math:Pi * arg / sample-rate)
-			folder = (c cs) => c + z * cs
-
-			Algorithm:Fold(folder fir) /
-			Algorithm:Fold(folder #1 iir)
-		}
-	}
-
-	Convolution(coefs) {
-		;; Returns a function that convolves its input with a FIR filter consisting of 'coefs'.
-		Convolution = sig => Convolve(sig coefs)
-	}
-
 	Resonator(freq bw) {
 		Resonator = Cons( {
 			w = #2 * freq * arg * Math:Pi
