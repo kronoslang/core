@@ -5,16 +5,16 @@
 True = Not(nil)
 Otherwise = True
 
-Invalid-Function() {
+Invalid-Function() #[Pattern] {
 	(_ Invalid-Function) = nil
 }
 
-First(pair) {
+First(pair) #[Pattern] {
 	;; Destructure 'pair' and return the first half.
 	(First _) = pair
 }
 
-Rest(pair) {
+Rest(pair) #[Pattern] {
 	;; Destructure 'pair' and return the second half.
 	(_ Rest) = pair
 }
