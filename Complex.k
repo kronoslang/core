@@ -103,10 +103,11 @@ Package Fallback {
 					  (Div Complex:Div)
 					  (Equal Complex:Equal) ]
 
-		(key overload) = Algorithm:Some((k o) => Equal-Type(k func) overloads)
+		(key overload) = Algorithm:Some((k o) => (k ==t func) overloads)
 
 		Binary-Op = When(Equal-Type(Class-Of(a) Complex) &
-						 Equal-Type(Class-Of(b) Complex)
+						 Equal-Type(Class-Of(b) Complex) &
+						 Not(Nil?(overload))
 						 :Eval(overload a b))
 	}
 }

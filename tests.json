@@ -81,6 +81,10 @@
             "Tutorial-32": {},
             "Tutorial-33": {}
         },
+        "Vector": {
+            "Vectorized-Gen": {},
+            "Vectorized-Filter": {}
+        },
         "WikiSynthesis": {
             "Geometric-Waves": {},
             "Sine-Bank": { "exclude": "Linux" }
@@ -129,6 +133,33 @@
             "Cycle-Error": {},
             "Function-Binding": {},
             "Infix-Override": {}
+        },
+        "Vector": {
+            "Packed-Coerce":
+            {"expr": "Vector:Cons(1 2 3) * 5d"},
+
+            "Compound-Coerce":
+            {"expr": "#5 - Vector:Cons(1d 2i 3q 4)"},
+
+            "Fallback":
+            {"expr": "Math:Exp(Vector:Cons(2 4 3 9 35))"},
+
+            "Compound-Fallback":
+            {"expr": "Math:Cos(Vector:Cons(0.1 0.2d 0.3 0.4d)) * 5"},
+
+            "Explode":
+            {"expr": "Vector:Explode(Vector:Cons(Algorithm:Expand(#10 (+ 1) 1)))"},
+
+            "Width":
+            {"expr": "Vector:Width(Vector:Cons(Algorithm:Expand(#10 (* 2) #1)))"},
+
+            "Horizontal":
+            {"expr": "Vector:Horizontal((*) Vector:Cons(Algorithm:Expand(#5 (+ 1) 1)))"},
+
+            "Horizontal-Compound":
+            {"expr": "Vector:Horizontal((*) Vector:Cons(#1 2 3q 4d 5i #6 7))"},
+
+            "Coerce": {}
         }
     }
 }

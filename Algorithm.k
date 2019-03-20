@@ -147,6 +147,9 @@ Package Algorithm {
 	}
 
 	Choose(truth when-true when-false) {
+		;; Choose either 'when-true' or 'when-false' based on 'truth'.
+		;; The branches should have equal type.
+
 		; choose for atoms
 		Choose = Ternary-Select(truth when-true when-false)
 
@@ -157,7 +160,7 @@ Package Algorithm {
 
 		; choose for custom types
 		tid = Class-Of(when-true)
-		Choose = When(Equal-Type(when-true when-false)
+		Choose = When(when-true ==t when-false
 					  Make(tid Choose(
 					  	truth Break(tid when-true) Break(tid when-false))))
 	}
@@ -171,11 +174,14 @@ Package Algorithm {
 			)
 	}
 
-	Skip(N xs) {
-		Skip = Iterate(N Rest xs)
+	Skip(N set...) {
+		Skip = N == #0 : set... nil
+		(x xs) = set...
+		Skip = N > #0 : Recur(N - #1 xs) set...
 	}
 
 	Take(N set...) {
+		Take = (Nil?(set...) | N < #1) : nil [set...]
 		(x xs) = set...
 		Take = N > #0 : (x Recur(N - #1 xs)) nil
 	}
@@ -192,6 +198,18 @@ Package Algorithm {
 
 		Upper-Bound-Index = First(Iterate(Ns (lo hi) => Binary-Converge(pred lo hi sorted-set...)
 								         0i Coerce(Int32 N)))
+	}
+
+	Partition(N set...) {
+		;;
+		front = Take(N set...)
+		When(
+			Not(front ==t set...)
+				(front Recur(N Skip(N set...)))
+			Nil?(set...)
+				nil
+			Otherwise
+				(set... nil))
 	}
 }
 

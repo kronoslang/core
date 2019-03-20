@@ -137,15 +137,6 @@ Constraints:Double-Precision!(dp) #[Pattern] {
 	When(Double-Precision(dp) dp)
 }
 
-Vector?(a) {
-	Vector? = Require(Vector:Unpack(a) Vector)
-}
-
-Constraints:Vector!(v) #[Pattern] {
-	;; Matches when 'v' is a vector of scalars
-	When(Vector?(v) v)
-}
-
 Class-Of(a) #[Extend] {
 	vlst = Vector:Unpack(a)
 	Class-Of = (Class-Of(First(vlst)) Arity(vlst))
