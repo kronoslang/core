@@ -1,6 +1,5 @@
 Import Exception
 Import Reflection
-Import Vector
 
 ; this is very compact to save rpc bandwidth
 Type pk
@@ -140,6 +139,11 @@ Package VM {
 			Mix-ZeroPad = (b + s Recur(bs ss))
 		}
 
+		Unwrap(sig) #[Pattern] {
+			Unwrap = Recur(Break(Class-Of(sig) sig))
+			Unwrap = Recur(Vector:Unpack(sig))
+		}
+
 		; for now support 2:2 1:2 and 2:1
 		Mix(mixbus sig _) {
 			Mix = Throw:Invalid-Argument("Don't know how to mix " sig " onto " sig)
@@ -149,11 +153,8 @@ Package VM {
 			sm = When(Not(Pair?(sig)) sig * 0.5)
 			Mix = When(Pair?(mixbus) Recur(mixbus (sm sm) nil))
 
-			; unwrap any user types
-			Mix = Recur(mixbus Break(Class-Of(sig) sig) nil)
-
-			; unpack vectors
-			Mix = Recur(mixbus Vector:Unpack(sig) nil)
+			; unwrap any user types or vectors
+			Mix = Recur(mixbus Unwrap(sig) nil)
 		}
 
 		Upmix(sig1 sig2) {
@@ -184,14 +185,13 @@ Package VM {
 		Peak-Meter(pipe sig) {
 			peak-clock  = Reactive:Resample(0 Reactive:Tick(#5 ("audio" "Post")))
 
-			sig-list = Vector?(sig) : Vector:Explode(sig)
-					   As-List(sig)
+			peaks = Algorithm:Map(ss => Peak-Stream(ss peak-clock) As-List(sig))
 
-			peaks = Algorithm:Map(ss => Peak-Stream(ss peak-clock) sig-list)
+			Peak-Meter = Effect-Dependency(sig
+							Execute(Actions:Output-JSON( pipe
+								Make(:pk peaks)) nil))
 
-			Effect-Dependency(sig
-				Execute(Actions:Output-JSON( pipe
-					Make(:pk peaks)) nil))
+			Peak-Meter = Recur(pipe Unwrap(sig))
 		}
 	}
 }
