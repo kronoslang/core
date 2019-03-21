@@ -1,5 +1,6 @@
 Import Exception
 Import Reflection
+Import Vector
 
 ; this is very compact to save rpc bandwidth
 Type pk
@@ -183,7 +184,10 @@ Package VM {
 		Peak-Meter(pipe sig) {
 			peak-clock  = Reactive:Resample(0 Reactive:Tick(#5 ("audio" "Post")))
 
-			peaks = Algorithm:Map(ss => Peak-Stream(ss peak-clock) As-List(sig))
+			sig-list = Vector?(sig) : Vector:Explode(sig)
+					   As-List(sig)
+
+			peaks = Algorithm:Map(ss => Peak-Stream(ss peak-clock) sig-list)
 
 			Effect-Dependency(sig
 				Execute(Actions:Output-JSON( pipe

@@ -69,6 +69,8 @@ Package Vector {
 	}
 
 	Horizontal(fn v) {
+		;; Apply binary operator 'fn' horizontally to reduce the vector to a single element.
+		;; For example, to add all vector elements, use `Horizontal(Add vector)`
 		Algorithm:Reduce(fn Explode(v))
 	}
 
