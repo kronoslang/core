@@ -71,6 +71,31 @@ Package Vector {
 	Horizontal(fn v) {
 		Algorithm:Reduce(fn Explode(v))
 	}
+
+	Indices(count) {
+		;; Produces an index vector with 'count' elements, starting from 0 and increasing by one.
+		Cons(Algorithm:Expand(count (+ 1) 1))
+	}
+
+	Indices(count start) #[Extend] {
+		;; Producs an index vector with 'count' elements, starting from 'start' and increasing by one.
+		Cons(Algorithm:Expand(count (+ #1) start))
+	}
+
+	Indices(count start step) #[Extend] {
+		;; Produces an index vector with 'count' elements, starting from 'start' and increasing by 'step'.
+		Cons(Algorithm:Expand(count (+ step) start))
+	}
+
+	Repeat(count value) {
+		;; Produces a vector with 'count' elements, each set to 'value'.
+		Cons(Algorithm:Expand(count '_ value))
+	}
+
+	Ones(count) {
+		;; Produces a vector with 'count' elements, each set to 1.
+		Repeat(count 1)
+	}
 }
 
 Package Fallback {
