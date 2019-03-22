@@ -30,7 +30,6 @@ Package Algorithm {
 
 	Zip-With(func as bs) {
 		;; Applies a binary 'func' to elements pulled from 'as' and 'bs', collecting the results.
-		Zip-With = Throw:Invalid-Argument("Can't zip")
 		(asf asr) = as
 		(bsf bsr) = bs
 		Zip-With = When(Nil?(as) | Nil?(bs) nil
@@ -38,6 +37,23 @@ Package Algorithm {
 						Atom?(as) Eval(func as bsf)
 						Atom?(bs) Eval(func asf bs))
 		Zip-With = (Eval(func asf bsf) Recur(func asr bsr))
+	}
+
+	Zip3-With(func as bs cs) {
+		;; Applies a ternary 'func' to elements pulled from 'as', 'bs' and 'cs', collecting the results.
+		(asf asr) = as
+		(bsf bsr) = bs
+		(csf csr) = cs
+
+		Zip3-With = When(Nil?(as) | Nil?(bs) | Nil?(cs)
+							nil
+						Otherwise
+							Eval(func
+									Flat-First(as)
+									Flat-First(bs)
+									Flat-First(cs)))
+
+		Zip3-With = (Eval(func asf bsf csf) Recur(func asr bsr csr))
 	}
 
 	Zip(as bs) {
@@ -158,7 +174,7 @@ Package Algorithm {
 		(wf wfs) = when-false
 		Choose = (Choose(truth wt wf) Choose(truth wts wfs))
 
-		; choose for custom types
+		; choose for identical custom types
 		tid = Class-Of(when-true)
 		Choose = When(when-true ==t when-false
 					  Make(tid Choose(

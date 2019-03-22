@@ -40,13 +40,27 @@ Package Vector {
 		w2 = Width(v2)
 		p1 = Packed?(v1)
 		p2 = Packed?(v2)
-		e1 = Break(Vector v1)
-		e2 = Break(Vector v2)
-		Zip-Op = Cons(Algorithm:Zip-With(op
-					When((w1 ==t w2) & (p1 ==t p2)
-							(Break(Vector v1) Break(Vector v2))
-						 Otherwise
-						 	(Explode(v1) Explode(v2)))))
+
+		Cons(Algorithm:Zip-With(op
+				When((w1 ==t w2) & (p1 ==t p2)
+						(Break(Vector v1) Break(Vector v2))
+					 Otherwise
+					 	(Explode(v1) Explode(v2)))))
+	}
+
+	Zip3-Op(op v1 v2 v3) {
+		w1 = Width(v1)
+		w2 = Width(v2)
+		w3 = Width(v3)
+		p1 = Packed?(v1)
+		p2 = Packed?(v2)
+		p3 = Packed?(v3)
+
+		Cons(Algorithm:Zip3-With(op
+				When((w1 ==t w2) & (p1 ==t p2) & (w1 ==t w3) & (p1 ==t p3)
+						(Break(Vector v1) Break(Vector v2) Break(Vector v3))
+					 Otherwise
+					 	(Explode(v1) Explode(v2) Explode(v3)))))
 	}
 
 	Tuple-Binary-Op(op t1 t2) #[Pattern] {
@@ -65,7 +79,10 @@ Package Vector {
 	Broadcast-To(vector scalar) {
 		;; Result is structurally similar to 'vector', but all elements
 		;; are 'scalar'.
-		Cons(Algorithm:Map(e => Coerce(e scalar) Explode(vector)))
+		Broadcast-To = Cons(Algorithm:Map(e => Coerce(e scalar) Explode(vector)))
+		Broadcast-To =
+			When(Vector?(scalar)
+				Cons(Algorithm:Zip-With(Coerce Explode(vector) Explode(scalar))))
 	}
 
 	Horizontal(fn v) {
@@ -106,11 +123,11 @@ Package Fallback {
 
 		Binary-Op = When((Class-Of(a) ==t Vector:Vector) &
 						 (Class-Of(b) ==t Vector:Vector)
-						 	:Eval(overload a b)
+						 	overload(a b)
 						 (Class-Of(a) ==t Vector:Vector)
-						 	:Eval(overload a Vector:Broadcast-To(a b))
+						 	overload(a Vector:Broadcast-To(a b))
 						 (Class-Of(b) ==t Vector:Vector)
-						 	:Eval(overload Vector:Broadcast-To(b a) b))
+						 	overload(Vector:Broadcast-To(b a) b))
 	}
 
 	Unary-Op(func name a) #[Extend] {
@@ -128,6 +145,34 @@ Package Type-Conversion {
 			 	 	Algorithm:Map(e => Coerce(e data)
 			 	 		Vector:Explode(type))))
 	}
+}
+
+Ternary-Select(pred t f) #[Extend] {
+	pv? = Class-Of(pred) ==t Vector:Vector
+	tv? = Class-Of(t) ==t Vector:Vector
+	fv? = Class-Of(f) ==t Vector:Vector
+
+	vec = pv? : pred
+		  tv? : t
+		  fv? : f
+		  nil
+
+	Ternary-Select = When(Not(Nil?(vec))
+		When(Not(pv?) Recur(Vector:Broadcast-To(vec pred) t f)
+			 Not(tv?) Recur(pred Vector:Broadcast-To(vec t) f)
+			 Not(fv?) Recur(pred t Vector:Broadcast-To(vec f))
+			 ((pred ==t t) & (pred ==t f))
+			 	Vector:Cons(
+			 		Algorithm:Zip3-With(:Ternary-Select
+			 			Break(Vector:Vector pred)
+			 			Break(Vector:Vector t)
+			 			Break(Vector:Vector f)))
+			 Otherwise
+			 	Vector:Cons(
+			 		Algorithm:Zip3-With(:Ternary-Select
+			 			Vector:Explode(pred)
+			 			Vector:Explode(t)
+			 			Vector:Explode(f)))))
 }
 
 Infix+v = Curry(Vector:Tuple-Binary-Op Vector:Add)

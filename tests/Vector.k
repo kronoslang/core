@@ -25,4 +25,25 @@ Package Test {
 			Vector:Cons(3i 4i 5i) * Vector:Cons(10 100)
 		]
 	}
+
+	Mixed-Rate() {
+		Use Vector
+		f = Control:Param("freq" 440)
+		:Coerce(Float Horizontal(Add Gen:Tri(Cons(330d 440 550 f f))))
+	}
+
+	Selection() {
+		Use Vector[Cons Ones Repeat]
+		Use Algorithm[Expand]
+		[
+			Ternary-Select(
+				Cons(Expand(#10 (+ 1) 5)) > Cons(Expand(#10 (* 2) 0.5))
+				Repeat(#10 1)
+				Repeat(#10 0))
+			Ternary-Select(
+				Cons(Expand(#11 (+ 1d) 5)) > Cons(Expand(#10 (* 2d) 0.5))
+				Repeat(#9 1)
+				Repeat(#8 0d))
+		]
+	}
 }

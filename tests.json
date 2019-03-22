@@ -83,7 +83,9 @@
         },
         "Vector": {
             "Vectorized-Gen": {},
-            "Vectorized-Filter": {}
+            "Vectorized-Filter": {},
+            "Mixed-Rate": {}
+
         },
         "WikiSynthesis": {
             "Geometric-Waves": {},

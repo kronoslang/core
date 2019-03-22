@@ -4,6 +4,11 @@ Import Reflection
 ; this is very compact to save rpc bandwidth
 Type pk
 
+Unwrap(sig) #[Pattern] {
+	Unwrap = Recur(Break(Class-Of(sig) sig))
+	Unwrap = Recur(Vector:Unpack(sig))
+}
+
 Package VM {
 	Package World {
 		Type World
@@ -139,11 +144,6 @@ Package VM {
 			Mix-ZeroPad = (b + s Recur(bs ss))
 		}
 
-		Unwrap(sig) #[Pattern] {
-			Unwrap = Recur(Break(Class-Of(sig) sig))
-			Unwrap = Recur(Vector:Unpack(sig))
-		}
-
 		; for now support 2:2 1:2 and 2:1
 		Mix(mixbus sig _) {
 			Mix = Throw:Invalid-Argument("Don't know how to mix " sig " onto " sig)
@@ -203,7 +203,6 @@ Package Format {
 }
 
 Package Actions {
-
 	Print-One(a) {
 		to-print = Format:Text(a)
 		VM:Make-Op["kvm_print!"
@@ -403,7 +402,7 @@ Package Actions {
 			"float*" sig
 			"sizeof" sig]
 
-		Instrument = Recur(Break(Class-Of(sig) sig))
+		Instrument = Recur(Unwrap(sig) sig)
 	}
 
 	Prebuild-All = 1i
