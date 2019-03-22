@@ -26,7 +26,8 @@
             "Noise": {},
             "Sin": {},
             "Sin-Seq": { "control": "Sin-Seq"},
-            "Waveshaping": {}
+            "Waveshaping": {},
+            "Lofi-Seq": {}
         },
         "Gen": {
             "Phasor":

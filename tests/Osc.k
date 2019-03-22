@@ -44,7 +44,7 @@ Clicker(freq) {
 	phasor = z-1(inc - inc wrap + inc)
 	edge = (phasor >= #1) & #1
 	wrap = phasor - edge
-	Clicker = edge	
+	Clicker = edge
 }
 
 
@@ -88,6 +88,16 @@ Package Test {
 		freq = (5 + Taylor-Sin(0.05 4.8))
 		Clicks = Clicker(freq)
 	}
+
+	Lofi-Seq() {
+		Use Algorithm
+
+		t = z-1(Audio:Signal(t + 1i))
+		shifts = [0i 2i 7i 11i 9i]
+
+		b8 = Reduce(Or Map(Curry(BitShiftRight t) shifts))
+		(b8 & 0xff) / 256 - 0.5
+	}
 }
 
 Package Sequence {
@@ -101,5 +111,5 @@ Package Sequence {
 		(0.6 "amp"  0.7)
 		(1 	 "amp"  0)
 		(1 	 "end"  nil)
-	]	
+	]
 }
