@@ -68,46 +68,42 @@ Package Filter {
 		Tone = y0
 	}
 
-	Halfband(sig) {
-		;; Filters 'sig'nal to remove the upper half of the signal band with a sharp
-		;; transition. Uses less computation power than 'Halfband-HQ'.
+	Polyphase(sig a b) {
+		;; Send 'sig'nal through two allpass filter cascades with coefficient lists
+		;; given by 'a' and 'b'.
 		Use Algorithm[Reduce]
+		#0.5 * (Reduce(Allpass sig a) + z-1(Reduce(Allpass sig b)))
+	}
 
-		a = [0.03583278843106211
-			 0.2720401433964576
-			 0.5720571972357003
-			 0.827124761997324]
+	Halfband(sig) {
+		a = [#0.03583278843106211
+			 #0.2720401433964576
+			 #0.5720571972357003
+			 #0.827124761997324]
 
-		b = [0.1340901419430669
-			 0.4243248712718685
-			 0.7062921421386394
-			 0.9415030941737551]
+		b = [#0.1340901419430669
+			 #0.4243248712718685
+			 #0.7062921421386394
+			 #0.9415030941737551]
 
-		out-b = Reduce(Allpass sig b)
-
-		(Reduce(Allpass sig a) + z-1(out-b)) * 0.5
+		Polyphase(sig a b)
 	}
 
 	Halfband-HQ(sig) {
-		;; Filters 'sig'nal to remove the upper half of the signal band with a sharp
-		;; transition. Provides more ideal filter characteristics than 'Halfband'.
-		Use Algorithm[Reduce]
+		a = [#0.036681502163648017
+			 #0.2746317593794541
+			 #0.56109896978791948
+			 #0.769741833862266
+			 #0.8922608180038789
+			 #0.962094548378084]
 
-		a = [0.036681502163648017
-			 0.2746317593794541
-			 0.56109896978791948
-			 0.769741833862266
-			 0.8922608180038789
-			 0.962094548378084]
+		b = [#0.13654762463195771
+			 #0.42313861743656667
+			 #0.6775400499741616
+			 #0.839889624849638
+			 #0.9315419599631839
+			 #0.9878163707328971]
 
-		b = [0.13654762463195771
-			 0.42313861743656667
-			 0.6775400499741616
-			 0.839889624849638
-			 0.9315419599631839
-			 0.9878163707328971]
-
-
-		0.5 * (Reduce(Allpass sig a) + z-1(Reduce(Allpass sig b)))
+		Polyphase(sig a b)
 	}
 }

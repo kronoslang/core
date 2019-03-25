@@ -26,8 +26,13 @@ Package Test {
     			Sin(440 * Slower(#500 {
     				1 + Sin(1)
     				}))
-    			})
-    	)
+    			}))
+    }
+
+    Faster-Args() {
+        sr = Rate-of(Audio:Signal(0))
+        Audio:Signal(
+            Gen:Faster(#2 Gen:Sin sr * 1.99))
     }
 
     Oversampled-RM() {
@@ -51,5 +56,10 @@ Package Test {
         }
 
     	downsample(Faster(N rm) N)
+    }
+
+    Library-Oversample() {
+        sr = Rate-of(Gen:Signal(0))
+        Gen:Oversample(#4 Gen:Saw Gen:Phasor(1) * sr * 0.5)
     }
 }

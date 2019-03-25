@@ -52,7 +52,9 @@
 
             "Simple-Slower": {},
             "Nested-Slower": {},
-            "Oversampled-RM": {}
+            "Faster-Args": {},
+            "Oversampled-RM": {},
+            "Library-Oversample": {}
         },
         "Thesis": {
             "Supplementary-Example": {},
@@ -130,6 +132,9 @@
             "Tutorial-23": {},
             "Tutorial-24": {},
             "Tutorial-27": {}
+        },
+        "Math": {
+            "Copy-Sign-IEEE": {}
         },
         "Core": {
             "Binding": {},

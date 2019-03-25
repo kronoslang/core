@@ -1,6 +1,7 @@
 Import IO
 Import Approx
 Import Math
+Import Filter
 
 Package Gen {
 	Brief() {
@@ -171,6 +172,10 @@ Package Gen {
 	}
 
 	Slower(factor fn) {
+		Recur(factor fn nil)
+	}
+
+	Slower(factor fn args...) #[Extend] {
 		;; Function 'fn' is evaluated in a context where all the
 		;; signal sources in the Gen package update at a rate
 		;; that is slower by 'factor' in comparison to the current one.
@@ -180,10 +185,14 @@ Package Gen {
 		With-Binding(":Gen:Signal" {
 			new-tick = Reactive:Downsample(current-signal(0) factor)
 			Reactive:Resample(arg new-tick)
-		} fn)
+		} { fn(args...) })
 	}
 
 	Faster(factor fn) {
+		Recur(factor fn nil)
+	}
+
+	Faster(factor fn args...) #[Extend] {
 		;; Function 'fn' is evaluated in a context where all the
 		;; signal sources in the Gen package update at a rate
 		;; that is faster by 'factor' in comparison to the current one.
@@ -193,12 +202,42 @@ Package Gen {
 		With-Binding(":Gen:Signal" {
 			new-tick = Reactive:Upsample(current-signal(0) factor)
 			Reactive:Resample(arg new-tick)
-		} fn)
+		} { fn(args...) })
 	}
 
 	Noise() {
 		state = z-1(0.499d Signal(state * #3.9999 * (#1 - state)))
 		2 * Coerce(Float state) - 1
+	}
+
+	Oversample(num-stages fn args...) {
+		;; Within function 'fn', double the rate of 'Gen:Signal' 'num-stages' times.
+		;; Each stage output is equipped with a halfband filter and the signal rate
+		;; is decimated by 2. As a result, any 'Gen:Signal' clock at the output will
+		;; correspond to the normal rate.
+
+		factor = Math:Pow(#2 num-stages)
+		sig = Faster(factor fn args...)
+
+		; gentle slope with -103dB stopband for
+		; all but the final decimation stages
+		a = [#0.03583278843106211
+			 #0.2720401433964576
+			 #0.5720571972357003
+			 #0.827124761997324]
+
+		b = [#0.1340901419430669
+			 #0.4243248712718685
+			 #0.7062921421386394
+			 #0.9415030941737551]
+
+		decimate = sig => Reactive:Downsample(Filter:Polyphase(sig a b) #2)
+
+		When(num-stages > #0
+			 Reactive:Downsample(
+			 	Filter:Halfband-HQ(
+			 		Algorithm:Iterate(num-stages - #1 decimate sig)
+			 		) #2))
 	}
 }
 

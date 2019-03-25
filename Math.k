@@ -49,6 +49,12 @@ Package Math {
 		Csch = (ex + ex) / (ex * ex - #1)
 	}
 
+	Copy-Sign(value sign) {
+		;; changes the sign of 'value' to match 'sign'
+		sv = Coerce(value sign)
+		Abs(value) | Xor(Abs(sv) sv)
+	}
+
 	Horner-Scheme(x coefficients) {
 		;; Evaluates a polynomial described by the set of 'coefficients' that correspond to powers of 'x' in ascending order. The evaluation is carried out according to the Horner scheme.
 		Horner-Scheme = Algorithm:Fold((a b) => a + x * b coefficients)
