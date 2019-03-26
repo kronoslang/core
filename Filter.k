@@ -4,17 +4,20 @@ Import IO
 
 Type Filter
 Package Filter {
-	Brief() {
+	Brief(documentation) {
 		;; Audio filters to shape the frequency response
 		nil
 	}
 
-	Integrate(sig leak) {
-		y1 = z-1(y1 * leak + sig)
+	Integrate(sig feedback) {
+		;; Integrate incoming 'sig'nal. For lossless integration, use 'feedback' of 1. Smaller
+		;; feedback coefficients will produce a leaky integrator.
+		y1 = z-1(y1 * feedback + sig)
 		Integrate = y1
 	}
 
 	Allpass(sig coef) {
+		;; A second-order allpass filter
 		y0 = x2 + ((sig - y2) * coef)
 		x1 = z-1(sig)
 		x2 = z-1(x1)
@@ -27,7 +30,7 @@ Package Filter {
 	Convolve(sig coefs) {
 		;; Convolves 'sig'nal with a FIR filter consisting of coefficients in 'coefs'. The length of the list determines the order of the filter. The coefficients are arranged from low to high order.
 		Convolve = Algorithm:Fold(
-			(c cs) => sig * c + z-1(cs * #0 cs)
+			(c cs) => sig * c + z-1(cs)
 			coefs)
 	}
 
@@ -66,6 +69,14 @@ Package Filter {
 		y1 = z-1(y0)
 
 		Tone = y0
+	}
+
+	DC(sig) {
+		;; Remove any DC offset from 'sig'nal
+		R = #1 - (#190 / Rate-of(sig))
+		out = sig - z-1(sig) + R * z-1(out)
+
+		out
 	}
 
 	Polyphase(sig a b) {

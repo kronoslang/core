@@ -4,9 +4,19 @@ Import Math
 Import Filter
 
 Package Gen {
-	Brief() {
+	Brief(documentation) {
 		;; Elementary signal generator system
 		nil
+	}
+
+	Rate() {
+		;; Outputs the 'sampling-rate' of the Generators
+		Rate-of(Gen:Signal(0))
+	}
+
+	Interval() {
+		;; Outputs the 'sampling-interval' of the Generators in seconds
+		Interval-of(Gen:Signal(0))
 	}
 
 	Signal(sig) {
