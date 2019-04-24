@@ -87,8 +87,9 @@
         "Vector": {
             "Vectorized-Gen": {},
             "Vectorized-Filter": {},
-            "Mixed-Rate": {}
-
+            "Mixed-Rate": {},
+            "Big-Vector": {},
+            "Big-Mixed-Vector": {}
         },
         "WikiSynthesis": {
             "Geometric-Waves": {},
@@ -151,6 +152,9 @@
 
             "Fallback":
             {"expr": "Math:Exp(Vector:Cons(2 4 3 9 35))"},
+
+            "Coerce-Invariant":
+            {"expr": "Vector:Cons(1d Algorithm:Expand(#30 (+ 1) 1)) * #30"},
 
             "Compound-Fallback":
             {"expr": "Math:Cos(Vector:Cons(0.1 0.2d 0.3 0.4d)) * 5"},

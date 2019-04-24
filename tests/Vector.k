@@ -46,4 +46,16 @@ Package Test {
 				Repeat(#8 0d))
 		]
 	}
+
+	Big-Vector() {
+		harmonics = Vector:Indices(#200) * 2 - 1
+		partials = Gen:Sin(harmonics * 40)
+		Vector:Horizontal((+) partials / harmonics)
+	}
+
+	Big-Mixed-Vector() {
+		harmonics = Vector:Cons(1d Algorithm:Expand(#199 (+ 1) 2))
+		partials = Gen:Sin(harmonics * 40)
+		:Coerce(Float Vector:Horizontal((+) partials / harmonics))
+	}
 }
