@@ -5,8 +5,8 @@ Import Reflection
 Type pk
 
 Unwrap(sig) #[Pattern] {
-	Unwrap = Recur(Break(Class-Of(sig) sig))
-	Unwrap = Recur(Vector:Unpack(sig))
+	Unwrap = Break(Class-Of(sig) sig)
+	Unwrap = Vector:Unpack(sig)
 }
 
 Package VM {
@@ -402,7 +402,7 @@ Package Actions {
 			"float*" sig
 			"sizeof" sig]
 
-		Instrument = Recur(Unwrap(sig) sig)
+		Instrument = Recur(Unwrap(sig))
 	}
 
 	Prebuild-All = 1i
