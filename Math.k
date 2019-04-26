@@ -6,7 +6,8 @@ Package Math {
 		nil
 	}
 
-	Pi = #3.14159265358979
+	Pi = #2 * Atan2(#0 #1)
+
 	Tan(x) {
 		;; Computes the tanget of 'x'
 		Tan = Sin(x) / Cos(x)
