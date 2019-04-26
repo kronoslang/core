@@ -6,7 +6,7 @@ Package Math {
 		nil
 	}
 
-	Pi = #2 * Atan2(#0 #1)
+	Pi = Atan2(#1 #0) * #2
 
 	Tan(x) {
 		;; Computes the tanget of 'x'
