@@ -20,6 +20,10 @@ Interval-of(sig) {
 	Interval-of = #1 / Rate-of(sig)
 }
 
+Cache(data) {
+	(Cache _) = Reactive:Couple(data Reactive:Tick(#-100 "once"))
+}
+
 Frequency-Coefficient(sig freq) {
  	Frequency-Coefficient = Reactive:Resample(freq * Interval-of(sig) sig)
 }

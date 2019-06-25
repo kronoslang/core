@@ -29,6 +29,9 @@
             "Waveshaping": {},
             "Lofi-Seq": {}
         },
+        "Envelope": {
+            "FM-ADSR": {}
+        },
         "Gen": {
             "Phasor":
             { "expr": "Gen:Phasor(441)" },
@@ -107,7 +110,14 @@
             "Simple-Expand": {},
             "Simple-Filter": {},
             "Simple-Some": {},
-            "Some-Haystack": {}
+            "Some-Haystack": {},
+            "Partition": {},
+            "Find-Max": {"expr": "Algorithm:Find-Max(1 9 3 8 6 3 2 11 9 100)" },
+            "Find-Max": {"expr": "Algorithm:Find-Min(1 9 3 8 6 3 2 11 9 100)" }
+        },
+        "Sort": {
+            "Values": { "expr": "Bitonic:Sort(1 9 3 8 6 3 2 11 9 100)" },
+            "Constants": { "expr": "Bitonic:Sort(#1 #9 #3 #8 #6 #3 #2 #11 #9 #100)" }
         },
         "Approx": {
             "Cosine": { "exclude": "Static" }
@@ -141,7 +151,10 @@
             "Binding": {},
             "Cycle-Error": {},
             "Function-Binding": {},
-            "Infix-Override": {}
+            "Infix-Override": {},
+            "Slice-Subarray": {},
+            "Return-Slice":
+            {"expr": "Slice(Algorithm:Expand(#100 (+ 1) 1) 5 10)"}
         },
         "Vector": {
             "Packed-Coerce":

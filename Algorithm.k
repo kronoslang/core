@@ -166,6 +166,10 @@ Package Algorithm {
 		;; Choose either 'when-true' or 'when-false' based on 'truth'.
 		;; The branches should have equal type.
 
+		; compile time choose as fallback
+		Choose = When(truth when-true
+					  Not(truth) when-false)
+
 		; choose for atoms
 		Choose = Ternary-Select(truth when-true when-false)
 
@@ -191,19 +195,28 @@ Package Algorithm {
 	}
 
 	Skip(N set...) {
+		;; Remove `N` items from the beginning of `set...`
 		Skip = N == #0 : set... nil
 		(x xs) = set...
 		Skip = N > #0 : Recur(N - #1 xs) set...
 	}
 
 	Take(N set...) {
+		;; Take the first `N` items from the beginning of `set...`.
 		Take = (Nil?(set...) | N < #1) : nil [set...]
 		(x xs) = set...
 		Take = N > #0 : (x Recur(N - #1 xs)) nil
 	}
 
 	Take-Last(N xs) {
+		;; Take the last `N` items from the beginning of `set...`.
 		Take-Last = Skip(Arity(xs) - N xs)
+	}
+
+	Split(xs...) {
+		;; Splits the list `xs...` in half
+		Nh = Arity(xs...) / #2
+		(Take(Nh xs...) Skip(Nh xs...))
 	}
 
 	Upper-Bound-Index(pred sorted-set...) {
@@ -216,8 +229,44 @@ Package Algorithm {
 								         0i Coerce(Int32 N)))
 	}
 
+	Find-Max-With(pred set...) {
+		;; Returns the index to the element in `set...` that is
+		;; the greatest according to a binary `pred`icate.
+
+		iter(pred I mv mi set) {
+			iter = (mi mv)
+
+			(x xs) = set
+			new-max? = pred(x mv)
+
+			iter =
+				Recur(
+					pred
+					I + #1
+					Choose(new-max? x mv)
+					Choose(new-max? I mi) xs)
+
+			iter = When(Nil?(xs) (mi mv))
+		}
+
+		(h t) = set...
+		iter(pred 1i h 0i t)
+	}
+
+	Find-Max(set...) {
+		;; Returns the index to the element in `set...` that has
+		;; the greatest value. Returns the pair `(index value)`.
+		Find-Index-With((>) set...)
+	}
+
+	Find-Min(set...) {
+		;; Returns the index to the element in `set...` that has
+		;; the least value. Returns the pair `(index min-value)`.
+		Find-Index-With((<) set...)
+	}
+
 	Partition(N set...) {
-		;;
+		;; Partition `set...` into tuples with `N` elements each.
 		front = Take(N set...)
 		When(
 			Not(front ==t set...)
@@ -236,9 +285,11 @@ Nth(index set...) {
 }
 
 Sum(numbers...) {
+	;; Compute the sum of `numbers...`.
 	Sum = Algorithm:Reduce(Add numbers...)
 }
 
 Product(numbers...) {
+	;; Compute the product of `numbers...`.
 	Product = Algorithm:Reduce(Mul numbers...)
 }

@@ -40,4 +40,10 @@ Package Test {
 		}
 		Handle(FMA(1 2 "foo") Expect-Error)
 	}
+
+	Slice-Subarray() {
+		Use Algorithm
+		xs = Expand(#20 (+ 1) 1)
+		Map(o => Slice(xs o #5) Expand(#60 (+ 1) -20))
+	}
 }

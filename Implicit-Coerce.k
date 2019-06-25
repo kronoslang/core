@@ -10,8 +10,16 @@ Package Fallback {
 	}
 
 	Binary-Op(func name a b) #[Extend] {
-		Binary-Op = When(Not(Equal-Type(a b))
-						 func(Coerce-Binary(a b)))
+		Binary-Op = When(
+			Pair?(b)
+				Algorithm:Reduce(func a b)
+			Not(Equal-Type(a b))
+				func(Coerce-Binary(a b)))
+
+	}
+
+	Unary-Op(func name a) #[Extend] {
+		Unary-Op = When(Pair?(a) Algorithm:Map(func a))
 	}
 
 	Bad-Coerce(type data) {

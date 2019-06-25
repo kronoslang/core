@@ -79,4 +79,10 @@ Package Test {
 		Map(find => Some((==t find) range)
 			range)
 	}
+
+	Partition() {
+		Use Algorithm
+		xs = Expand(#5 (+ 1) 1)
+		Map(s => Algorithm:Partition(s xs) Expand(#6 (+ #1) #1))
+	}
 }

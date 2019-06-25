@@ -24,6 +24,6 @@ Package Test {
 	}
 
 	Coercing-Concat() {
-		String:Concat(1 #2 nil ["foo"] "bar" baz lambda => 5 { arg } Coercing-Concat)
+		String:Concat(1 #2 nil ["foo"] "bar" { baz } lambda => 5 { arg } Coercing-Concat)
 	}
 }

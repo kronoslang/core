@@ -60,4 +60,23 @@ Package Math {
 		;; Evaluates a polynomial described by the set of 'coefficients' that correspond to powers of 'x' in ascending order. The evaluation is carried out according to the Horner scheme.
 		Horner-Scheme = Algorithm:Fold((a b) => a + x * b coefficients)
 	}
+
+	Linear-Interpolation(h x0 x1) {
+		;; Interpolate linearly between x0 an x1 as h ranges from 0 to 1.
+		x0 + h * (x1 - x0)
+	}
+
+	Hermite-Interpolation(h x-1 x0 x1 x2) {
+		;; Hermite interpolation between 'x0' and 'x1' as 'h' goes from 0 to 1, with further control points 'x-1' and 'x2' referring to past and future points.
+
+		; adapted from musicdsp.org, C source attributed to Laurent De Soras
+		c  = (x1 - x-1) * #0.5
+		v  = x0 - x1
+		w  = c + v
+		a  = w + v + (x2 - x0) * #0.5
+		bn = w + a
+
+		((((a * h) - bn) * h + c) * h + x0)
+	}
+
 }
