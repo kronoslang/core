@@ -256,13 +256,13 @@ Package Algorithm {
 	Find-Max(set...) {
 		;; Returns the index to the element in `set...` that has
 		;; the greatest value. Returns the pair `(index value)`.
-		Find-Index-With((>) set...)
+		Find-Max-With((>) set...)
 	}
 
 	Find-Min(set...) {
 		;; Returns the index to the element in `set...` that has
 		;; the least value. Returns the pair `(index min-value)`.
-		Find-Index-With((<) set...)
+		Find-Max-With((<) set...)
 	}
 
 	Partition(N set...) {
