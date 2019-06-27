@@ -29,9 +29,9 @@ Package Bitonic {
 
 		sset =
 			Reduce(Concat
-				ordf
-				unord
-				ordr)
+				    ordf
+					unord
+					ordr)
 
 		Arity(set) < #2 : set,
 			Concat(

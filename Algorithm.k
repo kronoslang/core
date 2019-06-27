@@ -198,14 +198,14 @@ Package Algorithm {
 		;; Remove `N` items from the beginning of `set...`
 		Skip = N == #0 : set... nil
 		(x xs) = set...
-		Skip = N > #0 : Recur(N - #1 xs) set...
+		Skip = N >= #1 : Recur(N - #1 xs) set...
 	}
 
 	Take(N set...) {
 		;; Take the first `N` items from the beginning of `set...`.
 		Take = (Nil?(set...) | N < #1) : nil [set...]
 		(x xs) = set...
-		Take = N > #0 : (x Recur(N - #1 xs)) nil
+		Take = N >= #1 : (x Recur(N - #1 xs)) nil
 	}
 
 	Take-Last(N xs) {
