@@ -220,6 +220,17 @@ Package Gen {
 		2 * Coerce(Float state) - 1
 	}
 
+	Ramp(trig rate) {
+		;; Produces a signal that starts from zero and changes linearly, at `rate` per second. When `trig` signal
+		;; has an upward edge, the ramp is reset to zero.
+
+		sr = Rate-of(Signal(0))
+		inc = rate / sr
+		state = (trig >= z-1(0 trig)) & z-1(0 state + inc)
+
+		state
+	}
+
 	Oversample(num-stages fn args...) {
 		;; Within function 'fn', double the rate of 'Gen:Signal' 'num-stages' times.
 		;; Each stage output is equipped with a halfband filter and the signal rate

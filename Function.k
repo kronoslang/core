@@ -28,8 +28,10 @@ Package Function {
 		argument => Algorithm:Map(fn => fn(argument) fns...)
 	}
 
-	Interpolate(fn) {
-		;; Composes a function that, when called with argument `x`, calls `fn(x)` and `fn(x+1)`, and returns a linearly interpolated value weighted by the fraction of `x`.
+	Wrap-LERP(fn) {
+		;; Wraps `fn` in linear interpolation: returns a function that, when called with argument `x`,
+		;; calls `fn(x)` and `fn(x + #1)`, interpolating linearly between them, weighted by the fraction
+		;; of `x`.
 		;; This can produce a linear breakpoint function from a discrete-valued, 'stair-case' `fn`.
 
 		{ Math:Linear-Interpolation(
@@ -38,35 +40,31 @@ Package Function {
 			fn(arg + #1)) }
 	}
 
-	Interpolate-Hermite(fn) {
-		;; Composes a function that, when called with argument `x`, calls `fn` with arguments `x - 1, x, x + 1, x + 2`.
-		;; The results are used to compute a Hermite polynomial interpolation between the values at `x` and `x + 1`. The additional
-		;; control points provide higher quality interpolation.
+	Wrap-Hermite(fn) {
+		;; Wraps `fn` in Hermite interpolation: returns a function that, when called with argument `x`,
+		;; calls `fn` with four sample points ranging from `x - #1` to `x + #2`, and interpolates between
+		;; the values at `x` and `x + #1` according to the fraction of `x`. The additional sample points
+		;; are used to produce a smoother curve.
 
 		{ Math:Hermite-Interpolation(
 			Fraction(arg)
-			Algorithm:Map(fn arg - #1 arg arg + #1 arg + #2)) }
+			fn(arg - #1)
+			fn(arg)
+			fn(arg + #1)
+			fn(arg + #2)) }
 	}
 
-	Sample(xs...) {
+	Table(xs...) {
 		;; Given a list `xs...`, returns a function that, given an argument `i`, returns
 		;; the `i`:th element in `xs...`.
 		{ Select(xs... arg) }
 	}
 
-	Sample-Cyclic(xs...) {
+	Table-Cyclic(xs...) {
 		;; Given a list `xs...`, returns a function that, given an argument `i`, returns
 		;; the `i`:th element in `xs...`. The list is extended in an infinite cycle, both
 		;; beyond the count of the original elements and also below index 0.
 
 		{ Select-Wrap(xs... arg) }
-	}
-
-	Wavetable(xs...) {
-		;; Returns a function that, given an argument 'x', remaps
-		;; it to a periodic wavetable specified by `xs...`. The wavetable
-		;; has a period of 1.
-
-		{ Select-Wrap(xs... Arity(xs...) * arg) }
 	}
 }
