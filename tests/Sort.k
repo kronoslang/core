@@ -1,4 +1,5 @@
 Import Sort
+Import Algorithm
 
 Package Test {
 	Basic() {
@@ -7,5 +8,11 @@ Package Test {
 
 	Invert() {
 		Bitonic:Sort(16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1)
+	}
+
+	Reorder() {
+		Use Algorithm
+		is = Map(Math:Cos Expand(#16 (+ 0.3) 0))
+		Bitonic:Sort(is)
 	}
 }

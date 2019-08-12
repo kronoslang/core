@@ -117,7 +117,10 @@
         },
         "Sort": {
             "Values": { "expr": "Bitonic:Sort(1 9 3 8 6 3 2 11 9 100)" },
-            "Constants": { "expr": "Bitonic:Sort(#1 #9 #3 #8 #6 #3 #2 #11 #9 #100)" }
+            "Constants": { "expr": "Bitonic:Sort(#1 #9 #3 #8 #6 #3 #2 #11 #9 #100)" },
+            "Basic": {},
+            "Invert": {},
+            "Reorder": {}
         },
         "Approx": {
             "Cosine": { "exclude": "Static" }
