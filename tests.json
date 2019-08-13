@@ -113,7 +113,7 @@
             "Some-Haystack": {},
             "Partition": {},
             "Find-Max": {"expr": "Algorithm:Find-Max(1 9 3 8 6 3 2 11 9 100)" },
-            "Find-Max": {"expr": "Algorithm:Find-Min(1 9 3 8 6 3 2 11 9 100)" }
+            "Find-Min": {"expr": "Algorithm:Find-Min(1 9 3 8 6 3 2 11 9 100)" }
         },
         "Sort": {
             "Values": { "expr": "Bitonic:Sort(1 9 3 8 6 3 2 11 9 100)" },
@@ -154,10 +154,7 @@
             "Binding": {},
             "Cycle-Error": {},
             "Function-Binding": {},
-            "Infix-Override": {},
-            "Slice-Subarray": {},
-            "Return-Slice":
-            {"expr": "Slice(Algorithm:Expand(#100 (+ 1) 1) 5 10)"}
+            "Infix-Override": {}
         },
         "Vector": {
             "Packed-Coerce":
