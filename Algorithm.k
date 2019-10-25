@@ -119,7 +119,8 @@ Package Algorithm {
 
 	Every(predicate set...) {
 		;; #true if all elements in 'set' are true according to 'predicate'.
-		Every = Nil?(set...) : True predicate(set...)
+		Every = Nil?(set...) : True 
+				predicate(set...)
 
 		(x xs) = set...
 		Every = predicate(x) : Recur(predicate xs) nil

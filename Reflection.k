@@ -137,6 +137,23 @@ Constraints:Double-Precision!(dp) #[Pattern] {
 	When(Double-Precision(dp) dp)
 }
 
+Function?(fn) {
+	t = Class-Of( { nil } )
+
+	Function? = nil
+
+	Function? = When(t ==t Class-Of(fn) True)
+
+	(f r) = fn
+	Function? = And(Function?(f) Function(r))
+}
+
+Constraints:Function!(fn) {
+	;; Matches when 'fn' is callable
+	When(Function?(fn) fn)
+}
+
+
 Class-Of(a) #[Extend] {
 	vlst = Vector:Unpack(a)
 	Class-Of = (Class-Of(First(vlst)) Arity(vlst))

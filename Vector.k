@@ -20,7 +20,7 @@ Package Vector {
 	Explode(v) {
 		;; Separate elements in vector 'v'
 		elts = Break(Vector v)
-		Explode = elts
+		Explode = List-to-Tuple(elts)
 		Explode = Vector:Unpack(elts)
 	}
 
@@ -174,6 +174,21 @@ Ternary-Select(pred t f) #[Extend] {
 			 			Vector:Explode(t)
 			 			Vector:Explode(f)))))
 }
+
+Select(buffer index) #[Extend] {
+	Vector:Cons( 
+		Algorithm:Map(
+			i => Select(buffer i) 
+			Vector:Explode(Constraints:Vector!(index))))
+}
+
+Select-Wrap(buffer index) #[Extend] {
+	Vector:Cons( 
+		Algorithm:Map(
+			i => Select-Wrap(buffer i) 
+			Vector:Explode(Constraints:Vector!(index))))
+}
+
 
 Infix+v = Curry(Vector:Tuple-Binary-Op Vector:Add)
 Infix-v = Curry(Vector:Tuple-Binary-Op Vector:Sub)

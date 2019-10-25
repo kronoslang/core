@@ -48,6 +48,42 @@ Package Filter {
 		Biquad = y0
 	}
 
+	Lowpass(sig cutoff resonance) {
+		;; Resonant lowpass filter. Attenuate frequencies above 'cutoff'.
+		;; From https://www.musicdsp.org/en/latest/Filters/38-lp-and-hp-filter.html
+		si = Interval-of(sig)
+
+		c = #1 / Math:Tan(Math:Pi * 
+					Max(0.0001 Min(0.4999 cutoff * Interval-of(sig))))
+
+		r = Max(#0.1 Math:Sqrt(#2) * Min(#1 #1 - resonance))
+
+		a = #1 / (#1 + r * c + c * c)
+		b1 = #2 * (#1 - c * c) * a
+		b2 = (#1 - r * c + c * c) * a
+
+		Biquad(sig a a + a a b1 b2)
+	}
+
+	Highpass(sig cutoff resonance) {
+		;; Resonant highpass filter. Attenuate frequencies below 'cutoff'.
+		;; From https://www.musicdsp.org/en/latest/Filters/38-lp-and-hp-filter.html
+
+		si = Interval-of(sig)
+		
+		c = Math:Tan(Math:Pi * 
+				Max(0.0001 Min(0.4999 cutoff * Interval-of(sig))))
+					
+		r = Max(#0.1 Math:Sqrt(#2) * Min(#1 #1 - resonance))
+
+		a0 = #1 / (#1 + r * c + c * c)
+		a1 = #-2 * a0
+		b1 = #2 * (c * c - #1) * a0
+		b2 = (#1 - r * c + c * c) * a0
+
+		Biquad(sig a0 a1 a0 b1 b2)
+	}
+
 	Resonator(sig freq bw) {
 		;; Filters 'sig'nal to produce a resonant peak at 'freq'uency,
 		;; with a bandwidth of 'bw' in Hertz.
@@ -64,11 +100,18 @@ Package Filter {
 
 	Tone(sig cutoff) {
 		;; Filter 'sig'nal with a simple one-pole 6dB/octave lowpass
-		;; slope. The cutoff range is [0,1].
+		;; slope. The cutoff range is [0,1] for closed or fully open.
 		y0 = y1 + cutoff * (sig - y1)
 		y1 = z-1(y0)
 
 		Tone = y0
+	}
+
+	Lpf6(sig cutoff) {
+		;; Filter 'sig'nal with a simple one-pole 6dB/octave lowpass
+		;; slope. The cutoff is specified in Hertz.
+
+		Tone(sig Max(0 Min(0.49999 cutoff * Interval-of(sig))))
 	}
 
 	DC(sig) {
@@ -116,5 +159,32 @@ Package Filter {
 			 #0.9878163707328971]
 
 		Polyphase(sig a b)
+	}
+
+	SVF(sig cutoff resonance) {
+		;; Double-sampled stable state-variable filter. Filter operates at the 'cutoff' frequency and 'resonance' is in range [0,1].
+		;; from https://www.musicdsp.org/en/latest/Filters/92-state-variable-filter-double-sampled-stable.html.
+		;; outputs (notch lowpass highpass bandpass peaking)
+
+		fi = Interval-of(sig)
+		res = Max(0 Min(1 resonance))
+
+		w = #2 * Math:Sin(Math:Pi * Min(#0.25, #0.5 * cutoff * fi))
+		damp = Min(#2 * (#1 - Math:Pow(res #0.25)) 
+				   Min(#2 #2 / w - w * #0.5))
+
+		Step(in low* band*) {
+			notch = in - damp * band*
+			low   = low* + w * band*
+			high  = notch - low
+			band  = w * high + band*
+
+			Step = (notch low high band)
+		}
+
+		(n l h b) = Step(sig z-1(low) z-1(band))
+		(notch low high band) = Step(sig l b)
+
+		SVF = (notch low high band low - high)
 	}
 }

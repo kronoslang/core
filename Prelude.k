@@ -3,7 +3,9 @@ Import Implicit-Coerce
 Import IO
 
 List-to-Tuple(list) {
-	;; Removes trailing 'nil' to convert a list to a tuple
+	;; Removes trailing 'nil' if present to convert a list to a tuple
+	List-to-Tuple = list
+
 	(x xs) = list
 	List-to-Tuple = Nil?(xs) : x
 					(x Recur(xs))

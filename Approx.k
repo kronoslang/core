@@ -27,5 +27,13 @@ Package Approx {
 		Cosine-Shape = x1 * Math:Horner-Scheme(x1 * x1 Cosine-Coefs(order))
 	}
 
+	Tanh(w) {
+		;; Fast hyperbolic tangent approximation; useful for soft saturation.
+		;; From https://www.musicdsp.org/en/latest/Other/238-rational-tanh-approximation.html
+		
+		x = Max(#-3 Min(#3 w))
+		x * (27 + x * x) / (27 + 9 * x * x)
+	}
+
 }
 

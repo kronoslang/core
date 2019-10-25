@@ -176,8 +176,8 @@ Package VM {
 			peak-reset 	   = Reactive:Clock-Edge(peak-clock)
 			combined-sig   = Reactive:Abdicate(sig (sig peak-clock))
 
-			peak+ = z-1(0 Ternary-Select(peak-reset -1 Max(peak+ combined-sig)))
-			peak- = z-1(0 Ternary-Select(peak-reset  1 Min(peak- combined-sig)))
+			peak+ = z-1(0 Ternary-Select(peak-reset -100000 Max(peak+ combined-sig))) 
+			peak- = z-1(0 Ternary-Select(peak-reset 100000 Min(peak- combined-sig)))
 
 			Reactive:Resample((peak+ peak-) peak-clock)
 		}

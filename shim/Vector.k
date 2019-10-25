@@ -5,7 +5,7 @@ Package Vector {
 	Type EVec
 
 	Pack(elements...) {
-		(e es) = elements
+		(e es) = elements...
 
 		Homogeneous?(x) {
 			Equal-Type(Class-Of(x) Class-Of(e))
@@ -13,7 +13,7 @@ Package Vector {
 
 		primitive = Float?(e) | Double?(e) | Int?(e)
 
-		When(Algorithm:Every?(Homogeneous? es) 
+		When(Algorithm:Every(Homogeneous? es) 
 			 Make(EVec elements...))
 	}
 
@@ -22,7 +22,7 @@ Package Vector {
 	}
 
 	Broadcast(width element) {
-		Pack(Algorithm:Expand(width {arg} element))
+		Pack(Algorithm:Expand(width { arg } element))
 	}
 }
 

@@ -70,7 +70,7 @@ Package Audio {
 		 {
 			(_ frames) = Break(Audio-File-Tag External-Asset(path))
 			out = Select(frames arg)
-			Pair?(out) : Vector:Pack(out) out
+			Pair?(out) : Vector:Cons(out) out
 		 })
 	}
 
@@ -82,7 +82,7 @@ Package Audio {
 		 {
 			(_ frames) = Break(Audio-File-Tag External-Asset(path))
 			out = Select-Wrap(frames arg)
-			Pair?(out) : Vector:Pack(out) out
+			Pair?(out) : Vector:Cons(out) out
 		 })
 	}
 }

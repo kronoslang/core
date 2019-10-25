@@ -1,3 +1,5 @@
+Import Reflection
+
 Type Closure
 
 Package Closure {
@@ -14,6 +16,10 @@ Package Closure {
 
 Curry(func a) {
 	Curry = Closure:Cons(func a)
+}
+
+Function?(fn) #[Extend] {
+	When(Class-Of(fn) ==t :Closure True)
 }
 
 Package Fallback {

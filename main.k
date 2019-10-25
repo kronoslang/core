@@ -3,6 +3,8 @@ Import Cycle
 Import Comp
 Import Math
 Import Complex
+Import Control
+Import Delay
 Import Gen
 Import Filter
 Import Vector

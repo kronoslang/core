@@ -215,8 +215,11 @@ Package Gen {
 		} { fn(args...) })
 	}
 
-	Noise() {
-		state = z-1(0.499d Signal(state * #3.9999 * (#1 - state)))
+	Noise(seed) {
+		;; Generate a white noise sound from a seed value that should be
+		;; close to but not exactly 0.5. 
+
+		state = z-1(Coerce(Double seed) Signal(state * #3.9999 * (#1 - state)))
 		2 * Coerce(Float state) - 1
 	}
 
@@ -260,7 +263,28 @@ Package Gen {
 			 		Algorithm:Iterate(num-stages - #1 decimate sig)
 			 		) #2))
 	}
+
+	Drift(seed) {
+		;; Generate random deviation in range [-1,1] at the audio rate.
+		Recur(Constraints:Atom!(seed) 1)
+	}
+
+	Drift(seed deviation) #[Extend] {
+		;; Generate random deviation in range [-deviation,deviation] at the audio rate.
+
+		lcg(seed a c) {
+			Coerce(Int32 
+				Coerce(Int64 seed) * Coerce(Int64 a) 
+				+ Coerce(Int64 c))
+		}
+
+		state = z-1(Coerce(Int32 seed) 
+					Gen:Signal(lcg(state 1103515245i 12345i)))
+
+		(state & 0x3fffffff) * Math:Pow(2 -29) * deviation - deviation
+	}
 }
+
 
 ;; backwards compatibility shims
 
