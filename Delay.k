@@ -21,6 +21,18 @@ Package Delay {
 		out
 	}
 
+	Allpass-Comb(sig num-samples feedback) {
+		;; Constructs a series combination of a feedforward and feedback
+		;; comb filter sharing a delay line to create an allpass filter 
+		;; structure. The echo density is specified by `num-samples` and 
+		;; decay rate by `feedback`.
+
+		v0 = sig - feedback * v-n
+		y0 = feedback * v0 + v-n
+		v-n = rbuf(Constraints:Constant!(num-samples) v0)
+
+		y0
+	}
 
 	Sample-Delay(sig num-samples max-delay) #[Extend] {
 		;; Delays 'sig'nal for 'num-samples' ticks of its clock.
@@ -40,7 +52,7 @@ Package Delay {
 		;; 'Eval'uate the (closure) output of this function with a parameter
 		;; specifying the desired delay up to 'max-delay' frames of 'sig'nal.
 		;; The output can be enhanced by wrapping it in interpolation, or 
-		;; altering the time base, such as 'Compose((* sample-rate) Function:Wrap-Hermite(delay-fn))' 
+		;; altering the time base, such as 'Compose( Function:Wrap-Hermite(delay-fn) (* sample-rate))' 
 		;; which would result in a 3rd order interpolated delay with the parameter in seconds.
 
 		delay => Sample-Delay(sig delay max-delay) 
@@ -76,17 +88,17 @@ Package Delay {
 		;; Delays 'sig'nal by 'delay-time' seconds, which can vary 
 		;; up to 'buffer-size' ticks of 'sig'nal clock. The delayed signal
 		;; is not interpolated, so this delay is best used with static 
-		;; 'delay-time'. Delayed output is added to the input signal
-		;; processed via the 'feedback-fn', e.g. a damping filter
-		;; or a feedback coefficient such as '(* 0.5)'.
+		;; 'delay-time'. Delayed output is processed via the 'feedback-fn', 
+		;; e.g. a damping filter or a feedback coefficient such as '(* 0.5)'
+		;; and added back to the input signal.
 
 		(buf out pos) = rcsbuf(sig - sig 
 							   Constraints:Constant!(buffer-size)
-							   sig + feedback-fn(fbout))
+							   sig + fbout)
 
 		num-samples = delay-time * Rate-of(sig)
 
-		fbout = z-1(Select-Wrap(buf pos - num-samples + #1))
+		fbout = feedback-fn(z-1(Select-Wrap(buf pos - num-samples + #1)))
 
 		fbout
 	}
@@ -103,13 +115,13 @@ Package Delay {
 
 		(buf out pos) = rcsbuf(sig - sig
 							   Constraints:Constant!(buffer-size)
-							   sig + feedback-fn(fbout))
+							   sig + fbout)
 
 		smp-pt = pos - delay-time * Rate-of(sig)
 
 		points = Vector:Explode(Select-Wrap(buf Vector:Indices(#4) + smp-pt))
 
-		fbout = z-1(Math:Hermite-Interpolation(Fraction(smp-pt) points))
+		fbout = feedback-fn(z-1(Math:Hermite-Interpolation(Fraction(smp-pt) points)))
 
 		fbout
 	}

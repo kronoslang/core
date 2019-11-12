@@ -27,6 +27,15 @@ Package Fallback {
 	}
 }
 
+And(a b) #[Extend] {
+	When( True?(a) b
+		  Nil?(a) a )	
+}
+
+Or(a b) #[Extend] {
+	When( Nil?(a) b )
+}
+
 Package Type-Conversion {
 	Implicit?(from to) {
 		Implicit? =

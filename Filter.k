@@ -39,10 +39,12 @@ Package Filter {
 		;; 'a0' 'a1' and 'a1', and feedback coefficients
 		;; 'b1' and 'b2'. The output comes from the difference
 		;; equation y[t] = a0 x[t] + a1 x[t-1] + a2 x[t-2] - b1 y[t-1] - b2 y[t-2]
+
 		x1 = z-1(sig)
 		x2 = z-1(x1)
 		y1 = z-1(y0)
 		y2 = z-1(y1)
+
 		y0 = sig * a0 + x1 * a1 + x2 * a2 - b1 * y1 - b2 * y2
 
 		Biquad = y0
@@ -87,6 +89,7 @@ Package Filter {
 	Resonator(sig freq bw) {
 		;; Filters 'sig'nal to produce a resonant peak at 'freq'uency,
 		;; with a bandwidth of 'bw' in Hertz.
+		
 		sr = Interval-of(sig)
 		w = #2 * freq * sr * Math:Pi
 		r = Math:Exp(Neg(bw * sr))
@@ -161,6 +164,23 @@ Package Filter {
 		Polyphase(sig a b)
 	}
 
+	Upsample(sig) {
+		;; Double-samples 'sig' by inserting zeroes and halfband-filtering. 
+		;; Please note that the output will tick at twice the rate of 'sig'.
+
+		chopper = Reactive:Resample(1 - z-1(chopper) Reactive:Upsample(sig #2))
+
+		Halfband(sig * chopper)
+
+	}
+
+	Downsample(sig) {
+		;; Half-band filter 'sig' and drop every other sample. Please note
+		;; that the output will tick at half the rate of 'sig'.
+
+		Reactive:Downsample(Halfband(sig) #2)
+	}
+
 	SVF(sig cutoff resonance) {
 		;; Double-sampled stable state-variable filter. Filter operates at the 'cutoff' frequency and 'resonance' is in range [0,1].
 		;; from https://www.musicdsp.org/en/latest/Filters/92-state-variable-filter-double-sampled-stable.html.
@@ -182,9 +202,10 @@ Package Filter {
 			Step = (notch low high band)
 		}
 
-		(n l h b) = Step(sig z-1(low) z-1(band))
+		(n l h b) =             Step(sig z-1(low) z-1(band))
 		(notch low high band) = Step(sig l b)
 
 		SVF = (notch low high band low - high)
 	}
+
 }

@@ -240,9 +240,6 @@ Package Gen {
 		;; is decimated by 2. As a result, any 'Gen:Signal' clock at the output will
 		;; correspond to the normal rate.
 
-		factor = Math:Pow(#2 num-stages)
-		sig = Faster(factor fn args...)
-
 		; gentle slope with -103dB stopband for
 		; all but the final decimation stages
 		a = [#0.03583278843106211
@@ -254,6 +251,10 @@ Package Gen {
 			 #0.4243248712718685
 			 #0.7062921421386394
 			 #0.9415030941737551]
+
+		factor = Math:Pow(#2 num-stages)
+
+		sig = Faster(factor fn args...)
 
 		decimate = sig => Reactive:Downsample(Filter:Polyphase(sig a b) #2)
 

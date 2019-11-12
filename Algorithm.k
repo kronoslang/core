@@ -290,6 +290,11 @@ Sum(numbers...) {
 	Sum = Algorithm:Reduce(Add numbers...)
 }
 
+Average(numbers...) {
+	;; Compute the average of `numbers...` 
+	Sum(numbers...) * (#1 / Arity(numbers...))
+}
+
 Product(numbers...) {
 	;; Compute the product of `numbers...`.
 	Product = Algorithm:Reduce(Mul numbers...)
