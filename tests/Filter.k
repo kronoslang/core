@@ -1,6 +1,6 @@
 Import Algorithm
 Import Closure
-Import "tests/Osc.k"
+Import "Osc.k"
 Import Gen
 Import Filter
 

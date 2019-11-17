@@ -234,7 +234,7 @@ Synth(midi-bytes polyphony krate) {
 
 
 ; --- Entry points ------------------------------------------------------------------
-Import "tests/Osc.k"
+Import "Osc.k"
 
 ramp = Buzzer(0.5)
 
@@ -245,7 +245,7 @@ Package Test {
 	}
 
 	Filter-Lowpass-Double() {
-		noise = Pseudo-White(0.5d)
+		noise = Pseudo-White(0.5d)cd 
 		sig = Filter(noise -0.9d + Taylor-Sin(1d 0.1d)) * 0.1d
 		Filter-Lowpass-Double = Coerce(Float Type-Check(sig Double-Precision?))
 	}
