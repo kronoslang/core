@@ -79,4 +79,18 @@ Package Math {
 		((((a * h) - bn) * h + c) * h + x0)
 	}
 
+	Clamp(x low-bound high-bound) {
+		;; Clamp the values of 'x' so that it will not go below 'low-bound' or above
+		;; 'high-bound'
+
+		Min(high-bound Max(low-bound x))
+	}
+
+	Mix(mix a b) {
+		;; Weighted average of 'a' and 'b' according to ratio, so that 0 corresponds to 
+		;; fully 'a', 1 to 'b' and 0.5 to an equal mix.
+
+		Linear-Interpolation(Clamp(mix #0 #1) a b)
+	}
+
 }

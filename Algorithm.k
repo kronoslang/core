@@ -117,6 +117,26 @@ Package Algorithm {
 		Iterate = n > #0 : Recur(n - #1 func func(x)) x
 	}
 
+	Repeat(n x) {
+		;; Makes a list of 'n' elements that have the value 'x'.
+		Expand(n '_  x)
+	}
+
+	Count(n) {
+		;; Makes a list of invariant constants from #1 to n
+		Expand(n (+ #1) #1)
+	}
+
+	Count(n start) #[Extend] {
+		;; Makes a list of 'n' elements, counting up from 'start'
+		Expand(n (+ #1) start)
+	}
+
+	Count(n start step) #[Extend] {
+		;; Makes a list of 'n' elements, counting up from 'start' in 'step's.
+		Expand(n (+ step) start)
+	}
+
 	Every(predicate set...) {
 		;; #true if all elements in 'set' are true according to 'predicate'.
 		Every = Nil?(set...) : True 

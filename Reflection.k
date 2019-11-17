@@ -59,6 +59,11 @@ Constraints:Sequence!(p) #[Pattern] {
 	When(Pair?(p) p)
 }
 
+Constraints:Seq-Length!(s n) #[Pattern] {
+	;; Matches when 's' is a sequence of at least 'n' elements
+	When(Arity(s) >= n s)
+}
+
 Atom?(a) {
 	Atom? = Not(Pair?(a))
 }

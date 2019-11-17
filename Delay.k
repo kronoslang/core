@@ -16,7 +16,7 @@ Package Delay {
 		;; multiplied by 'feedback'
 
 		out = rbuf(Constraints:Constant!(num-samples) 
-				   sig + feedback * out)
+				   (sig + out) * feedback)
 
 		out
 	}
@@ -77,9 +77,9 @@ Package Delay {
 
 		(buf out pos) = rcsbuf(Constraints:Constant!(buffer-size) sig)
 
-		smp-pt = pos - delay-time
+		smp-pt = pos - Max(#4 delay-time * sr + #1)
 
-		points = Vector:Explode(Select-Wrap(buf Vector:Cons(-1i 0i 1i 2i) + smp-pt))
+		points = Vector:Explode(Select-Wrap(buf Vector:Indices(#4) + Coerce(Int32 smp-pt)))
 
 		Math:Hermite-Interpolation(Fraction(smp-pt) points)
 	}
@@ -117,9 +117,9 @@ Package Delay {
 							   Constraints:Constant!(buffer-size)
 							   sig + fbout)
 
-		smp-pt = pos - delay-time * Rate-of(sig)
+		smp-pt = pos - Max(#4 delay-time * sr + #1)
 
-		points = Vector:Explode(Select-Wrap(buf Vector:Indices(#4) + smp-pt))
+		points = Vector:Explode(Select-Wrap(buf Vector:Indices(#4) + Coerce(Int32 smp-pt)))
 
 		fbout = feedback-fn(z-1(Math:Hermite-Interpolation(Fraction(smp-pt) points)))
 

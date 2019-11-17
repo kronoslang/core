@@ -64,4 +64,18 @@ Package Envelope {
 		renv = Release(gate release)
 		senv * renv
 	}
+
+	AR(gate attack release) {
+		;; Generates a linear attack-release envelope given a 'gate' signal.
+		;; The upward edge in 'gate' becomes a ramp of 'attack' seconds,
+		;; and the downard edge is a ramp of 'release' seconds.
+
+		(g _) = Reactive:Couple(gate Control:Signal(0))
+
+		sr = Reactive:Rate(g)
+		ar = #1 / Max(#1 a * sr)
+		rr = #1 / Max(#1 r * sr)
+
+		Slew(gate ar rr)
+	}
 }
