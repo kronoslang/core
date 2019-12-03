@@ -17,6 +17,18 @@ Package Vector {
 		Cons = Make(Vector Vector:Pack(elements...))
 	}
 
+	Vectorize(elements...) {
+		;; If `elements...` is a tuple, turn it into a vector.
+		;; Otherwise return as-is.
+
+		es = List-to-Tuple(elements...)
+
+		When(Pair?(es)
+				Cons(es)
+			 Otherwise
+				es)
+	}
+
 	Explode(v) {
 		;; Separate elements in vector 'v'
 		elts = Break(Vector v)
@@ -114,6 +126,15 @@ Package Vector {
 	Ones(count) {
 		;; Produces a vector with 'count' elements, each set to 1.
 		Repeat(count 1)
+	}
+
+	Split(vector) {
+		;; Splits `vector` into a tuple of two smaller vectors
+		;; half the width. If the original width is odd, the first
+		;; vector will be smaller.
+
+		(f s) = Algorithm:Split(Explode(vector))
+		(Vectorize(f) Vectorize(s))
 	}
 }
 

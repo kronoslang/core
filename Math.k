@@ -7,6 +7,7 @@ Package Math {
 	}
 
 	Pi = Atan2(#1 #0) * #2
+	E = Exp(#1)
 
 	Tan(x) {
 		;; Computes the tanget of 'x'
@@ -93,4 +94,28 @@ Package Math {
 		Linear-Interpolation(Clamp(mix #0 #1) a b)
 	}
 
+	Binomial-Coef(n k) {
+		;; computes binomial coefficient for the pair `(n k)`
+
+		Use Algorithm
+
+		When(k ==t #0 
+				#1 
+			 k ==t #1
+			 	n
+			 Otherwise 
+				Reduce(
+					(p i) => p * (n + #1 - i) / i 
+					n Rest(Count(k))))
+	}
+
+	Factorial(n) {
+		;; computes the factorial of the invariant constant 'n'
+
+		x = Truncate(n)
+		When(x > #1 
+			 	x * Factorial(x - #1)
+			 Otherwise 
+			 	#1)
+	}
 }
