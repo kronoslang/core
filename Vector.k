@@ -137,12 +137,20 @@ Package Vector {
 		(Vectorize(f) Vectorize(s))
 	}
 
-	Concat(a b) {
-		;; Concatenates elements in vectors `a` and `b`		
-		Cons(
-			Algorithm:Concat(
-				Explode(a)
-				Explode(b)))
+	Concat(a b...) {
+		;; Concatenates elements in vectors, tuples or scalars
+		;; into a vector.
+
+		ae = When(Vector?(a) Explode(a)
+				  Otherwise a)
+
+		be = When(Vector?(b...) Explode(b...)
+				  Otherwise b...)
+
+		Concat = Cons(Algorithm:Concat(ae be))
+
+		(b1 bs) = b...
+		Concat = Recur(a Concat(b1 bs))
 	}
 }
 
