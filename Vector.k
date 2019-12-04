@@ -136,6 +136,14 @@ Package Vector {
 		(f s) = Algorithm:Split(Explode(vector))
 		(Vectorize(f) Vectorize(s))
 	}
+
+	Concat(a b) {
+		;; Concatenates elements in vectors `a` and `b`		
+		Cons(
+			Algorithm:Concat(
+				Explode(a)
+				Explode(b)))
+	}
 }
 
 Package Fallback {
