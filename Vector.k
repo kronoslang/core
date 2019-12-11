@@ -13,7 +13,7 @@ Package Vector {
 	Type Vector
 	Cons(elements...) {
 		;; Combine 'elements...' into a vector
-		Cons = Make(Vector elements...)
+		Cons = Make(Vector List-to-Tuple(elements...))
 		Cons = Make(Vector Vector:Pack(elements...))
 	}
 
@@ -32,7 +32,7 @@ Package Vector {
 	Explode(v) {
 		;; Separate elements in vector 'v'
 		elts = Break(Vector v)
-		Explode = List-to-Tuple(elts)
+		Explode = elts
 		Explode = Vector:Unpack(elts)
 	}
 
