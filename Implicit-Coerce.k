@@ -50,6 +50,13 @@ Package Type-Conversion {
 			Equal-Type(from Float)    :
 				(Equal-Type(to Double) : True nil)
 			nil
+
+		(vtty vtw) = to
+		(vfty vfw) = from
+		Implicit? = Recur(vfty vtty)
+
+		Implicit? = Recur(First(Class-Of(from)) to)
+		Implciit? = Recur(from First(Class-Of(to)))
 	}
 
 	Implicit(type data) #[Pattern] {

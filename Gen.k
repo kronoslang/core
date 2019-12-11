@@ -267,12 +267,6 @@ Package Gen {
 
 	Drift(seed) {
 		;; Generate random deviation in range [-1,1] at the audio rate.
-		Recur(Constraints:Atom!(seed) 1)
-	}
-
-	Drift(seed deviation) #[Extend] {
-		;; Generate random deviation in range [-deviation,deviation] at the audio rate.
-
 		lcg(seed a c) {
 			Coerce(Int32 
 				Coerce(Int64 seed) * Coerce(Int64 a) 
@@ -282,7 +276,12 @@ Package Gen {
 		state = z-1(Coerce(Int32 seed) 
 					Gen:Signal(lcg(state 1103515245i 12345i)))
 
-		(state & 0x3fffffff) * Math:Pow(2 -29) * deviation - deviation
+		(state & 0x3fffffff) * Math:Pow(2 -29)
+	}
+
+	Drift(seed deviation) #[Extend] {
+		;; Generate random deviation in range [-deviation,deviation] at the audio rate.
+		(Recur(seed) * #2 - #1) * deviation
 	}
 }
 

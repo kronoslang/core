@@ -91,7 +91,7 @@ Package Vector {
 	Broadcast-To(vector scalar) {
 		;; Result is structurally similar to 'vector', but all elements
 		;; are 'scalar'.
-		Broadcast-To = Cons(Algorithm:Map(e => Coerce(e scalar) Explode(vector)))
+		Broadcast-To = Cons(Algorithm:Map({ scalar } Explode(vector)))
 		Broadcast-To =
 			When(Vector?(scalar)
 				Cons(Algorithm:Zip-With(Coerce Explode(vector) Explode(scalar))))
@@ -180,7 +180,16 @@ Package Type-Conversion {
 			 Vector?(type)
 			 	 Vector:Cons(
 			 	 	Algorithm:Map(e => Coerce(e data)
-			 	 		Vector:Explode(type))))
+			 	 		Vector:Explode(type)))
+			 Vector?(data)
+			 	Vector:Cons(
+			 	 Algorithm:Map(Curry(Coerce type)
+			 	 			   Break(Vector:Vector data))))
+	}
+
+	Implicit?(type data) #[Extend] {
+		elts = Break(Vector:Vector data)
+		Algorithm:Every(Curry(Implicit? type) elts)
 	}
 }
 
