@@ -219,7 +219,9 @@ Package Gen {
 		;; Generate a white noise sound from a seed value that should be
 		;; close to but not exactly 0.5. 
 
-		state = z-1(Coerce(Double seed) Signal(state * #3.9999 * (#1 - state)))
+		state = z-1(Coerce(Double Or(seed 0.499d)) 
+					Signal(state * #3.9999 * (#1 - state)))
+					
 		2 * Coerce(Float state) - 1
 	}
 
