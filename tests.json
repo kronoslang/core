@@ -152,7 +152,7 @@
         },
         "Core": {
             "Binding": {},
-            "Cycle-Error": {},
+            "Cycle-Error": {"exclude": "Static"},
             "Function-Binding": {},
             "Infix-Override": {}
         },

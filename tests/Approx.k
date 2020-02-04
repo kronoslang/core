@@ -13,4 +13,11 @@ Package Test {
 				orders)
 
 	}
+
+	Faster() {
+		Use Approx:Faster
+		fns = [Log2 Log Pow2 Pow Exp Sigmoid Sinh Cosh Tanh]
+		vals = Algorithm:Expand(#10 (+ 2) -10)
+		Algorithm:Map(fn => Algorithm:Map(fn vals) fns)
+	}
 }

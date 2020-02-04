@@ -3,7 +3,7 @@ Import Reflection
 
 Package Algorithm {
 	Brief(documentation) {
-		;; Higher order functions for applying transformations over data structures.
+		;; Generate algorithmic circuits from data structures.
 		nil
 	}
 

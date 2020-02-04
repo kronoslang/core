@@ -3,6 +3,11 @@ Import Algorithm
 Import Math
 
 Package Envelope {
+	Brief() {
+		;; Make musical control envelopes out of trigger and gate signals.
+		nil
+	}
+
 	Linear(gate segments...) {
 		;; Envelope with linear `segments...`, given as a list of pairs
 		;; in the format `(value seconds)`. The generator will produce
@@ -35,7 +40,9 @@ Package Envelope {
 		prev = z-1(out)
 		dist = sig - prev
 
-		prev + Max(rate- Min(rate+ dist))
+		out = prev + Max(rate- Min(rate+ dist))
+
+		out
 	}
 
 	Release(gate duration) {
@@ -73,8 +80,8 @@ Package Envelope {
 		(g _) = Reactive:Couple(gate Control:Signal(0))
 
 		sr = Reactive:Rate(g)
-		ar = #1 / Max(#1 a * sr)
-		rr = #1 / Max(#1 r * sr)
+		ar = #1 / Max(#1 attack * sr)
+		rr = #1 / Max(#1 release * sr)
 
 		Slew(gate ar rr)
 	}

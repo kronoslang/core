@@ -2,6 +2,11 @@ Import Algorithm
 Import IO
 
 Package Control {
+	Brief() {
+		;; Tools for control signals. Edge detectors, signal smoothers and hold circuits.
+		nil
+	}
+
 	Sample-and-Hold(sig sample?) {
 		;; When `sample?` is not true, freeze the value of `sig`nal.
 		state = z-1(sig Algorithm:Choose(sample? sig state))
