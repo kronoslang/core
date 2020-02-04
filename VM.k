@@ -250,6 +250,16 @@ Package Actions {
 		} Make(VM:Instance 0q "n/a" ))
 	}
 
+	Render(audio-file num-frames sample-rate closure) {
+		VM:Make-Op[
+			"kvm_render!"
+			"const char*" audio-file 
+			"typeof" 	  closure 
+			"const void*" closure 
+			"float"		  Coerce(Float sample-rate) 
+			"int64"		  Coerce(Int64 num-frames)]
+	}
+
 	Stop(instance) {
 		Stop = Throw:Type-Error(instance " is not an instance that can be stopped.")
 		(id returns) = Break(VM:Instance instance)
