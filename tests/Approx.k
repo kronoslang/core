@@ -16,14 +16,14 @@ Package Test {
 
 	Faster() {
 		Use Approx:Faster
-		fns = [Log2 Log Pow2 Pow Exp Sigmoid Sinh Cosh Tanh]
+		fns = [Log2 Log Pow2 x => Pow(x x) Exp Sigmoid Sinh Cosh]
 		vals = Algorithm:Expand(#10 (+ 2) -10)
 		Algorithm:Map(fn => Algorithm:Map(fn vals) fns)
 	}
 
 	Fast() {
 		Use Approx:Fast
-		fns = [Log2 Log Pow2 Pow Exp Sigmoid Sinh Cosh Tanh]
+		fns = [Log2 Log Pow2 x => Pow(x x) Exp Sigmoid Sinh Cosh Tanh]
 		vals = Algorithm:Expand(#10 (+ 2) -10)
 		Algorithm:Map(fn => Algorithm:Map(fn vals) fns)
 	}
