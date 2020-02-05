@@ -3,7 +3,7 @@ Import Algorithm
 Import Math
 
 Package Envelope {
-	Brief() {
+	Brief(documentation) {
 		;; Make musical control envelopes out of trigger and gate signals.
 		nil
 	}
@@ -54,7 +54,7 @@ Package Envelope {
 
 		(g _) = Reactive:Couple(gate Control:Signal(0))
 		sr = Reactive:Rate(g)
-		rate = #1 / (sr * duration)
+		rate = #1 / Max(#1 sr * duration)
 		out = Max(0 Ternary-Select(g > #0 1 z-1(1 out - rate)))
 
 		out
@@ -81,7 +81,7 @@ Package Envelope {
 
 		sr = Reactive:Rate(g)
 		ar = #1 / Max(#1 attack * sr)
-		rr = #1 / Max(#1 release * sr)
+		rr = #-1 / Max(#1 release * sr)
 
 		Slew(gate ar rr)
 	}
