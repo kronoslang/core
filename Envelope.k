@@ -83,6 +83,6 @@ Package Envelope {
 		ar = #1 / Max(#1 attack * sr)
 		rr = #-1 / Max(#1 release * sr)
 
-		Slew(gate ar rr)
+		Slew(g ar rr)
 	}
 }
