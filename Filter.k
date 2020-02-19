@@ -117,6 +117,29 @@ Package Filter {
 		Tone(sig Max(0 Min(0.49999 cutoff * Interval-of(sig))))
 	}
 
+	Pole(sig pole) {
+		;; First-order filter with a single `pole`
+		y0 = sig + z-1(y0) * pole
+
+		y0
+	}
+
+	Zero(sig zero) {
+		;; First-order filter with a single `zero`
+
+		sig - zero * z-1(sig)
+
+	}
+
+	Pole-Zero(sig pole zero) {
+		;; First-order filter with one `pole` and one `zero`.
+
+		y0 = sig + y1 * pole
+		y1 = z-1(y0)
+		
+		y0 - zero * y1
+	}
+
 	DC(sig) {
 		;; Remove any DC offset from 'sig'nal
 		R = #1 - (#190 / Rate-of(sig))

@@ -1,7 +1,7 @@
 Import Algorithm
 
 Vector?(v) {
-	Class-Of(v) ==t Vector:Vector
+	Class-of(v) ==t Vector:Vector
 }
 
 Constraints:Vector!(v) #[Pattern] {
@@ -38,7 +38,7 @@ Package Vector {
 
 	Packed?(v) {
 		Packed? = nil
-		(e w) = Class-Of(Break(Vector v))
+		(e w) = Class-of(Break(Vector v))
 		Packed? = Require(w True)
 	}
 
@@ -158,17 +158,17 @@ Package Fallback {
 	Binary-Op(func name a b) #[Extend] {
 		overload = Curry(Vector:Zip-Op func)
 
-		Binary-Op = When((Class-Of(a) ==t Vector:Vector) &
-						 (Class-Of(b) ==t Vector:Vector)
+		Binary-Op = When((Class-of(a) ==t Vector:Vector) &
+						 (Class-of(b) ==t Vector:Vector)
 						 	overload(a b)
-						 (Class-Of(a) ==t Vector:Vector)
+						 (Class-of(a) ==t Vector:Vector)
 						 	overload(a Vector:Broadcast-To(a b))
-						 (Class-Of(b) ==t Vector:Vector)
+						 (Class-of(b) ==t Vector:Vector)
 						 	overload(Vector:Broadcast-To(b a) b))
 	}
 
 	Unary-Op(func name a) #[Extend] {
-		When((Class-Of(a) ==t Vector:Vector)
+		When((Class-of(a) ==t Vector:Vector)
 				Vector:Map-Op(func a))
 	}
 }
@@ -194,9 +194,9 @@ Package Type-Conversion {
 }
 
 Ternary-Select(pred t f) #[Extend] {
-	pv? = Class-Of(pred) ==t Vector:Vector
-	tv? = Class-Of(t) ==t Vector:Vector
-	fv? = Class-Of(f) ==t Vector:Vector
+	pv? = Class-of(pred) ==t Vector:Vector
+	tv? = Class-of(t) ==t Vector:Vector
+	fv? = Class-of(f) ==t Vector:Vector
 
 	vec = pv? : pred
 		  tv? : t

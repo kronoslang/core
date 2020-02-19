@@ -5,7 +5,7 @@ Import Reflection
 Type pk
 
 Unwrap(sig) #[Pattern] {
-	Unwrap = Break(Class-Of(sig) sig)
+	Unwrap = Break(Class-of(sig) sig)
 	Unwrap = Vector:Unpack(sig)
 }
 
@@ -90,7 +90,7 @@ Package VM {
 		sig = closure( Make(Instance Self-ID() nil) )
 		bus = External(("unsafe" "accumulator") mixbus())
 
-		When(Equal-Type(Class-Of(sig) Op)
+		When(Equal-Type(Class-of(sig) Op)
 				Effect-Dependency(bus Execute(sig mixbus))
 			 Otherwise
 				Handle(Mixer:Onto-Bus[bus sig]
@@ -443,5 +443,5 @@ Package Actions {
 
 Invoke-With(left right) {
 	Invoke-With = right(left)
-	Invoke-With = When(Equal-Type(Class-Of(left) VM:Op) Actions:Invoke-With(left right))
+	Invoke-With = When(Equal-Type(Class-of(left) VM:Op) Actions:Invoke-With(left right))
 }

@@ -267,7 +267,7 @@ Package Gen {
 			 		) #2))
 	}
 
-	Drift(seed) {
+	Random(seed) {
 		;; Generate random deviation in range [0,1] at the audio rate.
 		lcg(seed a c) {
 			Coerce(Int32 
@@ -281,9 +281,14 @@ Package Gen {
 		(state & 0x3fffffff) * Math:Pow(2 -30)
 	}
 
-	Drift(seed deviation) #[Extend] {
+	Random(seed deviation) #[Extend] {
 		;; Generate random deviation in range [-deviation,deviation] at the audio rate.
 		(Recur(seed) * #2 - #1) * deviation
+	}
+
+	Random(seed low-bound high-bound) #[Extend] {
+		;; Generate random deviation in range [low-bound, high-bound] at the audio rate.
+		(Recur(seed) * (high-bound - low-bound) + low-bound)
 	}
 }
 
@@ -295,3 +300,4 @@ Wave:Tri = Gen:Tri
 Wave:Saw = Gen:Saw-
 Wave:Sin-DWG = Gen:Sin-Waveguide
 Noise:Pseudo-White = Gen:Noise
+Gen:Drift = Gen:Random

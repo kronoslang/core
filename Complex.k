@@ -105,8 +105,8 @@ Package Fallback {
 
 		(key overload) = Algorithm:Some((k o) => (k ==t func) overloads)
 
-		Binary-Op = When(Equal-Type(Class-Of(a) Complex) &
-						 Equal-Type(Class-Of(b) Complex) &
+		Binary-Op = When(Equal-Type(Class-of(a) Complex) &
+						 Equal-Type(Class-of(b) Complex) &
 						 Not(Nil?(overload))
 						 :Eval(overload a b))
 	}
@@ -121,10 +121,10 @@ Abs(args) #[Extend] {
 }
 
 Complex?(z) {
-	Complex? = Equal-Type(Class-Of(z) Complex)
+	Complex? = Equal-Type(Class-of(z) Complex)
 }
 
-I = Complex:Cons(0 1)
+I = Complex:Cons(#0 #1)
 
 Package Type-Conversion {
 	Explicit(type data) #[Extend] {
@@ -133,15 +133,19 @@ Package Type-Conversion {
 
 		; Convert real number to complex
 		Explicit = When(
-			Equal-Type(Class-Of(type) Complex)
-			Complex:Cons-Maybe(data #0))
+			Equal-Type(Class-of(type) Complex)
+			Complex:Cons-Maybe(
+				Type-Conversion:Upgrade(Complex:Real(type) data)
+				Type-Conversion:Upgrade(Complex:Img(type) #0)))
 	}
 
 	Implicit(type data) #[Extend] {
 		; Reals are implicitly upgraded to Complex
 		Implicit = When(
-			Equal-Type(Class-Of(type) Complex)
-			Complex:Cons-Maybe(data #0))
+			Equal-Type(Class-of(type) Complex)
+			Complex:Cons-Maybe(
+				Type-Conversion:Upgrade(Complex:Real(type) data) 
+				Type-Conversion:Upgrade(Complex:Img(type) #0)))
 	}
 }
 

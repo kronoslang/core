@@ -13,9 +13,9 @@ Package Type-Conversion {
 			Equal-Type(type 0i)  	: Cvt-Int32(data)
 			Equal-Type(type 0q)  	: Cvt-Int64(data)
 			Equal-Type(type data)	: data
-			Equal-Type(type Class-Of(data)) : data
+			Equal-Type(type Class-of(data)) : data
 			Equal-Type(type "")		: String:Convert(data)
-			Throw:Invalid-Argument("Can't coerce " Class-Of(data) " to " Class-Of(type))
+			Throw:Invalid-Argument("Can't coerce " Class-of(data) " to " Class-of(type))
 
 	}
 
@@ -25,7 +25,7 @@ Package Type-Conversion {
 	}
 
 	Vector-Type(type) {
-		Vector-Type = Class-Of(type)
+		Vector-Type = Class-of(type)
 		(ty width) = type
 		Vector-Type = Require(width (ty width))
 	}
@@ -39,13 +39,14 @@ Package Type-Conversion {
 		vecsrc = Vector:Unpack(data) ; Vector source
 		Explicit = When(width == Arity(vecsrc) Coerce-Class(ty data))
 		Explicit = When(Constant?(data) Vector:Broadcast(width Coerce-Class(ty data)))
-		Explicit = When(Equal-Type(type data) data)
+		Explicit = When(Equal-Type(type data) data
+					    Class-of(type) ==t Class-of(data) data)
 	}
 }
 
 
 Coerce(type data) {
-	Coerce = Throw:Invalid-Argument("Can't coerce " Class-Of(data) " to " Class-Of(type))
+	Coerce = Throw:Invalid-Argument("Can't coerce " Class-of(data) " to " Class-of(type))
 	Coerce = Type-Conversion:Explicit(type data)
 }
 

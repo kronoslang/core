@@ -38,7 +38,7 @@ Package Control {
 		next = prev + coef * (in - prev)
 
 		(s ss) = sig
-		ty = Class-Of(sig)
+		ty = Class-of(sig)
 
 		Polymorphic( (Recur(s rate) Recur(ss rate))
 					  Make(ty Recur(Break(ty sig) rate)) 
@@ -56,7 +56,7 @@ Package Control {
 		next = prev + coef * (in - prev)
 
 		(s ss) = sig
-		ty = Class-Of(sig)
+		ty = Class-of(sig)
 
 		Polymorphic( (Recur(s rate) Recur(ss rate))
 					  Make(ty Recur(Break(ty sig) rate)) 
@@ -74,7 +74,7 @@ Package Control {
 		next = prev + coef * (in - prev)
 
 		(s ss) = sig
-		ty = Class-Of(sig)
+		ty = Class-of(sig)
 
 		Polymorphic( (Recur(s rate) Recur(ss rate))
 					  Make(ty Recur(Break(ty sig) rate)) 
@@ -92,7 +92,7 @@ Package Control {
 		next = prev + coef * (in - prev)
 
 		(s ss) = sig
-		ty = Class-Of(sig)
+		ty = Class-of(sig)
 
 		Polymorphic( (Recur(s rate) Recur(ss rate))
 					  Make(ty Recur(Break(ty sig) rate)) 

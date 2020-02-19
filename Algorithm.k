@@ -200,7 +200,7 @@ Package Algorithm {
 		Choose = (Choose(truth wt wf) Choose(truth wts wfs))
 
 		; choose for identical custom types
-		tid = Class-Of(when-true)
+		tid = Class-of(when-true)
 		Choose = When(when-true ==t when-false
 					  Make(tid Choose(
 					  	truth Break(tid when-true) Break(tid when-false))))

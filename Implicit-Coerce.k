@@ -11,15 +11,9 @@ Package Fallback {
 
 	Binary-Op(func name a b) #[Extend] {
 		Binary-Op = When(
-			Pair?(b)
-				Algorithm:Reduce(func a b)
 			Not(Equal-Type(a b))
 				func(Coerce-Binary(a b)))
 
-	}
-
-	Unary-Op(func name a) #[Extend] {
-		Unary-Op = When(Pair?(a) Algorithm:Map(func a))
 	}
 
 	Bad-Coerce(type data) {
@@ -40,28 +34,32 @@ Package Type-Conversion {
 	Implicit?(from to) {
 		Implicit? =
 			Equal-Type(from Constant) : True
-			Equal-Type(from Int32)     :
+			Equal-Type(from Int32) :
 				(Equal-Type(to Float)  : True
 				 Equal-Type(to Double) : True
-				 Equal-Type(to Int64)  : True nil)
-			Equal-Type(from Int64)    :
+				 Equal-Type(to Int64)  : True 
+				 nil)
+			Equal-Type(from Int64) :
 				(Equal-Type(to Float)  : True
-				 Equal-Type(to Double) : True nil)
-			Equal-Type(from Float)    :
-				(Equal-Type(to Double) : True nil)
+				 Equal-Type(to Double) : True 
+				 nil)
+			Equal-Type(from Float) :
+				(Equal-Type(to Double) : True 
+				 nil)
 			nil
 
-		(vtty vtw) = to
-		(vfty vfw) = from
-		Implicit? = Recur(vfty vtty)
-
-		Implicit? = Recur(First(Class-Of(from)) to)
-		Implciit? = Recur(from First(Class-Of(to)))
+		Implicit? = When(Pair?(to) Recur(from First(to)))
+		Implicit? = When(Pair?(from) Recur(First(from) to))
 	}
 
 	Implicit(type data) #[Pattern] {
 		Implicit = When(
-			Implicit?(data type) | Implicit?(Class-Of(data) type) | Implicit?(Class-Of(data) Class-Of(type))
+			Implicit?(data type) | Implicit?(Class-of(data) type) | Implicit?(Class-of(data) Class-of(type))
 				Explicit(type data))
+	}
+
+	Upgrade(alternative data) {
+		Upgrade = data
+		Upgrade = Implicit(alternative data)
 	}
 }

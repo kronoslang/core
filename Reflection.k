@@ -74,7 +74,7 @@ Constraints:Atom!(a) #[Pattern] {
 }
 
 Constant?(a) {
-	Constant? = Equal-Type(Class-Of(a) Constant)
+	Constant? = Equal-Type(Class-of(a) Constant)
 }
 
 Constraints:Constant!(a) #[Pattern] {
@@ -99,7 +99,7 @@ Constraints:Scalar!(s) #[Pattern] {
 
 Integer?(a) {
 	Integer? = Reflection:Is-Any-Of(a Int32 Int64)
-	Integer? = When(Equal-Type(Class-Of(a) Constant) When(Constant - Floor(Constant) == #0) True)
+	Integer? = When(Equal-Type(Class-of(a) Constant) When(Constant - Floor(Constant) == #0) True)
 	Integer? = Recur(First(Vector:Unpack(a)))
 }
 
@@ -119,7 +119,7 @@ Constraints:Real!(r) #[Pattern] {
 }
 
 Bound?(sym) {
-	Equal-Type(Class-Of(sym) Class-Of(Recur))
+	Equal-Type(Class-of(sym) Class-of(Recur))
 }
 
 Single-Precision?(a) {
@@ -143,11 +143,11 @@ Constraints:Double-Precision!(dp) #[Pattern] {
 }
 
 Function?(fn) {
-	t = Class-Of( { nil } )
+	t = Class-of( { nil } )
 
 	Function? = nil
 
-	Function? = When(t ==t Class-Of(fn) True)
+	Function? = When(t ==t Class-of(fn) True)
 
 	(f r) = fn
 	Function? = And(Function?(f) Function(r))
@@ -159,10 +159,12 @@ Constraints:Function!(fn) {
 }
 
 
-Class-Of(a) #[Extend] {
+Class-of(a) #[Extend] {
 	vlst = Vector:Unpack(a)
-	Class-Of = (Class-Of(First(vlst)) Arity(vlst))
+	Class-of = Require(vlst Class-of(First(vlst)) Arity(vlst))
 }
+
+Class-Of = Class-of
 
 Type-Check(data constraints) {
 	Type-Check = Eval(constraints data) : data
@@ -171,7 +173,7 @@ Type-Check(data constraints) {
 
 Package Reflection {
 	Is-Any-Of(data types) {
-		cls = Class-Of(data)
+		cls = Class-of(data)
 
 		Is-Any-Of = Equal-Type(types cls) : True nil
 

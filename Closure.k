@@ -19,11 +19,11 @@ Curry(func a) {
 }
 
 Function?(fn) #[Extend] {
-	When(Class-Of(fn) ==t :Closure True)
+	When(Class-of(fn) ==t :Closure True)
 }
 
 Package Fallback {
 	Eval(fn arg...) #[Extend] {
-		Eval = Closure:Call(fn arg...)
+		Eval = Handle(Closure:Call(fn arg...) Raise("Could not evaluate " fn " with arguments " arg...))
 	}
 }

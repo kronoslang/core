@@ -7,13 +7,9 @@ Package Vector {
 	Pack(elements...) {
 		(e es) = elements...
 
-		Homogeneous?(x) {
-			Equal-Type(Class-Of(x) Class-Of(e))
-		}
+		primitive? = Float?(e) | Double?(e) | Int?(e)
 
-		primitive = Float?(e) | Double?(e) | Int?(e)
-
-		When(Algorithm:Every(Homogeneous? es) 
+		When(Algorithm:Every((e ==t) es) & primitive?
 			 Make(EVec elements...))
 	}
 
