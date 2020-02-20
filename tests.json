@@ -127,6 +127,14 @@
             "Fast": {},
             "Faster": {}
         },
+        "Complex": {
+            "Coerce-Invariant-Prototype": { "expr": "Coerce(Complex:Unitary(#0.1) 1)"},
+            "Coerce": { "expr": "Coerce(Complex:Cons(1 0) #0)" },
+            "Implicit-Coerce": { "expr": "Complex:Polar(#0.1 #0.2) + #0.3" },
+            "Addition": { "expr": "Complex:Cons(0 1) + Complex:Polar(Math:Pi #2)"},
+            "Multiplication": { "expr": "I * I" },
+            "Absolute-Value": {"expr": "(Math:Sqrt(Complex:Real(3 * I * 3 * Neg(I))) Abs(3 * I))" }
+        }, 
         "Coerce": {
             "Implicit-Coercion-Matrix": {},
             "Vector-Coerce": {}
