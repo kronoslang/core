@@ -153,6 +153,10 @@ Function?(fn) {
 	Function? = And(Function?(f) Function(r))
 }
 
+Vectorize-Type?(t) {
+	nil
+}
+
 Constraints:Function!(fn) {
 	;; Matches when 'fn' is callable
 	When(Function?(fn) fn)
@@ -182,4 +186,18 @@ Package Reflection {
 		Is-Any-Of = When(Equal-Type(t cls) True)
 
 	}
+
+	Tuple-of-Type?(type tuple) {
+		Tuple-of-Type? = Class-of(tuple) ==t type
+
+		(e es) = tuple
+		Tuple-of-Type? = (Class-of(e) ==t type) & Recur(type es)
+	}
+}
+
+Homogeneous?(tuple) {
+	Homogeneous? = True
+
+	(e es) = tuple
+	Homogeneous? = Reflection:Reflection:Tuple-of-Type?(Class-of(e) es)
 }

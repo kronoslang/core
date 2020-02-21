@@ -295,9 +295,9 @@ Package Gen {
 
 ;; backwards compatibility shims
 
-Wave:Sin = f => Gen:Sin(f #-0.25)
-Wave:Tri = Gen:Tri
-Wave:Saw = Gen:Saw-
-Wave:Sin-DWG = Gen:Sin-Waveguide
-Noise:Pseudo-White = Gen:Noise
-Gen:Drift = Gen:Random
+:Wave:Sin = f => Gen:Sin(f #-0.25)
+:Wave:Tri = Gen:Tri
+:Wave:Saw = Gen:Saw-
+:Wave:Sin-DWG = Gen:Sin-Waveguide
+:Noise:Pseudo-White = Gen:Noise
+:Gen:Drift = Gen:Random

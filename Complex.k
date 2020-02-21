@@ -8,9 +8,9 @@ Package Complex{
 		nil
 	}
 
-	Cons(real img) {
+	Cons(real:Real! img:Real!) {
 		;; Constructs a Complex number from 'real' and 'img'inary parts.
-		Cons = Make(:Complex (Type-Check(real Real?) Type-Check(img Real?)))
+		Cons = Make(:Complex real img)
 	}
 
 	Cons-Maybe(real img) {
@@ -20,76 +20,72 @@ Package Complex{
 			Make(:Complex real img))
 	}
 
-	Maybe(real img) {
-		Maybe = When(Real?(real) & Real?(img) Cons(real img))
-	}
-
-	Real/Img(c) #[Pattern] {
+	Real/Img(c:Complex!) #[Pattern] {
 		;; Retrieve Real and/or Imaginary part of a Complex number 'c'.
 		(Real Img) = Break(:Complex c)
 	}
 
-	Add(a b) {
+	Add(a:Complex! b:Complex!) {
 		;; Adds two complex numbers.
 		Add = Cons(Real(a) + Real(b)
 				   Img(a) + Img(b))
 	}
 
-	Sub(a b) {
+	Sub(a:Complex! b:Complex!) {
 		;; Substracts complex 'b' from 'a'.
 		Sub = Cons(Real(a) - Real(b)
 				   Img(a) - Img(b))
 	}
 
-	Mul(a b) {
+	Mul(a:Complex! b:Complex!) {
 		;; Multiplies two complex numbers.
 		Mul = Cons(Real(a) * Real(b) - Img(a) * Img(b)
 				   Real(a) * Img(b) + Img(a) * Real(b))
 	}
 
-	Div(z1 z2) {
+	Div(z1:Complex! z2:Complex!) {
 		;; Divides complex 'z1' by complex 'z2'.
 		denom = 1 / Abs-Square(z2)
 		nom = z1 * Conjugate(z2)
 		Div = Cons(Real(nom) * denom  Img(nom) * denom)
 	}
 
-	Conjugate(c) {
+	Conjugate(c:Complex!) {
 		;; Constructs a complex conjugate of 'c'.
 		Conjugate = Cons(Real(c), 0 - Img(c))
 	}
 
-	Abs-Square(c) #[Pattern] {
+	Abs-Square(c:Complex!) #[Pattern] {
 		;; Computes the square of the absolute value of complex 'c'.
 		Abs-Square = Real(c) * Real(c) + Img(c) * Img(c)
 	}
 
-	Abs(c) #[Pattern] {
+	Abs(c:Complex!) #[Pattern] {
 		;; Computes the absolute value of complex 'c'.
 		Abs = :Math:Sqrt(Abs-Square(c))
 	}
 
-	Arg(c) #[Pattern] {
+	Arg(c:Complex!) #[Pattern] {
 		Arg = :Math:Atan2(Img(c) Real(c))
 	}
 
-	Polar(angle radius) {
+	Polar(angle:Real! radius:Real!) {
 		;; Constructs a complex number from a polar representation: 'angle' in radians and 'radius'.
 		Polar = Cons(radius * Math:Cos(angle) radius * Math:Sin(angle))
 	}
 
-	Unitary(angle) {
+	Unitary(angle:Real!) {
 		;; Constructs a unitary complex number at 'angle' in radians.
 		Unitary = Cons(Math:Cos(angle) Math:Sin(angle))
 	}
 
-	Neg(z) #[Pattern] {
+	Neg(z:Complex!) #[Pattern] {
 		;; Negates a complex number 'z'.
 		(re im) = (Real(z) Img(z))
 		Neg = Cons(:Neg(re) :Neg(im))
 	}
 
-	Equal(z1 z2) {
+	Equal(z1:Complex! z2:Complex!) {
 		;; Compares the complex numbers 'z1' and 'z2' for equality.
 		Equal = Real(z1) == Real(z2) & Img(z1) == Img(z2)
 	}
@@ -112,11 +108,11 @@ Package Fallback {
 	}
 }
 
-Neg(args) #[Extend] {
+Neg(args:Complex!) #[Extend] {
 	Neg = :Complex:Neg(args)
 }
 
-Abs(args) #[Extend] {
+Abs(args:Complex!) #[Extend] {
 	Abs = :Complex:Abs(args)
 }
 
@@ -124,11 +120,16 @@ Complex?(z) {
 	Complex? = Equal-Type(Class-of(z) Complex)
 }
 
+Vectorize-Type?(z) #[Extend] {
+	Class-of(z) ==t Complex
+}
+
+
 I = Complex:Cons(#0 #1)
 
 Package Type-Conversion {
 	Explicit(type data) #[Extend] {
-		; try again by dropping imaginary part
+		; Convert complex number by dropping imaginary part
 		Explicit = Recur(type Complex:Real(data))
 
 		; Convert real number to complex
@@ -149,13 +150,19 @@ Package Type-Conversion {
 	}
 }
 
+Package Constraints {
+	Complex!(z) #[Pattern] {
+		When(Complex?(z) z)
+	}
+}
+
 Package Math {
-	Log(Z) #[Extend] {
+	Log(Z:Complex!) #[Extend] {
 		Use Complex
 		Log = Complex:Cons(Log(Abs-Square(Z)) / #2 Arg(Z))
 	}
 
-	Exp(Z) #[Extend] {
+	Exp(Z:Complex!) #[Extend] {
 		Use Complex
 		(x y) = (Real(Z) Img(Z))
 		Exp = Complex:Polar(y Math:Exp(x))

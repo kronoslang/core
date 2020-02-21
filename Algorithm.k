@@ -7,13 +7,13 @@ Package Algorithm {
 		nil
 	}
 
-	Expand(count iterator seed) {
+	Expand(count:Constant! iterator seed) {
 		;; Produces a list of 'count' elements, starting with 'seed' and generating the following elements by applying 'iterator' to the previous one.
 		Expand = count  >= #2 : (seed Recur(count - #1 iterator Eval(iterator seed)))
 				 count  >= #1 : (seed nil) nil
 	}
 
-	Map(func set...) {
+	Map(func:Function! set...) {
 		;; Applies 'func' to each element in 'set', collecting the results in a new structurally similar set.
 	 	Map = Nil?(set...) : nil
 	 		  Eval(func set...)
@@ -28,7 +28,7 @@ Package Algorithm {
 		Flat-First = Recur(First(x))
 	}
 
-	Zip-With(func as bs) {
+	Zip-With(func:Function! as bs) {
 		;; Applies a binary 'func' to elements pulled from 'as' and 'bs', collecting the results.
 		(asf asr) = as
 		(bsf bsr) = bs
@@ -39,7 +39,7 @@ Package Algorithm {
 		Zip-With = (Eval(func asf bsf) Recur(func asr bsr))
 	}
 
-	Zip3-With(func as bs cs) {
+	Zip3-With(func:Function! as bs cs) {
 		;; Applies a ternary 'func' to elements pulled from 'as', 'bs' and 'cs', collecting the results.
 		(asf asr) = as
 		(bsf bsr) = bs
@@ -67,7 +67,7 @@ Package Algorithm {
 			         (Map(First set...) Map(Rest set...)))
 	}
 
-	Reduce(func set...) {
+	Reduce(func:Function! set...) {
 		;; Applies a binary 'func' to combine the first two elements of a list as long as the list is more than one element long.
 	 	(a b) = set...
 	 	Reduce = Nil?(b)    : a
@@ -78,7 +78,7 @@ Package Algorithm {
 		Reduce = Recur(func Eval(func x1 x2) xs)
 	}
 
-	Accumulate(func set...) {
+	Accumulate(func:Function! set...) {
 		;; Produces a list where each element is produced by applying 'func' to the previously produced element and an element from 'set'.
 		(a b) = set...
 		Accumulate = Nil?(b)		: set...
@@ -91,7 +91,7 @@ Package Algorithm {
 		Accumulate = (x1 Recur(func acc xs))
 	}
 
-	Fold(func set...) {
+	Fold(func:Function! set...) {
 		;; Folds 'set' by applying 'func' to the first element of 'set' and a recursive fold of the rest of 'set'.
 	 	(x xs) = set...
 
@@ -100,7 +100,7 @@ Package Algorithm {
 	 		   Eval(func x Recur(func xs))
 	}
 
-	Filter(predicate set) {
+	Filter(predicate:Function! set) {
 		;; Evaluates 'predicate' for each element in 'set', removing those elements for which nil is returned.
 		Filter = When(Atom?(set)
 			Throw:Invalid-Argument("Filter requires a nil-terminated list"))
@@ -112,32 +112,32 @@ Package Algorithm {
 		Filter = When(Nil?(set) nil)
 	}
 
-	Iterate(n func x) {
+	Iterate(n:Constant! func:Function! x) {
 		;; Applies a pipeline of 'n' 'func's to 'x'.
 		Iterate = n > #0 : Recur(n - #1 func func(x)) x
 	}
 
-	Repeat(n x) {
+	Repeat(n:Constant! x) {
 		;; Makes a list of 'n' elements that have the value 'x'.
 		Expand(n '_  x)
 	}
 
-	Count(n) {
+	Count(n:Constant!) {
 		;; Makes a list of invariant constants from #1 to n
 		Expand(n (+ #1) #1)
 	}
 
-	Count(n start) #[Extend] {
+	Count(n:Constant! start) #[Extend] {
 		;; Makes a list of 'n' elements, counting up from 'start'
 		Expand(n (+ #1) start)
 	}
 
-	Count(n start step) #[Extend] {
+	Count(n:Constant! start step) #[Extend] {
 		;; Makes a list of 'n' elements, counting up from 'start' in 'step's.
 		Expand(n (+ step) start)
 	}
 
-	Every(predicate set...) {
+	Every(predicate:Function! set...) {
 		;; #true if all elements in 'set' are true according to 'predicate'.
 		Every = Nil?(set...) : True 
 				predicate(set...)
@@ -146,7 +146,7 @@ Package Algorithm {
 		Every = predicate(x) : Recur(predicate xs) nil
 	}
 
-	Some(predicate set...) {
+	Some(predicate:Function! set...) {
 		;; #true if some element in 'set' is true according to 'predicate'.
 		Some = predicate(set...) : set... nil
 
@@ -160,7 +160,7 @@ Package Algorithm {
 		Reverse = Reduce((a b) => (b a) nil set...)
 	}
 
-	Multi-Map(func sets...) {
+	Multi-Map(func:Function! sets...) {
 		;; Applies a polyadic 'func' to a tuple of corresponding elements in all of the 'sets'. The resulting set length corresponds to the smallest input set.
 		Multi-Map = Some(Nil? sets...)   : nil
 			   		Every(Pair? sets...) : (Eval(func Map(First sets...))
@@ -206,7 +206,7 @@ Package Algorithm {
 					  	truth Break(tid when-true) Break(tid when-false))))
 	}
 
-	Binary-Converge(pred lo hi sorted-set...) {
+	Binary-Converge(pred:Function! lo hi sorted-set...) {
 		i = (lo + hi) / #2
 		t = pred(Select(sorted-set... i))
 		Binary-Converge = (
@@ -215,21 +215,21 @@ Package Algorithm {
 			)
 	}
 
-	Skip(N set...) {
+	Skip(N:Constant! set...) {
 		;; Remove `N` items from the beginning of `set...`
 		Skip = N == #0 : set... nil
 		(x xs) = set...
 		Skip = N >= #1 : Recur(N - #1 xs) set...
 	}
 
-	Take(N set...) {
+	Take(N:Constant! set...) {
 		;; Take the first `N` items from the beginning of `set...`.
 		Take = (Nil?(set...) | N < #1) : nil [set...]
 		(x xs) = set...
 		Take = N >= #1 : (x Recur(N - #1 xs)) nil
 	}
 
-	Take-Last(N xs) {
+	Take-Last(N:Constant! xs) {
 		;; Take the last `N` items from the beginning of `set...`.
 		Take-Last = Skip(Arity(xs) - N xs)
 	}
@@ -240,7 +240,7 @@ Package Algorithm {
 		(Take(Nh xs...) Skip(Nh xs...))
 	}
 
-	Upper-Bound-Index(pred sorted-set...) {
+	Upper-Bound-Index(pred:Function! sorted-set...) {
 		N  = Arity(sorted-set...)
 		Ns = Ceil(Math:Log(N) / Math:Log(#2))
 
@@ -250,7 +250,7 @@ Package Algorithm {
 								         0i Coerce(Int32 N)))
 	}
 
-	Find-Max-With(pred set...) {
+	Find-Max-With(pred:Function! set...) {
 		;; Returns the index to the element in `set...` that is
 		;; the greatest according to a binary `pred`icate.
 
@@ -286,7 +286,7 @@ Package Algorithm {
 		Find-Max-With((<) set...)
 	}
 
-	Partition(N set...) {
+	Partition(N:Constant! set...) {
 		;; Partition `set...` into tuples with `N` elements each.
 		front = Take(N set...)
 		When(

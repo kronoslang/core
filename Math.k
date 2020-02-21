@@ -94,7 +94,7 @@ Package Math {
 		Linear-Interpolation(Clamp(mix #0 #1) a b)
 	}
 
-	Binomial-Coef(n k) {
+	Binomial-Coef(n k:Constant!) {
 		;; computes binomial coefficient for the pair `(n k)`
 
 		Use Algorithm
@@ -109,8 +109,8 @@ Package Math {
 					n Rest(Count(k))))
 	}
 
-	Factorial(n) {
-		;; computes the factorial of the invariant constant 'n'
+	Factorial(n:Constant!) {
+		;; computes the factorial of 'n'
 
 		x = Truncate(n)
 		When(x > #1 

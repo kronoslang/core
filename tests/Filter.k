@@ -3,6 +3,8 @@ Import Closure
 Import "Osc.k"
 Import Gen
 Import Filter
+Import Complex
+Import Vector
 
 Package Biquad {
 	Direct-II(x0 b0 b1 b2 a1 a2) {
@@ -123,5 +125,19 @@ Package Test {
 
 	Library-Resonator() {
 		Filter:Resonator(Gen:Saw(44.1) 3000 * Gen:Phasor(1) Gen:Phasor(0.1) * 1500)
+	}
+
+	Pole-Formats() {
+		Use Filter
+		Use Gen 
+
+		Pole-Zero(
+			Complex:Real(
+				Zero(
+					Pole(Gen:Noise(0.499d)
+						 Complex:Unitary(0.1))
+					-1))
+			Vector:Cons(-0.2 -0.1 0.1 0.2)
+			#0.5) * #0.01
 	}
 }

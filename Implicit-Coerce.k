@@ -12,7 +12,10 @@ Package Fallback {
 	Binary-Op(func name a b) #[Extend] {
 		Binary-Op = When(
 			Not(Equal-Type(a b))
-				func(Coerce-Binary(a b)))
+;				Explain-Constraint(
+					func(Coerce-Binary(a b))
+;					("Could not implictly coerce " a " and " b " to legal types for " name))
+				)
 
 	}
 

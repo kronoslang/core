@@ -235,6 +235,26 @@ Select-Wrap(buffer index) #[Extend] {
 			Vector:Explode(Constraints:Vector!(index))))
 }
 
+Real?(vector) #[Extend] {
+	Recur(First(Vector:Explode(vector)))
+}
+
+Scalar?(vector) #[Extend] {
+	Recur(First(Vector:Explode(vector)))	
+}
+
+Integer?(vector) #[Extend] {
+	Recur(First(Vector:Explode(vector)))	
+}
+
+Single-Precision?(vector) #[Extend] {
+	Recur(First(Vector:Explode(vector)))	
+}
+
+Double-Precision?(vector) #[Extend] {
+	Recur(First(Vector:Explode(vector)))	
+}
+
 
 Infix+v = Curry(Vector:Tuple-Binary-Op Vector:Add)
 Infix-v = Curry(Vector:Tuple-Binary-Op Vector:Sub)
