@@ -235,23 +235,23 @@ Select-Wrap(buffer index) #[Extend] {
 			Vector:Explode(Constraints:Vector!(index))))
 }
 
-Real?(vector) #[Extend] {
+Real?(vector:Vector!) #[Extend] {
 	Recur(First(Vector:Explode(vector)))
 }
 
-Scalar?(vector) #[Extend] {
+Scalar?(vector:Vector!) #[Extend] {
 	Recur(First(Vector:Explode(vector)))	
 }
 
-Integer?(vector) #[Extend] {
+Integer?(vector:Vector!) #[Extend] {
 	Recur(First(Vector:Explode(vector)))	
 }
 
-Single-Precision?(vector) #[Extend] {
+Single-Precision?(vector:Vector!) #[Extend] {
 	Recur(First(Vector:Explode(vector)))	
 }
 
-Double-Precision?(vector) #[Extend] {
+Double-Precision?(vector:Vector!) #[Extend] {
 	Recur(First(Vector:Explode(vector)))	
 }
 
