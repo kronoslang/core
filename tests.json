@@ -154,7 +154,7 @@
             "Reorder": {}
         },
         "Approx": {
-            "Cosine": { "exclude": "Static" },
+            "Cosine": { },
             "Fast": {},
             "Faster": {}
         },
