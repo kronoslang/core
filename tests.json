@@ -98,6 +98,36 @@
         "WikiSynthesis": {
             "Geometric-Waves": {},
             "Sine-Bank": { "exclude": "Linux" }
+        },
+        "Additive-Synthesis": {
+            "$include": ["tests/Additive-Synthesis.json", "audio"]
+        },
+        "ADSR-Envelope": {
+            "$include": ["tests/ADSR-Envelope.json", "audio"]
+        },
+        "Basics": {
+            "$include": ["tests/Basics.json", "audio"]
+        },
+        "Compile-Time-Computation": {
+            "$include": ["tests/Compile-Time-Computation.json", "audio"]
+        },
+        "DPW": {
+            "$include": ["tests/DPW.json", "audio"]
+        },
+        "Extending-Functions": {
+            "$include": ["tests/Extending-Functions.json", "audio"]
+        },
+        "Gradual-Types": {
+            "$include": ["tests/Gradual-Types.json", "audio"]
+        },
+        "Polymorphism": {
+            "$include": ["tests/Polymorphism.json", "audio"]
+        },
+        "Simple-Waveforms": {
+            "$include": ["tests/Simple-Waveforms.json", "audio"]
+        },
+        "Syntax": {
+            "$include": ["tests/Syntax.json", "audio"]
         }
     },
     "eval": {
@@ -196,6 +226,36 @@
             {"expr": "Vector:Horizontal((*) Vector:Cons(#1 2 3q 4d 5i #6 7))"},
 
             "Coerce": {}
+        },
+        "Additive-Synthesis": {
+            "$include": ["tests/Additive-Synthesis.json", "eval"]
+        },
+        "ADSR-Envelope": {
+            "$include": ["tests/ADSR-Envelope.json", "eval"]
+        },
+        "Basics": {
+            "$include": ["tests/Basics.json", "eval"]
+        },
+        "Compile-Time-Computation": {
+            "$include": ["tests/Compile-Time-Computation.json", "eval"]
+        },
+        "DPW": {
+            "$include": ["tests/DPW.json", "eval"]
+        },
+        "Extending-Functions": {
+            "$include": ["tests/Extending-Functions.json", "eval"]
+        },
+        "Gradual-Types": {
+            "$include": ["tests/Gradual-Types.json", "eval"]
+        },
+        "Polymorphism": {
+            "$include": ["tests/Polymorphism.json", "eval"]
+        },
+        "Simple-Waveforms": {
+            "$include": ["tests/Simple-Waveforms.json", "eval"]
+        },
+        "Syntax": {
+            "$include": ["tests/Syntax.json", "eval"]
         }
     }
 }

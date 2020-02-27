@@ -1,0 +1,1 @@
+{"audio":{"Audio-pCbmb":{"label":"snd = Wave:Saw(110) * bpf(trigger env)"},"Audio-qGU4I":{"label":"snd = Wave:Saw(110) * ads * rel-env"},"Audio-xy5Ax":{"label":"snd = Wave:Saw(110) * rel-env"},"Audio-ze1SA":{"label":"snd = Wave:Saw(110) * e * e"}},"eval":{}}

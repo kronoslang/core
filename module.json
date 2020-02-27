@@ -9,7 +9,7 @@
 		"Comp": "Function composition",
 		"Complex": "Complex number arithmetic",
 		"Cycle": "Declarative method for unit-delay feedback processors",
-		"Interpolation": "Interpolating discrete data",
+		"Function": "Make and wrap functions",
 		"Gen": "Waveform generators for audio and control",
 		"Math": "Additional mathematical functions",
 	}
