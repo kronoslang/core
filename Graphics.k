@@ -18,19 +18,8 @@ Package Graphics {
 		nil
 	}
 
-	Group(shapes) {
-		top = (-1i nil)
-		push(list tag) {
-			(oi _) = Nil?(list) : (-1i nil)
-							      First(list)
-			n = (oi + #1 tag)
-			(n list)
-		}
-		Algorithm:Reduce(push nil shapes)
-	}
-
 	Seq(shapes) {
-		Make(pq Group(shapes))
+		Make(pq shapes)
 	}
 
 	PolyLine(x1 y1 x2 y2 more...) {
@@ -54,27 +43,27 @@ Package Graphics {
 
 	Stroke(color shapes) {
 		;; Draw 'shapes...' with 'color', which is a tuple of either (RED GREEN BLUE) or (RED GREEN BLUE ALPHA) with values from 0 to 1.
-		Make(ss color Group(shapes))
+		Make(ss color shapes)
 	}
 
 	Fill(color shapes) {
 		;; Fill 'shapes...' with 'color', which is a tuple of either (RED GREEN BLUE) or (RED GREEN BLUE ALPHA) with values from 0 to 1.
-		Make(sf color Group(shapes))
+		Make(sf color shapes)
 	}
 
 	Rotate(angle shapes) {
 		;; Rotate 'shapes' by 'angle' degrees
-		Make(tr angle Group(shapes))
+		Make(tr angle shapes)
 	}
 
 	Scale(x y shapes) {
 		;; Scale 'shapes' by multipliers 'x' and 'y'
-		Make(ts (x y) Group(shapes))
+		Make(ts (x y) shapes)
 	}
 
 	Translate(x y shapes) {
 		;; Move all of 'shapes' along the 'x' and 'y' axes
-		Make(tt (x y) Group(shapes))
+		Make(tt (x y) shapes)
 	}
 
 	Canvas(id shapes) {
@@ -86,7 +75,7 @@ Package Graphics {
 
 	Viewport(width height shapes) {
 		;; Draw 'shapes' in a viewport with coordinate space (0,0) -- (width, height)
-		Make(vp (width height) Group(shapes))
+		Make(vp (width height) shapes)
 	}
 }
 

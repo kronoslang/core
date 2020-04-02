@@ -33,6 +33,7 @@ Package Audio {
 	Clock 	 = Reactive:Tick(Priority "audio")
 
 	Signal(sig) {
+		;; Upsample `sig` to the audio rate.
 		Signal = Reactive:Resample(sig Clock)
 	}
 
@@ -93,14 +94,17 @@ Package Control {
 	Coarse = Reactive:Downsample(:Audio:Clock #512)
 
 	Signal(sig) {
+		;; Resample `sig` to control rate (1/64 audio)
 		Signal = Reactive:Resample(sig Clock)
 	}
 
 	Signal-Fine(sig) {
+		;; Resample `sig` to fine control rate (1/8 audio)
 		Signal-Fine = Reactive:Resample(sig Fine)
 	}
 
 	Signal-Coarse(sig) {
+		;; Resample `sig` to coarse control rate (1/512 audio)
 		Signal-Coarse = Reactive:Resample(sig Coarse)
 	}
 
