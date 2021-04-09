@@ -1,11 +1,47 @@
 Import Function
 Import Algorithm
 Import Math
+Import IO
 
 Package Envelope {
 	Brief(documentation) {
 		;; Make musical control envelopes out of trigger and gate signals.
 		nil
+	}
+
+	BPF(gate segments...) {
+		;; Breakpoint function envelope with linear `segments...` given as 
+		;; a list of `(x y)` where `x` is an interval in seconds relative 
+		;; to the start of the envelope. The envelope ticks at either
+		;; the control rate or the signal rate of `gate`, whichever is higher.
+		;;
+		;; OUTPUT: (x y)
+		;; interpolated coordinates along the bpf
+
+		Use Algorithm
+
+		(g _) = Reactive:Couple(gate Control:Signal(0))
+		sr = Reactive:Rate(g)
+
+		xs0 = Map(First segments...)
+		xs1 = Map(First Rest(segments...))
+
+		inc = Cache( 
+				Concat(
+					Zip-With((x1 x0) => #1 / (sr * (x1 - x0))  xs1 xs0)
+					[0]))
+
+		(x0 y0) = Select(segments... position)
+		(x1 y1) = Select(segments... position + #1)
+		rate = Select(inc position)
+
+		trigger = g > z-1(g)
+		position = z-1(position + rate) & Not(trigger)
+
+		h = Fraction(position)
+
+		(Math:Linear-Interpolation(h x0 x1)
+		 Math:Linear-Interpolation(h y0 y1))
 	}
 
 	Linear(gate segments...) {

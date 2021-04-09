@@ -67,4 +67,18 @@ Package Function {
 
 		{ Select-Wrap(xs... arg) }
 	}
+
+	Table-Period(xs...) {
+		;; Given a list of `xs..., returns a function that cycles through them
+		;; during each interval between integers with linear interpolation. 
+		;; Suitable for waveshaping a phasor.
+		x => Eval( Wrap-LERP(Table(xs...)) x * Arity(xs...) )
+	}
+
+	Table-Period-Smooth(xs...) {
+		;; Given a list of `xs..., returns a function that cycles through them
+		;; during each interval between integers with polynomial Hermite interpolation. 
+		;; Suitable for waveshaping a phasor.
+		x => Eval( Wrap-Hermite(Table(xs...)) x * Arity(xs...) )
+	}
 }

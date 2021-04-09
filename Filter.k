@@ -207,7 +207,8 @@ Package Filter {
 	SVF(sig cutoff resonance) {
 		;; Double-sampled stable state-variable filter. Filter operates at the 'cutoff' frequency and 'resonance' is in range [0,1].
 		;; from https://www.musicdsp.org/en/latest/Filters/92-state-variable-filter-double-sampled-stable.html.
-		;; outputs (notch lowpass highpass bandpass peaking)
+		;;
+		;; OUTPUTS: (notch lowpass highpass bandpass peaking)
 
 		fi = Interval-of(sig)
 		res = Max(0 Min(1 resonance))
