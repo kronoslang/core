@@ -65,7 +65,7 @@ Package MIDI {
 		;; detected.
 
 		s = Status(midi-event)
-		b = Status(midi-event)
+		b = B(midi-event)
 
 		note-on = s == 0x90 & b > 0i
 		note-off = s == 0x80 | (s == 0x90 & b == 0i)
