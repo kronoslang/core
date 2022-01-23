@@ -9,7 +9,7 @@ Package Control {
 
 	Sample-and-Hold(sig sample?) {
 		;; When `sample?` is not true, freeze the value of `sig`nal.
-		state = z-1(sig Algorithm:Choose(sample? sig state))
+		state = Algorithm:Choose(sample? sig z-1(sig state))
 		state
 	}
 

@@ -11,3 +11,4 @@ Import Vector
 Import Function
 Import Envelope
 Import Sort
+Import MIDI

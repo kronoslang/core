@@ -33,7 +33,7 @@ Package Envelope {
 
 		(x0 y0) = Select(segments... position)
 		(x1 y1) = Select(segments... position + #1)
-		rate = Select(inc position)
+		rate = Select(inc position) & (g != 0)
 
 		trigger = g > z-1(g)
 		position = z-1(position + rate) & Not(trigger)
@@ -91,7 +91,7 @@ Package Envelope {
 		(g _) = Reactive:Couple(gate Control:Signal(0))
 		sr = Reactive:Rate(g)
 		rate = #1 / Max(#1 sr * duration)
-		out = Max(0 Ternary-Select(g > #0 1 z-1(1 out - rate)))
+		out = Max(0 Ternary-Select(g > #0 1 z-1(0 out - rate)))
 
 		out
 	}
