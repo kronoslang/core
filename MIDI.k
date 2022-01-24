@@ -34,9 +34,9 @@ Package MIDI {
 
 	Pack(status a b) {
 		;; Compose MIDI event from `status` byte and two parameter bytes `a` and `b`.
-		Make(Event BitShiftLeft(Coerce(0i status) & 0xff 16i)
-				   BitShiftLeft(Coerce(0i b)      & 0xff 8i)
-				   BitShiftLeft(Coerce(0i a)      & 0xff))
+		Make(Event BitShiftLeft(Coerce(0i status) & 0xff 16i) |
+				   BitShiftLeft(Coerce(0i b)      & 0x7f 8i)  |
+				   (Coerce(0i a) & 0x7f))
 	}
 
 	Note->Freq(note-num A4) {
